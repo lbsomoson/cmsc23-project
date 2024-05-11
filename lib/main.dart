@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:project/screens/donor/donor_signup.dart';
 import 'package:project/screens/donor_signin.dart';
-import 'package:project/screens/signin_as.dart';
 
 void main() {
   runApp(const RootWidget());
@@ -32,6 +32,13 @@ class _RootWidgetState extends State<RootWidget> {
           ),
         ),
         textTheme: TextTheme(
+          // screen title
+          bodyLarge: const TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.w700,
+            color: Color.fromRGBO(71, 187, 98, 1),
+            fontFamily: 'Inter',
+          ),
           // title
           bodyMedium: const TextStyle(
             fontSize: 20,
@@ -68,16 +75,16 @@ class _RootWidgetState extends State<RootWidget> {
           ),
         ),
       ),
-      // home: const SignInScreen(),
-      initialRoute: "/sign-in-as",
+      initialRoute: "/donor-signup",
       onGenerateRoute: (settings) {
-        if (settings.name == "/sign-in-as") {
-          return MaterialPageRoute(
-              builder: (context) => const SignInAsScreen());
-        }
         if (settings.name == "/login") {
           return MaterialPageRoute(builder: (context) => const SignInScreen());
         }
+        if (settings.name == "/donor-signup") {
+          return MaterialPageRoute(
+              builder: (context) => const DonorSignUpScreen());
+        }
+        return null;
       },
     );
   }

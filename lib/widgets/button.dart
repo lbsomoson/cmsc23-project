@@ -21,7 +21,6 @@ class _ButtonWidgetState extends State<ButtonWidget> {
     return SizedBox(
       width: widget.block ? double.infinity : null,
       child: widget.style == "outlined"
-          // TODO: Add a container here
           ? OutlinedButton(
               onPressed: () {
                 widget.handleClick();
@@ -30,6 +29,7 @@ class _ButtonWidgetState extends State<ButtonWidget> {
                 padding: EdgeInsets.zero,
               ),
               child: Container(
+                height: 44,
                 alignment: Alignment.center,
                 padding:
                     const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
