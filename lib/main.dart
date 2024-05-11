@@ -1,6 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:project/screens/admin/admin_approval.dart';
+import 'package:project/screens/admin/admin_dashboard.dart';
+import 'package:project/screens/admin/admin_view_donors.dart';
+import 'package:project/screens/admin/admin_view_orgs.dart';
+import 'package:project/screens/donor/donor_dashboard.dart';
+import 'package:project/screens/donor/donor_profile.dart';
 import 'package:project/screens/donor/donor_signup.dart';
 import 'package:project/screens/donor_signin.dart';
+import 'package:project/screens/organization/org_dashboard.dart';
+import 'package:project/screens/organization/org_donation.dart';
+import 'package:project/screens/organization/org_drives.dart';
+import 'package:project/screens/organization/org_profile.dart';
+import 'package:project/screens/organization/org_signup.dart';
+import 'package:project/widgets/admin_bottom_navbar.dart';
+import 'package:project/widgets/donor_bottom_navbar.dart';
+import 'package:project/widgets/org_bottom_navbar.dart';
 
 void main() {
   runApp(const RootWidget());
@@ -75,14 +89,70 @@ class _RootWidgetState extends State<RootWidget> {
           ),
         ),
       ),
-      initialRoute: "/donor-signup",
+      initialRoute: "/",
       onGenerateRoute: (settings) {
+        if (settings.name == "/") {
+          return MaterialPageRoute(
+              builder: (context) => const DonorBottomNavBar());
+        }
         if (settings.name == "/login") {
           return MaterialPageRoute(builder: (context) => const SignInScreen());
         }
         if (settings.name == "/donor-signup") {
           return MaterialPageRoute(
               builder: (context) => const DonorSignUpScreen());
+        }
+        if (settings.name == "/donor-dashboard") {
+          return MaterialPageRoute(
+              builder: (context) => const DonorDashboardScreen());
+        }
+        if (settings.name == "/donor-profile") {
+          return MaterialPageRoute(
+              builder: (context) => const DonorProfileScreen());
+        }
+        if (settings.name == "/organization-navbar") {
+          return MaterialPageRoute(
+              builder: (context) => const OrgBottomNavBar());
+        }
+        if (settings.name == "/organization-signup") {
+          return MaterialPageRoute(
+              builder: (context) => const OrgSignUpScreen());
+        }
+        if (settings.name == "/organization-dashboard") {
+          return MaterialPageRoute(
+              builder: (context) => const OrgDashboardScreen());
+        }
+        if (settings.name == "/organization-profile") {
+          return MaterialPageRoute(
+              builder: (context) => const OrgProfileScreen());
+        }
+        if (settings.name == "/organization-drives") {
+          return MaterialPageRoute(
+              builder: (context) => const OrgDonationDrivesScreen());
+        }
+        if (settings.name == "/organization-donations") {
+          return MaterialPageRoute(
+              builder: (context) => const OrgDonationScreen());
+        }
+        if (settings.name == "/admin-navbar") {
+          return MaterialPageRoute(
+              builder: (context) => const AdminBottomNavBar());
+        }
+        if (settings.name == "/admin-dashboard") {
+          return MaterialPageRoute(
+              builder: (context) => const AdminDashboard());
+        }
+        if (settings.name == "/admin-view-orgs") {
+          return MaterialPageRoute(
+              builder: (context) => const AdminViewOrgsScreen());
+        }
+        if (settings.name == "/admin-approval") {
+          return MaterialPageRoute(
+              builder: (context) => const AdminApprovalScreen());
+        }
+        if (settings.name == "/admin-view_donors") {
+          return MaterialPageRoute(
+              builder: (context) => const AdminViewDonorsScreen());
         }
         return null;
       },
