@@ -115,7 +115,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         TextLink(
                             label: "Register",
                             callback: () {
-                              Navigator.pushNamed(context, '/signup');
+                              Navigator.pushNamed(context, '/donor-signup');
                             })
                       ],
                     ),

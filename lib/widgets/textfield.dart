@@ -42,6 +42,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
             color: Colors.grey[800],
             fontWeight: FontWeight.w500,
             decoration: TextDecoration.none,
+            fontSize: 16,
           ),
           onSaved: (value) {},
           validator: (value) {

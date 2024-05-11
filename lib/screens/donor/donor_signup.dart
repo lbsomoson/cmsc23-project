@@ -117,13 +117,13 @@ class _DonorSignUpScreenState extends State<DonorSignUpScreen> {
                             margin: const EdgeInsets.symmetric(
                                 vertical: 20, horizontal: 0),
                             child: const TextWidget(
-                              text: 'Don\'t have an account yet?',
+                              text: 'Already have an account?',
                               style: 'bodySmall',
                             )),
                         TextLink(
-                            label: "Register",
+                            label: "Login",
                             callback: () {
-                              Navigator.pushNamed(context, '/signup');
+                              Navigator.pushNamed(context, '/login');
                             })
                       ],
                     ),
