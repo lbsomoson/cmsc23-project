@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:project/screens/donor_signin.dart';
+import 'package:project/screens/signin_as.dart';
 
 void main() {
   runApp(const RootWidget());
@@ -15,20 +17,68 @@ class _RootWidgetState extends State<RootWidget> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: const ColorScheme.light(
-            primary: Color.fromRGBO(71, 187, 98, 1),
-            secondary: Color.fromRGBO(142, 229, 0, 1),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        useMaterial3: true,
+        colorScheme: const ColorScheme.light(
+          primary: Color.fromRGBO(71, 187, 98, 1),
+          secondary: Color.fromRGBO(142, 229, 0, 1),
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: ButtonStyle(
+            foregroundColor: MaterialStateProperty.all(Colors.white),
+            backgroundColor:
+                MaterialStateProperty.all(const Color.fromRGBO(71, 187, 98, 1)),
           ),
-          textButtonTheme: TextButtonThemeData(
-            style: ButtonStyle(
-              foregroundColor: MaterialStateProperty.all(Colors.white),
-              backgroundColor: MaterialStateProperty.all(
-                  const Color.fromRGBO(71, 187, 98, 1)),
-            ),
+        ),
+        textTheme: TextTheme(
+          // title
+          bodyMedium: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+            color: Color.fromRGBO(22, 57, 30, 1),
+            fontFamily: 'Inter',
           ),
-        ));
+          // caption
+          bodySmall: TextStyle(
+            color: Colors.grey[500],
+            fontSize: 16,
+            fontFamily: 'Inter',
+          ),
+          // text field helper
+          labelMedium: TextStyle(
+            color: Colors.grey[500],
+            fontSize: 15,
+            fontWeight: FontWeight.w500,
+            fontFamily: 'Inter',
+          ),
+          //
+          titleSmall: TextStyle(
+            color: Colors.grey[500],
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            fontFamily: 'Inter',
+          ),
+          // button
+          labelLarge: const TextStyle(
+            color: Colors.white,
+            fontSize: 17,
+            fontWeight: FontWeight.w600,
+            fontFamily: 'Roboto',
+          ),
+        ),
+      ),
+      // home: const SignInScreen(),
+      initialRoute: "/sign-in-as",
+      onGenerateRoute: (settings) {
+        if (settings.name == "/sign-in-as") {
+          return MaterialPageRoute(
+              builder: (context) => const SignInAsScreen());
+        }
+        if (settings.name == "/login") {
+          return MaterialPageRoute(builder: (context) => const SignInScreen());
+        }
+      },
+    );
   }
 }
