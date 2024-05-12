@@ -95,7 +95,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       ],
                     ),
                     const SizedBox(
-                      height: 5,
+                      height: 15,
                     ),
                     IconButtonWidget(
                         block: true,

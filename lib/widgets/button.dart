@@ -49,8 +49,8 @@ class _ButtonWidgetState extends State<ButtonWidget> {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
+                        Theme.of(context).colorScheme.secondary,
                         Theme.of(context).colorScheme.primary,
-                        Theme.of(context).colorScheme.secondary
                       ])),
               child: ElevatedButton(
                 onPressed: () {},

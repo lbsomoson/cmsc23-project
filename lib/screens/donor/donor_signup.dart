@@ -103,7 +103,7 @@ class _DonorSignUpScreenState extends State<DonorSignUpScreen> {
                       ],
                     ),
                     const SizedBox(
-                      height: 5,
+                      height: 15,
                     ),
                     IconButtonWidget(
                         block: true,

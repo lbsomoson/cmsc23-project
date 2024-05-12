@@ -89,12 +89,9 @@ class _RootWidgetState extends State<RootWidget> {
           ),
         ),
       ),
-      initialRoute: "/",
+      // initialRoute: "/admin-navbar",
+      initialRoute: "/login",
       onGenerateRoute: (settings) {
-        if (settings.name == "/") {
-          return MaterialPageRoute(
-              builder: (context) => const DonorBottomNavBar());
-        }
         if (settings.name == "/login") {
           return MaterialPageRoute(builder: (context) => const SignInScreen());
         }
@@ -102,6 +99,19 @@ class _RootWidgetState extends State<RootWidget> {
           return MaterialPageRoute(
               builder: (context) => const DonorSignUpScreen());
         }
+        if (settings.name == "/donor-navbar") {
+          return MaterialPageRoute(
+              builder: (context) => const DonorBottomNavBar());
+        }
+        if (settings.name == "/organization-navbar") {
+          return MaterialPageRoute(
+              builder: (context) => const OrgBottomNavBar());
+        }
+        if (settings.name == "/admin-navbar") {
+          return MaterialPageRoute(
+              builder: (context) => const AdminBottomNavBar());
+        }
+
         if (settings.name == "/donor-dashboard") {
           return MaterialPageRoute(
               builder: (context) => const DonorDashboardScreen());
@@ -110,10 +120,7 @@ class _RootWidgetState extends State<RootWidget> {
           return MaterialPageRoute(
               builder: (context) => const DonorProfileScreen());
         }
-        if (settings.name == "/organization-navbar") {
-          return MaterialPageRoute(
-              builder: (context) => const OrgBottomNavBar());
-        }
+
         if (settings.name == "/organization-signup") {
           return MaterialPageRoute(
               builder: (context) => const OrgSignUpScreen());
@@ -134,10 +141,7 @@ class _RootWidgetState extends State<RootWidget> {
           return MaterialPageRoute(
               builder: (context) => const OrgDonationScreen());
         }
-        if (settings.name == "/admin-navbar") {
-          return MaterialPageRoute(
-              builder: (context) => const AdminBottomNavBar());
-        }
+
         if (settings.name == "/admin-dashboard") {
           return MaterialPageRoute(
               builder: (context) => const AdminDashboard());
