@@ -77,6 +77,22 @@ class _DonorSignUpScreenState extends State<DonorSignUpScreen> {
                     const SizedBox(
                       height: sizedBoxHeight,
                     ),
+                    TextFieldWidget(
+                        callback: () {},
+                        label: "Address/es",
+                        hintText: "Enter your address",
+                        type: "String"),
+                    const SizedBox(
+                      height: sizedBoxHeight,
+                    ),
+                    TextFieldWidget(
+                        callback: () {},
+                        label: "Contact no.",
+                        hintText: "Enter your contact details",
+                        type: "Number"),
+                    const SizedBox(
+                      height: sizedBoxHeight,
+                    ),
                     ButtonWidget(
                         handleClick: () {},
                         block: true,

@@ -89,7 +89,7 @@ class _RootWidgetState extends State<RootWidget> {
           ),
         ),
       ),
-      initialRoute: "/",
+      initialRoute: "/login",
       onGenerateRoute: (settings) {
         if (settings.name == "/") {
           return MaterialPageRoute(
