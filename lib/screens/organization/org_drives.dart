@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/widgets/org_drive_card.dart';
 
 class OrgDonationDrivesScreen extends StatefulWidget {
   const OrgDonationDrivesScreen({super.key});
@@ -12,8 +13,14 @@ class _OrgDonationDrivesScreenState extends State<OrgDonationDrivesScreen> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(
-        child: Text("Organization Donation Drives Screen"),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: [OrgDriveCard()],
+            ),
+          ),
+        ),
       ),
     );
   }
