@@ -78,7 +78,9 @@ class _DonorSignUpScreenState extends State<DonorSignUpScreen> {
                       height: sizedBoxHeight,
                     ),
                     ButtonWidget(
-                        handleClick: () {},
+                        handleClick: () {
+                          Navigator.pushNamed(context, '/organization-navbar');
+                        },
                         block: true,
                         label: "Sign In",
                         style: "filled"),
@@ -103,11 +105,13 @@ class _DonorSignUpScreenState extends State<DonorSignUpScreen> {
                       ],
                     ),
                     const SizedBox(
-                      height: 5,
+                      height: 15,
                     ),
                     IconButtonWidget(
                         block: true,
-                        callback: () {},
+                        callback: () {
+                          Navigator.pushNamed(context, '/donor-navbar');
+                        },
                         icon: './assets/images/google logo.png',
                         label: "Continue with Google"),
                     Row(
@@ -127,6 +131,11 @@ class _DonorSignUpScreenState extends State<DonorSignUpScreen> {
                             })
                       ],
                     ),
+                    TextLink(
+                        label: "Sign up as organization",
+                        callback: () {
+                          Navigator.pushNamed(context, '/organization-signup');
+                        }),
                   ],
                 ),
               ),

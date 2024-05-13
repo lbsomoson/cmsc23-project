@@ -70,7 +70,10 @@ class _SignInScreenState extends State<SignInScreen> {
                       height: sizedBoxHeight,
                     ),
                     ButtonWidget(
-                        handleClick: () {},
+                        handleClick: () {
+                          // TODO: Check user type
+                          Navigator.pushNamed(context, '/donor-navbar');
+                        },
                         block: true,
                         label: "Sign In",
                         style: "filled"),
@@ -95,11 +98,14 @@ class _SignInScreenState extends State<SignInScreen> {
                       ],
                     ),
                     const SizedBox(
-                      height: 5,
+                      height: 15,
                     ),
                     IconButtonWidget(
                         block: true,
-                        callback: () {},
+                        callback: () {
+                          // TODO: Check user type
+                          Navigator.pushNamed(context, '/admin-navbar');
+                        },
                         icon: './assets/images/google logo.png',
                         label: "Continue with Google"),
                     Row(
