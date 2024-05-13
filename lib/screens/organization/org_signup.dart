@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/widgets/button.dart';
 import 'package:project/widgets/iconbutton.dart';
+import 'package:project/widgets/image_upload.dart';
 import 'package:project/widgets/text.dart';
 import 'package:project/widgets/textfield.dart';
 import 'package:project/widgets/textlink.dart';
@@ -55,25 +56,24 @@ class _OrgSignUpScreenState extends State<OrgSignUpScreen> {
                     ),
                     TextFieldWidget(
                         callback: () {},
-                        label: "Name",
-                        hintText: "Enter your name",
+                        label: "Organization Name",
+                        hintText: "Enter organization name",
                         type: "String"),
                     const SizedBox(
                       height: sizedBoxHeight,
                     ),
                     TextFieldWidget(
                         callback: () {},
-                        label: "Username",
-                        hintText: "Enter your username",
+                        label: "Organization Username",
+                        hintText: "Enter organization username",
                         type: "String"),
                     const SizedBox(
                       height: sizedBoxHeight,
                     ),
-                    TextFieldWidget(
-                        callback: () {},
-                        label: "Password",
-                        hintText: "Enter your password",
-                        type: "Password"),
+
+                    const ImageUploadWidget(
+                        instruction: "Upload proof of legitimacy",
+                        label: "Upload Document"),
                     const SizedBox(
                       height: sizedBoxHeight,
                     ),

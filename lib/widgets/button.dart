@@ -53,7 +53,9 @@ class _ButtonWidgetState extends State<ButtonWidget> {
                         Theme.of(context).colorScheme.primary,
                       ])),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  widget.handleClick();
+                },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.transparent,
                     shadowColor: Colors.transparent),

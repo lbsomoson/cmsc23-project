@@ -115,7 +115,6 @@ class _RootWidgetState extends State<RootWidget> {
           return MaterialPageRoute(
               builder: (context) => const AdminBottomNavBar());
         }
-
         if (settings.name == "/donor-dashboard") {
           return MaterialPageRoute(
               builder: (context) => const DonorDashboardScreen());

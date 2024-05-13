@@ -79,7 +79,7 @@ class _DonorSignUpScreenState extends State<DonorSignUpScreen> {
                     ),
                     ButtonWidget(
                         handleClick: () {
-                          Navigator.pushNamed(context, '/donor-navbar');
+                          Navigator.pushNamed(context, '/organization-navbar');
                         },
                         block: true,
                         label: "Sign In",
@@ -131,11 +131,11 @@ class _DonorSignUpScreenState extends State<DonorSignUpScreen> {
                             })
                       ],
                     ),
-                    // TextLink(
-                    //     label: "Sign up as organization",
-                    //     callback: () {
-                    //       Navigator.pushNamed(context, '/organization-signup');
-                    //     }),
+                    TextLink(
+                        label: "Sign up as organization",
+                        callback: () {
+                          Navigator.pushNamed(context, '/organization-signup');
+                        }),
                   ],
                 ),
               ),
