@@ -6,7 +6,7 @@ import 'package:project/screens/admin/admin_view_orgs.dart';
 import 'package:project/screens/donor/donor_dashboard.dart';
 import 'package:project/screens/donor/donor_profile.dart';
 import 'package:project/screens/donor/donor_signup.dart';
-import 'package:project/screens/donor_signin.dart';
+import 'package:project/screens/signin.dart';
 import 'package:project/screens/organization/org_dashboard.dart';
 import 'package:project/screens/organization/org_donation.dart';
 import 'package:project/screens/organization/org_drives.dart';
