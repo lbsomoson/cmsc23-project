@@ -19,6 +19,17 @@ class TextFieldWidget extends StatefulWidget {
 class _TextFieldWidgetState extends State<TextFieldWidget> {
   final RegExp regExp = RegExp(r'[\d]+'); // regex for numbers
 
+  TextInputType textInputTypeFromString(String input) { //Dynamic keyboard type for fields
+    switch (input) {
+      case 'String':
+        return TextInputType.text;
+      case 'Number':
+        return TextInputType.number;
+      default:
+        return TextInputType.text;
+    }
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -58,6 +69,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
           },
           onChanged: (value) => {if (value.isNotEmpty) widget.callback(value)},
           obscureText: widget.type == "Password",
+          keyboardType: textInputTypeFromString(widget.type),
           decoration: InputDecoration(
             isDense: true,
             enabledBorder: OutlineInputBorder(
