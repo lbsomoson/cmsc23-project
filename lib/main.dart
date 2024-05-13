@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:project/screens/admin/admin_approval.dart';
-import 'package:project/screens/admin/admin_dashboard.dart';
-import 'package:project/screens/admin/admin_view_donors.dart';
-import 'package:project/screens/admin/admin_view_orgs.dart';
-import 'package:project/screens/donor/donor_dashboard.dart';
-import 'package:project/screens/donor/donor_profile.dart';
-import 'package:project/screens/donor/donor_signup.dart';
-import 'package:project/screens/signin.dart';
-import 'package:project/screens/organization/org_dashboard.dart';
-import 'package:project/screens/organization/org_donation.dart';
-import 'package:project/screens/organization/org_drives.dart';
-import 'package:project/screens/organization/org_profile.dart';
-import 'package:project/screens/organization/org_signup.dart';
-import 'package:project/widgets/admin_bottom_navbar.dart';
-import 'package:project/widgets/donor_bottom_navbar.dart';
-import 'package:project/widgets/org_bottom_navbar.dart';
+import 'screens/admin/admin_approval.dart';
+import 'screens/admin/admin_dashboard.dart';
+import 'screens/admin/admin_view_donors.dart';
+import 'screens/admin/admin_view_orgs.dart';
+import 'screens/donor/donor_dashboard.dart';
+import 'screens/donor/donor_profile.dart';
+import 'screens/donor/donor_signup.dart';
+import 'screens/signin.dart';
+import 'screens/organization/org_dashboard.dart';
+import 'screens/organization/org_donation.dart';
+import 'screens/organization/org_drives.dart';
+import 'screens/organization/org_profile.dart';
+import 'screens/organization/org_signup.dart';
+import 'widgets/admin_bottom_navbar.dart';
+import 'widgets/donor_bottom_navbar.dart';
+import 'widgets/org_bottom_navbar.dart';
 
 void main() {
   runApp(const RootWidget());
