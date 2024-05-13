@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:project/screens/admin/admin_approval.dart';
 import 'package:project/screens/admin/admin_dashboard.dart';
@@ -27,7 +28,7 @@ class _AdminBottomNavBarState extends State<AdminBottomNavBar> {
         PersistentTabConfig(
           screen: const AdminViewOrgsScreen(),
           item: ItemConfig(
-              icon: const Icon(Icons.people_alt_rounded),
+              icon: const FaIcon(FontAwesomeIcons.globe),
               title: "Organizations",
               inactiveForegroundColor: Colors.grey[400]!,
               activeForegroundColor: Theme.of(context).colorScheme.primary),
@@ -35,7 +36,7 @@ class _AdminBottomNavBarState extends State<AdminBottomNavBar> {
         PersistentTabConfig(
           screen: const AdminViewDonorsScreen(),
           item: ItemConfig(
-              icon: const Icon(Icons.favorite),
+              icon: const FaIcon(FontAwesomeIcons.handHoldingHeart),
               title: "Donors",
               inactiveForegroundColor: Colors.grey[400]!,
               activeForegroundColor: Theme.of(context).colorScheme.primary),
@@ -43,7 +44,7 @@ class _AdminBottomNavBarState extends State<AdminBottomNavBar> {
         PersistentTabConfig(
           screen: const AdminApprovalScreen(),
           item: ItemConfig(
-              icon: const Icon(Icons.person),
+              icon: const Icon(Icons.approval_rounded),
               title: "Approval",
               inactiveForegroundColor: Colors.grey[400]!,
               activeForegroundColor: Theme.of(context).colorScheme.primary),
