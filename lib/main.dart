@@ -96,8 +96,7 @@ class _RootWidgetState extends State<RootWidget> {
           return MaterialPageRoute(builder: (context) => const SignInScreen());
         }
         if (settings.name == "/donor-signup") {
-          return MaterialPageRoute(
-              builder: (context) => const DonorSignUpScreen());
+          return MaterialPageRoute(builder: (context) => const SignUpScreen());
         }
         if (settings.name == "/donor-navbar") {
           return MaterialPageRoute(

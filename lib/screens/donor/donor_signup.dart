@@ -5,14 +5,14 @@ import 'package:project/widgets/text.dart';
 import 'package:project/widgets/textfield.dart';
 import 'package:project/widgets/textlink.dart';
 
-class DonorSignUpScreen extends StatefulWidget {
-  const DonorSignUpScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
-  State<DonorSignUpScreen> createState() => _DonorSignUpScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _DonorSignUpScreenState extends State<DonorSignUpScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     const double sizedBoxHeight = 20;
@@ -74,6 +74,22 @@ class _DonorSignUpScreenState extends State<DonorSignUpScreen> {
                         label: "Password",
                         hintText: "Enter your password",
                         type: "Password"),
+                    const SizedBox(
+                      height: sizedBoxHeight,
+                    ),
+                    TextFieldWidget(
+                        callback: () {},
+                        label: "Address/es",
+                        hintText: "Enter your address",
+                        type: "String"),
+                    const SizedBox(
+                      height: sizedBoxHeight,
+                    ),
+                    TextFieldWidget(
+                        callback: () {},
+                        label: "Contact no.",
+                        hintText: "Enter your contact details",
+                        type: "Number"),
                     const SizedBox(
                       height: sizedBoxHeight,
                     ),
