@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:project/widgets/text.dart';
 
 class ImageUploadWidget extends StatefulWidget {
   final String label, instruction;

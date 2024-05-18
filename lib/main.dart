@@ -11,6 +11,7 @@ import 'package:project/screens/organization/org_dashboard.dart';
 import 'package:project/screens/organization/org_drives.dart';
 import 'package:project/screens/organization/org_profile.dart';
 import 'package:project/screens/organization/org_signup.dart';
+import 'package:project/screens/splash_screen.dart';
 import 'package:project/widgets/admin_bottom_navbar.dart';
 import 'package:project/widgets/donor_bottom_navbar.dart';
 import 'package:project/widgets/org_bottom_navbar.dart';
@@ -89,8 +90,11 @@ class _RootWidgetState extends State<RootWidget> {
         ),
       ),
       // initialRoute: "/admin-navbar",
-      initialRoute: "/login",
+      initialRoute: "/",
       onGenerateRoute: (settings) {
+        if (settings.name == "/") {
+          return MaterialPageRoute(builder: (context) => const SplashScreen());
+        }
         if (settings.name == "/login") {
           return MaterialPageRoute(builder: (context) => const SignInScreen());
         }
