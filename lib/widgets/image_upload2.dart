@@ -17,17 +17,17 @@ class _ImageUpload2WidgetState extends State<ImageUpload2Widget> {
         // TODO: Open image from gallery, ask permission
       },
       child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 80),
+          padding: const EdgeInsets.symmetric(vertical: 50),
           width: double.infinity,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: Colors.grey[200],
-              border: Border.all(width: 2, color: Colors.grey[300]!)),
+              color: Colors.grey[100],
+              border: Border.all(width: 2, color: Colors.grey[200]!)),
           child: Center(
             child: Icon(
               Icons.add,
-              size: 50,
-              color: Colors.grey[400],
+              size: 75,
+              color: Colors.grey[300],
             ),
           )),
     );

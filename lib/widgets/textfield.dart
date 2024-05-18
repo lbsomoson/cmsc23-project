@@ -112,7 +112,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
             contentPadding:
                 const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
             filled: true,
-            fillColor: Colors.grey[200],
+            fillColor: Colors.grey[100],
           ),
         ),
       ],

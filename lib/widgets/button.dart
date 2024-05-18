@@ -21,18 +21,24 @@ class _ButtonWidgetState extends State<ButtonWidget> {
     return SizedBox(
       width: widget.block ? double.infinity : null,
       child: widget.style == "outlined"
-          ? OutlinedButton(
-              onPressed: () {
-                widget.handleClick();
-              },
-              style: OutlinedButton.styleFrom(
-                padding: EdgeInsets.zero,
+          ? Container(
+              height: 44,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                border: Border.all(
+                  color: Theme.of(context).colorScheme.primary,
+                  width: 1.5,
+                ),
               ),
-              child: Container(
-                height: 44,
-                alignment: Alignment.center,
-                padding:
-                    const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+              child: OutlinedButton(
+                onPressed: () {
+                  widget.handleClick();
+                },
+                style: OutlinedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  shadowColor: Colors.transparent,
+                  side: BorderSide.none,
+                ),
                 child: Text(
                   widget.label,
                   style: TextStyle(
@@ -41,7 +47,8 @@ class _ButtonWidgetState extends State<ButtonWidget> {
                     fontSize: 18,
                   ),
                 ),
-              ))
+              ),
+            )
           : Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50),
