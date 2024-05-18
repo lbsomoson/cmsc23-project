@@ -5,9 +5,13 @@ class TextFieldWidget extends StatefulWidget {
   final Function callback;
   final String hintText, type;
   final String? label;
+  final bool? isRequired;
+  final int? maxLines;
   const TextFieldWidget(
       {required this.callback,
       this.label,
+      this.isRequired,
+      this.maxLines,
       required this.hintText,
       required this.type,
       super.key});
@@ -19,7 +23,8 @@ class TextFieldWidget extends StatefulWidget {
 class _TextFieldWidgetState extends State<TextFieldWidget> {
   final RegExp regExp = RegExp(r'[\d]+'); // regex for numbers
 
-  TextInputType textInputTypeFromString(String input) { //Dynamic keyboard type for fields
+  TextInputType textInputTypeFromString(String input) {
+    //Dynamic keyboard type for fields
     switch (input) {
       case 'String':
         return TextInputType.text;
@@ -29,7 +34,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
         return TextInputType.text;
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -41,7 +46,20 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
-                    child: TextWidget(text: widget.label!, style: 'titleSmall'),
+                    child: Row(
+                      children: [
+                        TextWidget(text: widget.label!, style: 'titleSmall'),
+                        const SizedBox(
+                          width: 3,
+                        ),
+                        widget.isRequired != null
+                            ? Text("*",
+                                style: TextStyle(
+                                    color:
+                                        Theme.of(context).colorScheme.primary))
+                            : Container()
+                      ],
+                    ),
                   ),
                   const SizedBox(
                     height: 6,
@@ -67,6 +85,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
             }
             return null;
           },
+          maxLines: widget.maxLines ?? 1,
           onChanged: (value) => {if (value.isNotEmpty) widget.callback(value)},
           obscureText: widget.type == "Password",
           keyboardType: textInputTypeFromString(widget.type),

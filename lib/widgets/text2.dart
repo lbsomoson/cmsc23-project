@@ -29,6 +29,15 @@ class _Text2WidgetState extends State<Text2Widget> {
   TextStyle bodySmall = TextStyle(
     color: Colors.grey[500],
     fontSize: 16,
+    fontWeight: FontWeight.w700,
+    fontFamily: 'Inter',
+  );
+
+  // section header
+  TextStyle sectionHeader = const TextStyle(
+    color: Colors.black,
+    fontSize: 18,
+    fontWeight: FontWeight.w800,
     fontFamily: 'Inter',
   );
 
@@ -60,6 +69,7 @@ class _Text2WidgetState extends State<Text2Widget> {
     return Text(
       widget.text,
       style: switch (widget.style) {
+        'sectionHeader' => sectionHeader,
         'bodySmall' => bodySmall,
         'bodyMedium' => bodyMedium,
         'bodyLarge' => bodyLarge,

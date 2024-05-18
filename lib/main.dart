@@ -6,6 +6,7 @@ import 'package:project/screens/admin/admin_view_orgs.dart';
 import 'package:project/screens/donor/donor_dashboard.dart';
 import 'package:project/screens/donor/donor_profile.dart';
 import 'package:project/screens/donor/donor_signup.dart';
+import 'package:project/screens/organization/org_add_donation_drive.dart';
 import 'package:project/screens/signin.dart';
 import 'package:project/screens/organization/org_dashboard.dart';
 import 'package:project/screens/organization/org_drives.dart';
@@ -38,13 +39,13 @@ class _RootWidgetState extends State<RootWidget> {
           primary: Color.fromRGBO(71, 187, 98, 1),
           secondary: Color.fromRGBO(142, 229, 0, 1),
         ),
-        textButtonTheme: TextButtonThemeData(
-          style: ButtonStyle(
-            foregroundColor: MaterialStateProperty.all(Colors.white),
-            backgroundColor:
-                MaterialStateProperty.all(const Color.fromRGBO(71, 187, 98, 1)),
-          ),
-        ),
+        // textButtonTheme: TextButtonThemeData(
+        //   style: ButtonStyle(
+        //     foregroundColor: MaterialStateProperty.all(Colors.white),
+        //     backgroundColor:
+        //         MaterialStateProperty.all(const Color.fromRGBO(71, 187, 98, 1)),
+        //   ),
+        // ),
         textTheme: TextTheme(
           // screen title
           bodyLarge: const TextStyle(
@@ -135,6 +136,10 @@ class _RootWidgetState extends State<RootWidget> {
         if (settings.name == "/organization-drives") {
           return MaterialPageRoute(
               builder: (context) => const OrgDonationDrivesScreen());
+        }
+        if (settings.name == "/organization-add-drive") {
+          return MaterialPageRoute(
+              builder: (context) => const OrgAddDonationDriveScreen());
         }
         if (settings.name == "/admin-dashboard") {
           return MaterialPageRoute(

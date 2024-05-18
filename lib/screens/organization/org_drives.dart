@@ -18,7 +18,9 @@ class _OrgDonationDrivesScreenState extends State<OrgDonationDrivesScreen> {
         title: const AppBarTitle(title: "My Donation Drives"),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, '/organization-add-drive');
+        },
         tooltip: 'Add',
         shape: const CircleBorder(),
         child: const Icon(Icons.add),
