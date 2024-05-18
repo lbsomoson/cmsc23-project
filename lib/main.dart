@@ -14,6 +14,7 @@ import 'package:project/screens/organization/org_drives.dart';
 import 'package:project/screens/organization/org_profile.dart';
 import 'package:project/screens/organization/org_signup.dart';
 import 'package:project/screens/splash_screen.dart';
+import 'package:project/screens/view_donation_drive.dart';
 import 'package:project/widgets/admin_bottom_navbar.dart';
 import 'package:project/widgets/donor_bottom_navbar.dart';
 import 'package:project/widgets/org_bottom_navbar.dart';
@@ -37,7 +38,7 @@ class _RootWidgetState extends State<RootWidget> {
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: const ColorScheme.light(
-          primary: Color.fromRGBO(71, 187, 98, 1),
+          primary: Color.fromRGBO(62, 218, 134, 1),
           secondary: Color.fromRGBO(142, 229, 0, 1),
         ),
         textTheme: TextTheme(
@@ -84,7 +85,7 @@ class _RootWidgetState extends State<RootWidget> {
           ),
         ),
       ),
-      initialRoute: "/organization-edit-drive",
+      initialRoute: "/organization-navbar",
       onGenerateRoute: (settings) {
         if (settings.name == "/") {
           return MaterialPageRoute(builder: (context) => const SplashScreen());
@@ -111,6 +112,10 @@ class _RootWidgetState extends State<RootWidget> {
           return MaterialPageRoute(
               builder: (context) => const AdminBottomNavBar());
         }
+        if (settings.name == "/view-donation-drive") {
+          return MaterialPageRoute(
+              builder: (context) => const ViewOrgDonationDrive());
+        }
         if (settings.name == "/donor-dashboard") {
           return MaterialPageRoute(
               builder: (context) => const DonorDashboardScreen());
@@ -131,6 +136,7 @@ class _RootWidgetState extends State<RootWidget> {
           return MaterialPageRoute(
               builder: (context) => const OrgDonationDrivesScreen());
         }
+
         if (settings.name == "/organization-add-drive") {
           return MaterialPageRoute(
               builder: (context) => const OrgAddDonationDriveScreen());

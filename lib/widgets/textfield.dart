@@ -99,7 +99,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
             ),
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.primary, width: 1.0),
+                  color: Theme.of(context).colorScheme.primary, width: 1.5),
               borderRadius: BorderRadius.circular(10.0),
             ),
             border: OutlineInputBorder(

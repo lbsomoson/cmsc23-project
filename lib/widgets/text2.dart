@@ -64,10 +64,27 @@ class _Text2WidgetState extends State<Text2Widget> {
     fontFamily: 'Roboto',
   );
 
+  // body
+  TextStyle body = const TextStyle(
+    color: Colors.black,
+    fontSize: 15,
+    fontWeight: FontWeight.w400,
+    fontFamily: 'Inter',
+  );
+
+  // body2
+  TextStyle body2 = const TextStyle(
+    color: Color.fromRGBO(62, 218, 134, 1),
+    fontSize: 15,
+    fontWeight: FontWeight.w600,
+    fontFamily: 'Inter',
+  );
+
   @override
   Widget build(BuildContext context) {
     return Text(
       widget.text,
+      textAlign: TextAlign.justify,
       style: switch (widget.style) {
         'sectionHeader' => sectionHeader,
         'bodySmall' => bodySmall,
@@ -76,6 +93,8 @@ class _Text2WidgetState extends State<Text2Widget> {
         'labelMedium' => labelMedium,
         'labelLarge' => labelLarge,
         'titleSmall' => titleSmall,
+        'body' => body,
+        'body2' => body2,
         _ => Theme.of(context).textTheme.bodyMedium,
       },
     );

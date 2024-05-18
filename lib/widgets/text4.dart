@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class Text3Widget extends StatefulWidget {
+class Text4Widget extends StatefulWidget {
   final String text1, text2;
   final double size;
-  const Text3Widget({
+  const Text4Widget({
     required this.text1,
     required this.text2,
     required this.size,
@@ -11,10 +11,10 @@ class Text3Widget extends StatefulWidget {
   });
 
   @override
-  State<Text3Widget> createState() => _Text3WidgetState();
+  State<Text4Widget> createState() => _Text4WidgetState();
 }
 
-class _Text3WidgetState extends State<Text3Widget> {
+class _Text4WidgetState extends State<Text4Widget> {
   @override
   Widget build(BuildContext context) {
     return RichText(
@@ -25,8 +25,8 @@ class _Text3WidgetState extends State<Text3Widget> {
             style: TextStyle(
               fontSize: widget.size,
               fontFamily: 'Inter',
-              color: Theme.of(context).colorScheme.primary,
-              fontWeight: FontWeight.w600,
+              color: Colors.grey,
+              fontWeight: FontWeight.w400,
             ),
           ),
           const WidgetSpan(
@@ -37,8 +37,8 @@ class _Text3WidgetState extends State<Text3Widget> {
             style: TextStyle(
               fontSize: widget.size,
               fontFamily: 'Inter',
-              color: Colors.grey,
-              fontWeight: FontWeight.w400,
+              color: Theme.of(context).colorScheme.primary,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ],
