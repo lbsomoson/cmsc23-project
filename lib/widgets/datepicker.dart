@@ -5,13 +5,16 @@ class DatePickerWidget extends StatefulWidget {
   final Function callback;
   final String hintText;
   final String? label;
+  final DateTime? initialValue;
   final bool? isRequired;
-  const DatePickerWidget(
-      {required this.callback,
-      this.label,
-      this.isRequired,
-      required this.hintText,
-      super.key});
+  const DatePickerWidget({
+    required this.callback,
+    this.label,
+    this.initialValue,
+    this.isRequired,
+    required this.hintText,
+    super.key,
+  });
 
   @override
   State<DatePickerWidget> createState() => _DatePickerWidgetState();
@@ -24,7 +27,9 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
   @override
   void initState() {
     super.initState();
-    _selectedDate = DateTime.now();
+    _selectedDate = widget.initialValue ?? DateTime.now();
+    _controller.text =
+        "${_selectedDate.month}/${_selectedDate.day}/${_selectedDate.year}";
   }
 
   Future<void> _selectDate(BuildContext context) async {

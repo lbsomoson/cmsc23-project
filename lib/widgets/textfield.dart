@@ -4,12 +4,13 @@ import 'package:project/widgets/text.dart';
 class TextFieldWidget extends StatefulWidget {
   final Function callback;
   final String hintText, type;
-  final String? label;
+  final String? label, initialValue;
   final bool? isRequired;
   final int? maxLines;
   const TextFieldWidget(
       {required this.callback,
       this.label,
+      this.initialValue,
       this.isRequired,
       this.maxLines,
       required this.hintText,
@@ -74,6 +75,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
             fontSize: 16,
           ),
           onSaved: (value) {},
+          initialValue: widget.initialValue,
           validator: (value) {
             // asks for a value if the textfield is empty
             if (value == null || value.isEmpty) {
