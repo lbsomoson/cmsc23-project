@@ -42,8 +42,8 @@ class _OrgDriveCardState extends State<OrgDriveCard> {
                   const Text("Help Animal Sanctuary",
                       style: TextStyle(
                         fontFamily: 'Inter',
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
                         color: Color.fromRGBO(22, 57, 30, 1),
                       )),
                   const SizedBox(height: 5),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/widgets/appbar_title.dart';
 import 'package:project/widgets/org_drive_card.dart';
 
 class OrgDonationDrivesScreen extends StatefulWidget {
@@ -12,12 +13,25 @@ class OrgDonationDrivesScreen extends StatefulWidget {
 class _OrgDonationDrivesScreenState extends State<OrgDonationDrivesScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
+      appBar: AppBar(
+        title: const AppBarTitle(title: "My Donation Drives"),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              children: [OrgDriveCard()],
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
+            child: const Column(
+              children: [
+                OrgDriveCard(),
+                OrgDriveCard(),
+                OrgDriveCard(),
+                OrgDriveCard(),
+                OrgDriveCard(),
+                OrgDriveCard(),
+                OrgDriveCard(),
+                OrgDriveCard(),
+              ],
             ),
           ),
         ),

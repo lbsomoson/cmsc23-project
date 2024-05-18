@@ -25,10 +25,11 @@ class _Text3WidgetState extends State<Text3Widget> {
         Text(
           widget.text2,
           style: const TextStyle(
-              fontSize: 14,
-              fontFamily: 'Inter',
-              color: Colors.grey,
-              fontWeight: FontWeight.w600),
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            fontFamily: 'Inter',
+            color: Colors.grey,
+          ),
         )
       ],
     );
