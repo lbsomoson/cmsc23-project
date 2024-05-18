@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:project/widgets/text.dart';
+import 'package:project/widgets/text3.dart';
 
 class OrgDriveCard extends StatefulWidget {
   const OrgDriveCard({super.key});
@@ -33,21 +32,33 @@ class _OrgDriveCardState extends State<OrgDriveCard> {
                   fit: BoxFit.cover,
                 )),
           ),
-          const Expanded(
+          Expanded(
             flex: 2,
             child: Padding(
-              padding: EdgeInsets.all(15),
+              padding: const EdgeInsets.all(15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Help Animal Sanctuary",
+                  const Text("Help Animal Sanctuary",
                       style: TextStyle(
+                        fontFamily: 'Inter',
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: Color.fromRGBO(22, 57, 30, 1),
-                        fontFamily: 'Inter',
                       )),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 5),
+                  const Text3Widget(
+                    text1: "₱41",
+                    text2: "Fund raised",
+                  ),
+                  Text3Widget(
+                    text1: 21.toString(),
+                    text2: 21 > 1 ? "Donors" : "Donor",
+                  ),
+                  Text3Widget(
+                    text1: 4.toString(),
+                    text2: 4 > 1 ? "Days" : "Day",
+                  ),
                 ],
               ),
             ),
