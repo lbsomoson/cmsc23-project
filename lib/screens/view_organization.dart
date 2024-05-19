@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:project/widgets/button.dart';
 import 'package:project/widgets/divider.dart';
+import 'package:project/widgets/org_drive_card.dart';
 import 'package:project/widgets/text2.dart';
+import 'package:project/widgets/text3.dart';
 
-class AdminApprovalScreen extends StatefulWidget {
-  const AdminApprovalScreen({super.key});
+class ViewOrganizationScreen extends StatefulWidget {
+  const ViewOrganizationScreen({super.key});
 
   @override
-  State<AdminApprovalScreen> createState() => _AdminApprovalScreenState();
+  State<ViewOrganizationScreen> createState() => _ViewOrganizationScreenState();
 }
 
-class _AdminApprovalScreenState extends State<AdminApprovalScreen> {
+class _ViewOrganizationScreenState extends State<ViewOrganizationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,20 +32,23 @@ class _AdminApprovalScreenState extends State<AdminApprovalScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text("Metropawlitan",
+                        const Text("Cats of UPLB",
                             style: TextStyle(
                               fontFamily: 'Inter',
                               fontSize: 20,
                               fontWeight: FontWeight.w700,
                               color: Color.fromRGBO(22, 57, 30, 1),
                             )),
-                        const Text2Widget(
-                            text: "Category of Organization", style: 'body2'),
+                        const Text3Widget(
+                          size: 16,
+                          text1: "Organization Category",
+                          text2: "",
+                        ),
                         const SizedBox(
                           height: 10,
                         ),
                         const Text2Widget(
-                            maxLines: 5,
+                            maxLines: 10,
                             text:
                                 "Lorem ipsum dolor sit amet, consectetur  adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in",
                             style: 'body'),
@@ -95,33 +99,13 @@ class _AdminApprovalScreenState extends State<AdminApprovalScreen> {
                         ),
                         const DividerWidget(),
                         const Text2Widget(
-                            text: "Proof/s of Legitimacy",
-                            style: "sectionHeader"),
+                            text: "Donation Drives", style: "sectionHeader"),
                         const SizedBox(
                           height: 10,
                         ),
-                        // TODO: INSERT PICTURE HOLDER HERE FOR PROOF
-                        const DividerWidget(),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        user(),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        ButtonWidget(
-                            handleClick: () {},
-                            block: true,
-                            label: "Approve",
-                            style: 'filled'),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        ButtonWidget(
-                            handleClick: () {},
-                            block: true,
-                            label: "Disapprove",
-                            style: 'outlined'),
+                        const OrgDriveCard(),
+                        const OrgDriveCard(),
+                        const OrgDriveCard(),
                       ],
                     ),
                   ),
@@ -156,82 +140,6 @@ class _AdminApprovalScreenState extends State<AdminApprovalScreen> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget user() {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          flex: 1,
-          child: AspectRatio(
-            aspectRatio: 1,
-            child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Image.asset(
-                  'assets/images/juan.jpg',
-                  fit: BoxFit.cover,
-                )),
-          ),
-        ),
-        Expanded(
-          flex: 2,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text("Juan Dela Cruz",
-                    style: TextStyle(
-                      fontFamily: 'Inter',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Color.fromRGBO(22, 57, 30, 1),
-                    )),
-                const SizedBox(height: 5),
-                Row(
-                  children: [
-                    Icon(Icons.email,
-                        color: Theme.of(context).colorScheme.primary, size: 20),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    const Text2Widget(
-                        text: "juandelacruz@gmail.com", style: "body3")
-                  ],
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Row(
-                  children: [
-                    Icon(Icons.location_on,
-                        color: Theme.of(context).colorScheme.primary, size: 20),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    const Text2Widget(text: "Los Baños, Laguna", style: "body3")
-                  ],
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Row(
-                  children: [
-                    Icon(Icons.phone,
-                        color: Theme.of(context).colorScheme.primary, size: 20),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    const Text2Widget(text: "09954695022", style: "body3")
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

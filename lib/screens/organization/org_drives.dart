@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:project/widgets/appbar_title.dart';
+import 'package:project/widgets/org_drive_card.dart';
 
 class OrgDonationDrivesScreen extends StatefulWidget {
   const OrgDonationDrivesScreen({super.key});
@@ -11,9 +13,36 @@ class OrgDonationDrivesScreen extends StatefulWidget {
 class _OrgDonationDrivesScreenState extends State<OrgDonationDrivesScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text("Organization Donation Drives Screen"),
+    return Scaffold(
+      appBar: AppBar(
+        title: const AppBarTitle(title: "My Donation Drives"),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/organization-add-drive');
+        },
+        tooltip: 'Add',
+        shape: const CircleBorder(),
+        child: const Icon(Icons.add),
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
+            child: const Column(
+              children: [
+                OrgDriveCard(),
+                OrgDriveCard(),
+                OrgDriveCard(),
+                OrgDriveCard(),
+                OrgDriveCard(),
+                OrgDriveCard(),
+                OrgDriveCard(),
+                OrgDriveCard(),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

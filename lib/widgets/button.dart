@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 class ButtonWidget extends StatefulWidget {
   final Function handleClick;
   final String label, style;
+  final double? size;
   final bool block;
   const ButtonWidget(
       {required this.handleClick,
       required this.block,
+      this.size,
       required this.label,
       required this.style,
       super.key});
@@ -21,18 +23,24 @@ class _ButtonWidgetState extends State<ButtonWidget> {
     return SizedBox(
       width: widget.block ? double.infinity : null,
       child: widget.style == "outlined"
-          ? OutlinedButton(
-              onPressed: () {
-                widget.handleClick();
-              },
-              style: OutlinedButton.styleFrom(
-                padding: EdgeInsets.zero,
+          ? Container(
+              height: widget.size ?? 44,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                border: Border.all(
+                  color: Theme.of(context).colorScheme.primary,
+                  width: 1.5,
+                ),
               ),
-              child: Container(
-                height: 44,
-                alignment: Alignment.center,
-                padding:
-                    const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+              child: OutlinedButton(
+                onPressed: () {
+                  widget.handleClick();
+                },
+                style: OutlinedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  shadowColor: Colors.transparent,
+                  side: BorderSide.none,
+                ),
                 child: Text(
                   widget.label,
                   style: TextStyle(
@@ -41,8 +49,10 @@ class _ButtonWidgetState extends State<ButtonWidget> {
                     fontSize: 18,
                   ),
                 ),
-              ))
+              ),
+            )
           : Container(
+              height: widget.size ?? 45,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50),
                   gradient: LinearGradient(
