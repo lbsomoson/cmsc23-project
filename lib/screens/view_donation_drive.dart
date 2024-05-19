@@ -123,6 +123,7 @@ class _ViewOrgDonationDriveState extends State<ViewOrgDonationDrive> {
                             ],
                           ),
                         ),
+                        // TODO: CHECK USER TYPE IF ORGANIZATION OR ADMIN, DISPLAY BUTTONS IF ORGANIZATION
                         const DividerWidget(),
                         const SizedBox(
                           height: 5,

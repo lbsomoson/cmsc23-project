@@ -17,6 +17,7 @@ import 'package:project/screens/organization/org_signup.dart';
 import 'package:project/screens/splash_screen.dart';
 import 'package:project/screens/view_donation.dart';
 import 'package:project/screens/view_donation_drive.dart';
+import 'package:project/screens/view_organization.dart';
 import 'package:project/widgets/admin_bottom_navbar.dart';
 import 'package:project/widgets/donor_bottom_navbar.dart';
 import 'package:project/widgets/org_bottom_navbar.dart';
@@ -160,6 +161,10 @@ class _RootWidgetState extends State<RootWidget> {
         if (settings.name == "/admin-view-org-applications") {
           return MaterialPageRoute(
               builder: (context) => const ViewOrgApplications());
+        }
+        if (settings.name == "/admin-view-organizations") {
+          return MaterialPageRoute(
+              builder: (context) => const ViewOrganizationScreen());
         }
         if (settings.name == "/admin-view-orgs") {
           return MaterialPageRoute(

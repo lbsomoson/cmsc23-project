@@ -13,7 +13,7 @@ class _OrgCardState extends State<OrgCard> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, '/view-donation-drive');
+        Navigator.pushNamed(context, '/admin-view-organizations');
       },
       child: Card(
         elevation: 0,
