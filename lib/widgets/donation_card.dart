@@ -60,6 +60,9 @@ class DonationCard extends StatelessWidget {
                         const Text2Widget(text: "May 31, 2021", style: "body3")
                       ],
                     ),
+                    const SizedBox(
+                      height: 5,
+                    ),
                     Row(
                       children: [
                         Icon(Icons.location_on,
@@ -71,6 +74,9 @@ class DonationCard extends StatelessWidget {
                         const Text2Widget(
                             text: "Los Baños, Laguna", style: "body3")
                       ],
+                    ),
+                    const SizedBox(
+                      height: 5,
                     ),
                     Row(
                       children: [

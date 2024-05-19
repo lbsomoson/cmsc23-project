@@ -67,6 +67,9 @@ class _ViewOrganizationScreenState extends State<ViewOrganizationScreen> {
                                 text: "organization@email.org", style: "body3")
                           ],
                         ),
+                        const SizedBox(
+                          height: 5,
+                        ),
                         Row(
                           children: [
                             Icon(Icons.phone,
@@ -78,6 +81,9 @@ class _ViewOrganizationScreenState extends State<ViewOrganizationScreen> {
                             const Text2Widget(
                                 text: "09954695022", style: "body3")
                           ],
+                        ),
+                        const SizedBox(
+                          height: 5,
                         ),
                         Row(
                           children: [

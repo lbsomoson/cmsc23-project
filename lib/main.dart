@@ -154,14 +154,18 @@ class _RootWidgetState extends State<RootWidget> {
           return MaterialPageRoute(
               builder: (context) => const AdminDashboard());
         }
-        if (settings.name == "/admin-approval") {
-          return MaterialPageRoute(
-              builder: (context) => const AdminApprovalScreen());
-        }
         if (settings.name == "/admin-view-org-applications") {
           return MaterialPageRoute(
               builder: (context) => const ViewOrgApplications());
         }
+        if (settings.name == "/admin-approval") {
+          return MaterialPageRoute(
+              builder: (context) => const AdminApprovalScreen());
+        }
+        // if (settings.name == "/admin-view-org-applications") {
+        //   return MaterialPageRoute(
+        //       builder: (context) => const ViewOrgApplications());
+        // }
         if (settings.name == "/admin-view-organizations") {
           return MaterialPageRoute(
               builder: (context) => const ViewOrganizationScreen());

@@ -41,14 +41,6 @@ class _AdminBottomNavBarState extends State<AdminBottomNavBar> {
               inactiveForegroundColor: Colors.grey[400]!,
               activeForegroundColor: Theme.of(context).colorScheme.primary),
         ),
-        PersistentTabConfig(
-          screen: const ViewOrgApplications(),
-          item: ItemConfig(
-              icon: const Icon(Icons.approval_rounded),
-              title: "Approval",
-              inactiveForegroundColor: Colors.grey[400]!,
-              activeForegroundColor: Theme.of(context).colorScheme.primary),
-        ),
       ];
 
   @override

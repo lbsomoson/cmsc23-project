@@ -187,11 +187,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
                       initialPage: 0,
                       padEnds: false),
                 ),
-                // const Row(
-                //   children: [
-                //     OrgApplicationCard(),
-                //   ],
-                // ),
               ],
             ),
           ),

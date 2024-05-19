@@ -68,8 +68,10 @@ class _OrgApplicationCardState extends State<OrgApplicationCard> {
                           )),
                       const SizedBox(height: 5),
                       ButtonWidget(
-                        handleClick: () {},
-                        size: 40,
+                        handleClick: () {
+                          Navigator.pushNamed(context, '/admin-approval');
+                        },
+                        size: 38,
                         block: true,
                         label: "Review",
                         style: "filled",
