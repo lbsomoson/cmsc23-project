@@ -43,9 +43,8 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
               color: Colors.grey[200],
             ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center, // Center vertically
-              crossAxisAlignment:
-                  CrossAxisAlignment.center, // Center horizontally
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Icon(
                   Icons.image,
@@ -58,8 +57,7 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
                 Text(
                   "Upload proof of legitimacy",
                   style: TextStyle(color: Colors.grey[500], fontSize: 17),
-                  textAlign: TextAlign
-                      .center, // Optional: Center text within the column
+                  textAlign: TextAlign.center,
                 ),
               ],
             ),

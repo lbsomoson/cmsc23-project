@@ -3,6 +3,7 @@ import 'package:project/screens/admin/admin_approval.dart';
 import 'package:project/screens/admin/admin_dashboard.dart';
 import 'package:project/screens/admin/admin_view_donors.dart';
 import 'package:project/screens/admin/admin_view_orgs.dart';
+import 'package:project/screens/admin/view_org_applications.dart';
 import 'package:project/screens/donor/donor_dashboard.dart';
 import 'package:project/screens/donor/donor_profile.dart';
 import 'package:project/screens/donor/donor_signup.dart';
@@ -86,7 +87,7 @@ class _RootWidgetState extends State<RootWidget> {
           ),
         ),
       ),
-      initialRoute: "/organization-navbar",
+      initialRoute: "/admin-view-org-applications",
       onGenerateRoute: (settings) {
         if (settings.name == "/") {
           return MaterialPageRoute(builder: (context) => const SplashScreen());
@@ -138,8 +139,7 @@ class _RootWidgetState extends State<RootWidget> {
               builder: (context) => const OrgDonationDrivesScreen());
         }
         if (settings.name == "/view-donation") {
-          return MaterialPageRoute(
-              builder: (context) => const ViewDonation());
+          return MaterialPageRoute(builder: (context) => const ViewDonation());
         }
         if (settings.name == "/organization-add-drive") {
           return MaterialPageRoute(
@@ -153,15 +153,19 @@ class _RootWidgetState extends State<RootWidget> {
           return MaterialPageRoute(
               builder: (context) => const AdminDashboard());
         }
-        if (settings.name == "/admin-view-orgs") {
-          return MaterialPageRoute(
-              builder: (context) => const AdminViewOrgsScreen());
-        }
         if (settings.name == "/admin-approval") {
           return MaterialPageRoute(
               builder: (context) => const AdminApprovalScreen());
         }
-        if (settings.name == "/admin-view_donors") {
+        if (settings.name == "/admin-view-org-applications") {
+          return MaterialPageRoute(
+              builder: (context) => const ViewOrgApplications());
+        }
+        if (settings.name == "/admin-view-orgs") {
+          return MaterialPageRoute(
+              builder: (context) => const AdminViewOrgsScreen());
+        }
+        if (settings.name == "/admin-view-donors") {
           return MaterialPageRoute(
               builder: (context) => const AdminViewDonorsScreen());
         }

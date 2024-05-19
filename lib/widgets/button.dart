@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 class ButtonWidget extends StatefulWidget {
   final Function handleClick;
   final String label, style;
+  final double? size;
   final bool block;
   const ButtonWidget(
       {required this.handleClick,
       required this.block,
+      this.size,
       required this.label,
       required this.style,
       super.key});
@@ -22,7 +24,7 @@ class _ButtonWidgetState extends State<ButtonWidget> {
       width: widget.block ? double.infinity : null,
       child: widget.style == "outlined"
           ? Container(
-              height: 44,
+              height: widget.size ?? 44,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(50),
                 border: Border.all(
@@ -50,6 +52,7 @@ class _ButtonWidgetState extends State<ButtonWidget> {
               ),
             )
           : Container(
+              height: widget.size ?? 45,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50),
                   gradient: LinearGradient(

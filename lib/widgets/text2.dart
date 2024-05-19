@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 class Text2Widget extends StatefulWidget {
   final String text, style;
-  const Text2Widget({required this.text, required this.style, super.key});
+  final int? maxLines;
+  const Text2Widget(
+      {required this.text, required this.style, this.maxLines, super.key});
 
   @override
   State<Text2Widget> createState() => _Text2WidgetState();
@@ -36,6 +38,14 @@ class _Text2WidgetState extends State<Text2Widget> {
   // section header
   TextStyle sectionHeader = const TextStyle(
     color: Colors.black,
+    fontSize: 18,
+    fontWeight: FontWeight.w800,
+    fontFamily: 'Inter',
+  );
+
+  // section header 2
+  TextStyle sectionHeader2 = const TextStyle(
+    color: Color.fromRGBO(62, 218, 134, 1),
     fontSize: 18,
     fontWeight: FontWeight.w800,
     fontFamily: 'Inter',
@@ -92,9 +102,11 @@ class _Text2WidgetState extends State<Text2Widget> {
   Widget build(BuildContext context) {
     return Text(
       widget.text,
+      maxLines: widget.maxLines ?? 3,
       textAlign: TextAlign.justify,
       style: switch (widget.style) {
         'sectionHeader' => sectionHeader,
+        'sectionHeader2' => sectionHeader2,
         'bodySmall' => bodySmall,
         'bodyMedium' => bodyMedium,
         'bodyLarge' => bodyLarge,

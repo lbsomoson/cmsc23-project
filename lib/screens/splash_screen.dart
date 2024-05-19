@@ -15,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
   bool isChanged = false;
 
   Color primaryColor = const Color.fromARGB(255, 51, 188, 83);
-  Color secondaryColor = const Color.fromARGB(255, 51, 188, 83);
+  Color secondaryColor = const Color.fromARGB(255, 172, 188, 51);
 
   List<Color> generatePrimaryColors(Color baseColor) {
     return [
@@ -41,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
           alignment: Alignment.center,
           children: [
             Positioned.fill(
-              child: Container(
+              child: SizedBox(
                 width: double.infinity,
                 height: double.infinity,
                 child: AnimateGradient(
