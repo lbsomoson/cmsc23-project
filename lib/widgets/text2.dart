@@ -80,6 +80,14 @@ class _Text2WidgetState extends State<Text2Widget> {
     fontFamily: 'Inter',
   );
 
+  // body3
+  TextStyle body3 = const TextStyle(
+    color: Colors.grey,
+    fontSize: 15,
+    fontWeight: FontWeight.w400,
+    fontFamily: 'Inter',
+  );
+
   @override
   Widget build(BuildContext context) {
     return Text(
@@ -95,6 +103,7 @@ class _Text2WidgetState extends State<Text2Widget> {
         'titleSmall' => titleSmall,
         'body' => body,
         'body2' => body2,
+        'body3' => body3,
         _ => Theme.of(context).textTheme.bodyMedium,
       },
     );

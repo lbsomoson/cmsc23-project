@@ -14,6 +14,7 @@ import 'package:project/screens/organization/org_drives.dart';
 import 'package:project/screens/organization/org_profile.dart';
 import 'package:project/screens/organization/org_signup.dart';
 import 'package:project/screens/splash_screen.dart';
+import 'package:project/screens/view_donation.dart';
 import 'package:project/screens/view_donation_drive.dart';
 import 'package:project/widgets/admin_bottom_navbar.dart';
 import 'package:project/widgets/donor_bottom_navbar.dart';
@@ -136,7 +137,10 @@ class _RootWidgetState extends State<RootWidget> {
           return MaterialPageRoute(
               builder: (context) => const OrgDonationDrivesScreen());
         }
-
+        if (settings.name == "/view-donation") {
+          return MaterialPageRoute(
+              builder: (context) => const ViewDonation());
+        }
         if (settings.name == "/organization-add-drive") {
           return MaterialPageRoute(
               builder: (context) => const OrgAddDonationDriveScreen());

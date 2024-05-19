@@ -71,7 +71,7 @@ class _ViewOrgDonationDriveState extends State<ViewOrgDonationDrive> {
                     height: 200,
                   ),
                   Padding(
-                    padding: EdgeInsets.all(15),
+                    padding: const EdgeInsets.all(15),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

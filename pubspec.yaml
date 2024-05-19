@@ -75,6 +75,7 @@ flutter:
     - assets/images/Male User.png
     - assets/images/Rectangle 58.png
     - assets/images/Ellipse 9.png
+    - assets/images/juan.jpg
     - assets/images/splash.gif
 
   # An image asset can refer to one or more resolution-specific "variants", see

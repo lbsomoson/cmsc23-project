@@ -14,11 +14,15 @@ class DonorCard extends StatelessWidget {
         children: [
           Expanded(
             flex: 1,
-            child: ClipOval(
-              child: Image.asset(
-                'assets/images/Male User.png',
-                fit: BoxFit.cover,
-              ),
+            child: ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(100.0)),
+              child: AspectRatio(
+                aspectRatio: 1, 
+                child: Image.asset(
+                  'assets/images/juan.jpg',
+                  fit: BoxFit.cover,
+                ),
+              )
             ),
           ),
           const SizedBox(width: 10),
