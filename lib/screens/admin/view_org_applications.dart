@@ -23,7 +23,7 @@ class _ViewOrgApplicationsState extends State<ViewOrgApplications> {
             crossAxisCount: 2,
             mainAxisSpacing: 0,
             crossAxisSpacing: 0,
-            childAspectRatio: 0.59,
+            childAspectRatio: 0.61,
           ),
           itemCount: 5,
           itemBuilder: (BuildContext context, int index) {

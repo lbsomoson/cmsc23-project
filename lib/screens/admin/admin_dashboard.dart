@@ -14,6 +14,8 @@ class AdminDashboard extends StatefulWidget {
 }
 
 class _AdminDashboardState extends State<AdminDashboard> {
+  List list = [1, 2, 3, 4, 5];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -164,11 +166,32 @@ class _AdminDashboardState extends State<AdminDashboard> {
                     ),
                   ],
                 ),
-                const Row(
-                  children: [
+                // CarouselSlider(
+                //   options: CarouselOptions(),
+                //   items: list
+                //       .map(
+                //         (item) => const OrgApplicationCard(),
+                //       )
+                //       .toList(),
+                // ),
+                CarouselSlider(
+                  items: const [
+                    OrgApplicationCard(),
+                    OrgApplicationCard(),
                     OrgApplicationCard(),
                   ],
+                  options: CarouselOptions(
+                      aspectRatio: 1.10,
+                      viewportFraction: 0.6,
+                      enableInfiniteScroll: false,
+                      initialPage: 0,
+                      padEnds: false),
                 ),
+                // const Row(
+                //   children: [
+                //     OrgApplicationCard(),
+                //   ],
+                // ),
                 const DividerWidget(),
                 InkWell(
                   borderRadius: BorderRadius.circular(15),
