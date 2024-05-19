@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:project/providers/authenticator_provider.dart';
+import 'package:project/screens/donor/homepage.dart';
 import 'screens/admin/admin_approval.dart';
 import 'screens/admin/admin_dashboard.dart';
 import 'screens/admin/admin_view_donors.dart';
@@ -15,10 +17,28 @@ import 'screens/organization/org_signup.dart';
 import 'widgets/admin_bottom_navbar.dart';
 import 'widgets/donor_bottom_navbar.dart';
 import 'widgets/org_bottom_navbar.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
-  runApp(const RootWidget());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: ((context) => UserAuthProvider()))
+      ],
+      child: RootWidget(),
+    ),
+  );
 }
+// void main() {
+//   runApp(const RootWidget());
+// }
 
 class RootWidget extends StatefulWidget {
   const RootWidget({super.key});
@@ -90,7 +110,10 @@ class _RootWidgetState extends State<RootWidget> {
         ),
       ),
       // initialRoute: "/admin-navbar",
-      initialRoute: "/login",
+      initialRoute: "/",
+      routes: {
+        '/': (context) => const HomePage(),
+      },
       onGenerateRoute: (settings) {
         if (settings.name == "/login") {
           return MaterialPageRoute(builder: (context) => const SignInScreen());

@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:project/providers/authenticator_provider.dart';
 import 'package:project/widgets/button.dart';
 import 'package:project/widgets/iconbutton.dart';
 import 'package:project/widgets/text.dart';
 import 'package:project/widgets/textfield.dart';
 import 'package:project/widgets/textlink.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:project/models/donor_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
+
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -13,6 +20,11 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+  final _formKey = GlobalKey<FormState>();
+  String? username;
+  String? password;
+  bool showSignInErrorMessage = false;
+
   @override
   Widget build(BuildContext context) {
     const double sizedBoxHeight = 20;
@@ -40,92 +52,113 @@ class _SignInScreenState extends State<SignInScreen> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(
-                      height: sizedBoxHeight,
-                    ),
-                    const TextWidget(
-                        text: "Sign in to your account", style: 'bodyMedium'),
-                    const TextWidget(
-                        text: "Lorem ipsum dolor sit amet", style: "bodySmall"),
-                    const SizedBox(
-                      height: sizedBoxHeight,
-                    ),
-                    TextFieldWidget(
-                        callback: () {},
-                        label: "Username",
-                        hintText: "Enter your username",
-                        type: "String"),
-                    const SizedBox(
-                      height: sizedBoxHeight,
-                    ),
-                    TextFieldWidget(
-                        callback: () {},
-                        label: "Password",
-                        hintText: "Enter your password",
-                        type: "Password"),
-                    const SizedBox(
-                      height: sizedBoxHeight,
-                    ),
-                    ButtonWidget(
-                        handleClick: () {
-                          // TODO: Check user type
-                          Navigator.pushNamed(context, '/donor-navbar');
-                        },
-                        block: true,
-                        label: "Sign In",
-                        style: "filled"),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                            child: Divider(
-                          color: Colors.grey[500],
-                        )),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8.0),
-                          child: TextWidget(text: "or", style: 'bodySmall'),
-                        ),
-                        Expanded(
-                            child: Divider(
-                          color: Colors.grey[500],
-                        )),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    IconButtonWidget(
-                        block: true,
-                        callback: () {
-                          // TODO: Check user type
-                          Navigator.pushNamed(context, '/admin-navbar');
-                        },
-                        icon: './assets/images/google logo.png',
-                        label: "Continue with Google"),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                            margin: const EdgeInsets.symmetric(
-                                vertical: 20, horizontal: 0),
-                            child: const TextWidget(
-                              text: 'Don\'t have an account yet?',
-                              style: 'bodySmall',
-                            )),
-                        TextLink(
-                            label: "Register",
-                            callback: () {
-                              Navigator.pushNamed(context, '/donor-signup');
-                            })
-                      ],
-                    ),
-                  ],
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(
+                        height: sizedBoxHeight,
+                      ),
+                      const TextWidget(
+                          text: "Sign in to your account", style: 'bodyMedium'),
+                      const TextWidget(
+                          text: "Lorem ipsum dolor sit amet", style: "bodySmall"),
+                      const SizedBox(
+                        height: sizedBoxHeight,
+                      ),
+                      TextFieldWidget(
+                          callback: (String val) => username  = val,
+                          label: "Username",
+                          hintText: "Enter your username",
+                          type: "String"),
+                      const SizedBox(
+                        height: sizedBoxHeight,
+                      ),
+                      TextFieldWidget(
+                          callback: (String val) => password  = val,
+                          label: "Password",
+                          hintText: "Enter your password",
+                          type: "Password"),
+                      const SizedBox(
+                        height: sizedBoxHeight,
+                      ),
+                      ButtonWidget(
+                          handleClick: () async {
+                            if(_formKey.currentState!.validate()){
+                              _formKey.currentState!.save();
+                              String? message = await context
+                                  .read<UserAuthProvider>()
+                                  .authService
+                                  .signIn(username!, password!);
+
+                              print(message);
+                              print(showSignInErrorMessage);
+
+                              setState(() {
+                                if (message != null && message.isNotEmpty) {
+                                  showSignInErrorMessage = true;
+                                } else {
+                                  showSignInErrorMessage = false;
+                                }
+                              });
+                            }
+                            // TODO: Check user type          _formKey.currentState!.save();
+                            // Navigator.pushNamed(context, '/donor-navbar');
+                          },
+                          block: true,
+                          label: "Sign In",
+                          style: "filled"),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                              child: Divider(
+                            color: Colors.grey[500],
+                          )),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 8.0),
+                            child: TextWidget(text: "or", style: 'bodySmall'),
+                          ),
+                          Expanded(
+                              child: Divider(
+                            color: Colors.grey[500],
+                          )),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      IconButtonWidget(
+                          block: true,
+                          callback: () {
+                            // TODO: Check user type
+                            Navigator.pushNamed(context, '/admin-navbar');
+                          },
+                          icon: './assets/images/google logo.png',
+                          label: "Continue with Google"),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                              margin: const EdgeInsets.symmetric(
+                                  vertical: 20, horizontal: 0),
+                              child: const TextWidget(
+                                text: 'Don\'t have an account yet?',
+                                style: 'bodySmall',
+                              )),
+                          TextLink(
+                              label: "Register",
+                              callback: () {
+                                Navigator.pushNamed(context, '/donor-signup');
+                              })
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

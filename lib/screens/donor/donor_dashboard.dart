@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:project/providers/authenticator_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DonorDashboardScreen extends StatefulWidget {
   const DonorDashboardScreen({Key? key}) : super(key: key);
@@ -11,6 +15,12 @@ class _DonorDashboardScreenState extends State<DonorDashboardScreen> {
   @override
 Widget build(BuildContext context) {
   return Scaffold(
+    floatingActionButton: FloatingActionButton(
+      onPressed: (){
+        context.read<UserAuthProvider>().signOut();
+      },
+      child: Text("Signout"),
+    ),
     appBar: AppBar(
       title: Text(
         'Dashboard', 
