@@ -1,29 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:project/screens/admin/admin_approval.dart';
-import 'package:project/screens/admin/admin_dashboard.dart';
-import 'package:project/screens/admin/admin_view_donors.dart';
-import 'package:project/screens/admin/admin_view_orgs.dart';
-import 'package:project/screens/admin/view_org_applications.dart';
-import 'package:project/screens/donor/donor_dashboard.dart';
-import 'package:project/screens/donor/donor_profile.dart';
-import 'package:project/screens/donor/donor_signup.dart';
-import 'package:project/screens/organization/org_add_donation_drive.dart';
-import 'package:project/screens/organization/org_edit_donation_drive.dart';
-import 'package:project/screens/signin.dart';
-import 'package:project/screens/organization/org_dashboard.dart';
-import 'package:project/screens/organization/org_drives.dart';
-import 'package:project/screens/organization/org_profile.dart';
-import 'package:project/screens/organization/org_signup.dart';
-import 'package:project/screens/splash_screen.dart';
-import 'package:project/screens/view_donation.dart';
-import 'package:project/screens/view_donation_drive.dart';
-import 'package:project/screens/view_organization.dart';
-import 'package:project/widgets/admin_bottom_navbar.dart';
-import 'package:project/widgets/donor_bottom_navbar.dart';
-import 'package:project/widgets/org_bottom_navbar.dart';
+import 'screens/admin/admin_approval.dart';
+import 'screens/admin/admin_dashboard.dart';
+import 'screens/admin/admin_view_donors.dart';
+import 'screens/admin/admin_view_orgs.dart';
+import 'screens/admin/view_org_applications.dart';
+import 'screens/donor/donor_dashboard.dart';
+import 'screens/donor/donor_profile.dart';
+import 'screens/donor/donor_signup.dart';
+import 'screens/organization/org_add_donation_drive.dart';
+import 'screens/organization/org_edit_donation_drive.dart';
+import 'screens/signin.dart';
+import 'screens/organization/org_dashboard.dart';
+import 'screens/organization/org_drives.dart';
+import 'screens/organization/org_profile.dart';
+import 'screens/organization/org_signup.dart';
+import 'screens/splash_screen.dart';
+import 'screens/view_donation.dart';
+import 'screens/view_donation_drive.dart';
+import 'screens/view_organization.dart';
+import 'widgets/admin_bottom_navbar.dart';
+import 'widgets/donor_bottom_navbar.dart';
+import 'widgets/org_bottom_navbar.dart';
+import 'package:project/providers/authenticator_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
-  runApp(const RootWidget());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: ((context) => UserAuthProvider()))
+      ],
+      child: const RootWidget(),
+    ),
+  );
 }
 
 class RootWidget extends StatefulWidget {
@@ -88,7 +104,7 @@ class _RootWidgetState extends State<RootWidget> {
           ),
         ),
       ),
-      initialRoute: "/admin-navbar",
+      initialRoute: "/",
       onGenerateRoute: (settings) {
         if (settings.name == "/") {
           return MaterialPageRoute(builder: (context) => const SplashScreen());
