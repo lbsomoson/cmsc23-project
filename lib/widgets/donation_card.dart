@@ -49,18 +49,40 @@ class DonationCard extends StatelessWidget {
                           color: Color.fromRGBO(22, 57, 30, 1),
                         )),
                     const SizedBox(height: 5),
-                    Row(children: [
-                      Icon(Icons.calendar_month_rounded, color: Theme.of(context).colorScheme.primary, size: 20), 
-                      const Text2Widget(text: "May 31, 2021", style: "body3")
-                    ],),
-                    Row(children: [
-                      Icon(Icons.location_on, color: Theme.of(context).colorScheme.primary, size: 20), 
-                      const Text2Widget(text: "Los Baños, Laguna", style: "body3")
-                    ],),
-                    Row(children: [
-                      Icon(Icons.phone, color: Theme.of(context).colorScheme.primary, size: 20), 
-                      const Text2Widget(text: "09954695022", style: "body3")
-                    ],),
+                    Row(
+                      children: [
+                        Icon(Icons.calendar_month_rounded,
+                            color: Theme.of(context).colorScheme.primary,
+                            size: 20),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        const Text2Widget(text: "May 31, 2021", style: "body3")
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Icon(Icons.location_on,
+                            color: Theme.of(context).colorScheme.primary,
+                            size: 20),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        const Text2Widget(
+                            text: "Los Baños, Laguna", style: "body3")
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Icon(Icons.phone,
+                            color: Theme.of(context).colorScheme.primary,
+                            size: 20),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        const Text2Widget(text: "09954695022", style: "body3")
+                      ],
+                    ),
                   ],
                 ),
               ),
