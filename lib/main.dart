@@ -87,7 +87,7 @@ class _RootWidgetState extends State<RootWidget> {
           ),
         ),
       ),
-      initialRoute: "/admin-view-org-applications",
+      initialRoute: "/admin-navbar",
       onGenerateRoute: (settings) {
         if (settings.name == "/") {
           return MaterialPageRoute(builder: (context) => const SplashScreen());

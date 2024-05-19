@@ -13,16 +13,17 @@ class _ViewOrgApplicationsState extends State<ViewOrgApplications> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          AppBar(title: const AppBarTitle(title: "Organization Applications")),
+      appBar: AppBar(
+        title: const AppBarTitle(title: "Organization Applications"),
+      ),
       body: SafeArea(
         child: GridView.builder(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.zero,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            mainAxisSpacing: 8.0,
-            crossAxisSpacing: 8.0,
-            childAspectRatio: 0.62,
+            mainAxisSpacing: 0,
+            crossAxisSpacing: 0,
+            childAspectRatio: 0.59,
           ),
           itemCount: 5,
           itemBuilder: (BuildContext context, int index) {
