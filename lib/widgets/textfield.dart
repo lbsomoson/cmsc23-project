@@ -23,6 +23,8 @@ class TextFieldWidget extends StatefulWidget {
 
 class _TextFieldWidgetState extends State<TextFieldWidget> {
   final RegExp regExp = RegExp(r'[\d]+'); // regex for numbers
+  final RegExp phoneNumberRegExp =
+      RegExp(r'^(09|\+639)\d{9}$'); // regex for phone number
 
   TextInputType textInputTypeFromString(String input) {
     //Dynamic keyboard type for fields
@@ -30,6 +32,8 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
       case 'String':
         return TextInputType.text;
       case 'Number':
+        return TextInputType.number;
+      case 'Phone':
         return TextInputType.number;
       default:
         return TextInputType.text;
@@ -84,6 +88,10 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
             // if the type is a string, it checks if the value is a string
             if (widget.type == "String" && regExp.hasMatch(value)) {
               return "Please enter valid text";
+            }
+            // if the type is a phone number, it checks if the value is a valid phone number
+            if (widget.type == "Phone" && !phoneNumberRegExp.hasMatch(value)) {
+              return "Please enter valid phone number";
             }
             return null;
           },

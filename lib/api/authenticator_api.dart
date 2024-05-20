@@ -3,52 +3,64 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirebaseAuthAPI {
   static final FirebaseAuth auth = FirebaseAuth.instance;
+  static final FirebaseFirestore db = FirebaseFirestore.instance;
 
-  static final FirebaseFirestore allusers = FirebaseFirestore.instance;
-
-  User? getUser(){
+  User? getUser() {
     return auth.currentUser;
   }
 
-  Future<String?> signIn(String email, String password) async {
-    try{
-      await auth.signInWithEmailAndPassword(email: email, password: password);
-      return"";
-    } on FirebaseException catch(e){
-      if(e.code == 'invalid-email'){
-        return e.message;
-      } else if(e.code == 'invalid credential'){
-        return e.message;
-      } else{
-        return "Failed at ${e.code}: ${e.message}";
-      }
-    }
-  }
-
-  //Rereturn kung may nakalog in ba
-  Stream<User?> userSignedIn(){
+  Stream<User?> userSignedIn() {
     return auth.authStateChanges();
   }
 
-  Future<void> signUp(String email, String password) async {
-    UserCredential credential; //Built in
-    try{
-      credential = await auth.createUserWithEmailAndPassword(email: email, password: password);
-      print(credential);
-    } on FirebaseAuthException catch (e){
-      if(e.code == 'email-already-in use'){
-        print('The account already exists for that email.');
+  Future<String?> signIn(String email, String password) async {
+    try {
+      await auth.signInWithEmailAndPassword(email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        return "No user found for that email";
+      } else if (e.code == 'wrong-password') {
+        return 'Wrong password provided for that user.';
+      } else if (e.code == 'invalid-email') {
+        return 'Invalid email.';
+      } else if (e.code == 'invalid-credential') {
+        return ("Invalid credential.");
+      } else {
+        return "Failed at ${e.code}: ${e.message}";
       }
-    } catch (e){ 
-      print(e);
     }
+    return null;
   }
 
-  Future<void> signOut() async{
+  Future<String?> signUp(String email, String password, String name) async {
+    UserCredential credential;
+    try {
+      // signup
+      credential = await auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      // add firstName, lastName, and email of user to Firestore
+      await db.collection('users').doc(credential.user!.uid).set({
+        "name": name,
+        "email": email,
+      });
+
+      await credential.user?.updateDisplayName(name);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        return "The password provided is too weak.";
+      } else if (e.code == 'email-already-in-use') {
+        return "The account already exists for that email.";
+      }
+    } catch (e) {
+      return e.toString();
+    }
+    return null;
+  }
+
+  Future<void> signOut() async {
     await auth.signOut();
   }
-
-
-
-
 }

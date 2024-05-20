@@ -20,8 +20,8 @@ class UserAuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> signUp(String email, String password) async {
-    await authService.signUp(email, password);
+  Future<void> signUp(String email, String password, String name) async {
+    await authService.signUp(email, password, name);
     notifyListeners();
   }
 
