@@ -100,11 +100,11 @@ class _SignInScreenState extends State<SignInScreen> {
                                   showSignInErrorMessage = true;
                                 } else {
                                   showSignInErrorMessage = false;
+                                  Navigator.pushNamed(context, '/donor-navbar');
                                 }
                               });
                             }
-                            // TODO: Check user type          _formKey.currentState!.save();
-                            // Navigator.pushNamed(context, '/donor-navbar');
+                            // TODO: Check user type _formKey.currentState!.save();
                           },
                           block: true,
                           label: "Sign In",

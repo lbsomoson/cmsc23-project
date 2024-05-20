@@ -44,6 +44,15 @@ class FirebaseAuthAPI {
     }
   }
 
+  Future<String> addUser(Map<String, dynamic> newuser) async {
+    try {
+      await allusers.collection("users").add(newuser);
+      return "Successfully added user!";
+    } on FirebaseException catch (e) {
+      return "Failed with error '${e.code}: ${e.message}";
+    }
+  }
+
   Future<void> signOut() async{
     await auth.signOut();
   }

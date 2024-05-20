@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:project/models/user_model.dart';
 import '../api/authenticator_api.dart';
 
 class UserAuthProvider with ChangeNotifier {
@@ -34,4 +35,12 @@ class UserAuthProvider with ChangeNotifier {
     await authService.signOut();
     notifyListeners();
   }
+
+  void addUser(newUser user) async {
+    String message = await auth.addUser(user.toJson(user));
+    print(message);
+    notifyListeners();
+  }
+
+
 }

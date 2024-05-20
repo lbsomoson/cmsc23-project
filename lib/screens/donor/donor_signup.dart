@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/models/user_model.dart';
 import 'package:project/providers/authenticator_provider.dart';
 import 'package:project/widgets/button.dart';
 import 'package:project/widgets/iconbutton.dart';
@@ -8,7 +9,6 @@ import 'package:project/widgets/textlink.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project/models/donor_model.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -92,12 +92,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       ButtonWidget(
                           handleClick: () async {
-                            _formKey.currentState!.save();
+                            _formKey.currentState!.save();  
                             if (_formKey.currentState!.validate()){
                               await context
                               .read<UserAuthProvider>()
                               .authService
                               .signUp(username!, password!);
+                              newUser user = newUser(name: name!, username: username!, type:'Donor');
+                              context.read<UserAuthProvider>().addUser(user);
                               if (mounted) Navigator.pop(context);
                             }
                           },
