@@ -16,7 +16,7 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
-  String? username;
+  String? email;
   String? password;
   String? errorMessage;
   bool showSignInErrorMessage = false;
@@ -74,10 +74,10 @@ class _SignInScreenState extends State<SignInScreen> {
                         height: sizedBoxHeight,
                       ),
                       TextFieldWidget(
-                          callback: (String val) => username = val,
-                          label: "Username",
-                          hintText: "Enter your username",
-                          type: "String"),
+                          callback: (String val) => email = val,
+                          label: "Email",
+                          hintText: "Enter your email",
+                          type: "Email"),
                       const SizedBox(
                         height: sizedBoxHeight,
                       ),
@@ -106,7 +106,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               String? message = await context
                                   .read<UserAuthProvider>()
                                   .authService
-                                  .signIn(username!, password!);
+                                  .signIn(email!, password!);
                               setState(() {
                                 if (message != null && message.isNotEmpty) {
                                   errorMessage = message;

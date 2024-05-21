@@ -13,6 +13,7 @@ class FirebaseAuthAPI {
     return auth.authStateChanges();
   }
 
+  // TODO: Refactor code, use the appropriate moe models
   Future<String?> signIn(String email, String password) async {
     // TODO: if credentials are correct, return the user type to know where to navigate screen
 
@@ -34,6 +35,7 @@ class FirebaseAuthAPI {
     return null;
   }
 
+  // TODO: Refactor code, use the appropriate moe models
   // TODO: Can either separate this to sign up as donor and sign up as organization
   // TODO: Or add an optional parameter for uploading the proof of legitimacy
   Future<String?> signUp(String email, String username, String password,
@@ -48,6 +50,15 @@ class FirebaseAuthAPI {
         email: email,
         password: password,
       );
+
+      // add name, and email, address/es, contact, and user type of user to `users` collection
+      await db.collection('users').doc(credential.user!.uid).set({
+        "name": name,
+        "email": email,
+        "address": addresses,
+        "contact": contact,
+        "type": type
+      });
 
       // add name, and email, address/es, contact, and user type of user to Firestore
       await db.collection('users').doc(credential.user!.uid).set({

@@ -248,8 +248,8 @@ class _OrgSignUpScreenState extends State<OrgSignUpScreen> {
                                   .signUp(
                                       email!,
                                       orgUsername!,
-                                      orgName!,
                                       password!,
+                                      orgName!,
                                       addresses,
                                       contactNumber!,
                                       'Organization');
@@ -271,7 +271,7 @@ class _OrgSignUpScreenState extends State<OrgSignUpScreen> {
                             }
                           },
                           block: true,
-                          label: "Sign In",
+                          label: "Sign Up",
                           style: "filled"),
                       const SizedBox(
                         height: 15,
