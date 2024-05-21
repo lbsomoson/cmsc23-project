@@ -85,10 +85,6 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
             if (value == null || value.isEmpty) {
               return "Please enter your ${widget.label?.toLowerCase()}";
             }
-            // if the type is a string, it checks if the value is a string
-            if (widget.type == "String" && regExp.hasMatch(value)) {
-              return "Please enter valid text";
-            }
             // if the type is a phone number, it checks if the value is a valid phone number
             if (widget.type == "Phone" && !phoneNumberRegExp.hasMatch(value)) {
               return "Please enter valid phone number";

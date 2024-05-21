@@ -19,8 +19,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   static int indexCounter = 1;
   String? username, name, password, contactNumber, address;
-  List<String> addressControllers = [];
   List<Map<String, dynamic>> textFields = [];
+  String? errorMessage;
+  bool showSignUpErrorMessage = false;
 
   void _addNewTextField() {
     setState(() {
@@ -83,6 +84,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
+
+  Widget get signUpErrorMessage => Padding(
+        padding: const EdgeInsets.only(bottom: 30),
+        child: Text(
+          errorMessage!,
+          style: const TextStyle(
+              color: Colors.red, fontSize: 14, fontWeight: FontWeight.w400),
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -204,17 +214,40 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       const SizedBox(
                         height: sizedBoxHeight,
                       ),
+                      showSignUpErrorMessage
+                          ? Column(
+                              children: [
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                signUpErrorMessage,
+                              ],
+                            )
+                          : Container(),
                       ButtonWidget(
                           handleClick: () async {
                             _formKey.currentState!.save();
                             if (_formKey.currentState!.validate()) {
-                              await context
+                              String? message = await context
                                   .read<UserAuthProvider>()
                                   .authService
-                                  .signUp(username!, password!, name!, address!, contactNumber!, 'Donor');
+                                  .signUp(username!, password!, name!, address!,
+                                      contactNumber!, 'Donor');
+
+                              setState(() {
+                                if (message != null && message.isNotEmpty) {
+                                  errorMessage = message;
+                                  showSignUpErrorMessage = true;
+                                } else {
+                                  showSignUpErrorMessage = false;
+                                }
+                              });
                             }
-                            print(address);
-                            print(textFields);
+                            // check if no error and the widget hasn't been disposed of after an asynchronous action
+                            if (context.mounted &&
+                                showSignUpErrorMessage == false) {
+                              Navigator.pushNamed(context, '/donor-navbar');
+                            }
                           },
                           block: true,
                           label: "Sign In",
