@@ -1,18 +1,27 @@
 import 'dart:convert';
 
 class Donor {
-  String? id;
+  final String? donorId;
   String name;
   String email;
+  String userType;
+  List<String> organizations;
 
-  Donor({this.id, required this.name, required this.email});
+  Donor(
+      {this.donorId,
+      required this.name,
+      required this.email,
+      required this.userType,
+      required this.organizations});
 
   // Factory constructor to instantiate object from json format
   factory Donor.fromJson(Map<String, dynamic> json) {
     return Donor(
-      id: json['id'],
+      donorId: json['donorId'],
       name: json['name'],
       email: json['email'],
+      userType: json['userType'],
+      organizations: json['organizations'],
     );
   }
 
@@ -23,8 +32,11 @@ class Donor {
 
   Map<String, dynamic> toJson(Donor donor) {
     return {
+      'donorId': donor.donorId,
       'name': donor.name,
       'email': donor.email,
+      'userType': donor.userType,
+      'organizations': donor.organizations,
     };
   }
 }

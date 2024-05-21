@@ -1,14 +1,13 @@
 import 'dart:convert';
 
-class newUser {
+class User {
   String name;
   String username;
   String? address;
   String type;
   String? contact;
 
-
-  newUser({
+  User({
     required this.name,
     required this.username,
     this.address,
@@ -17,8 +16,8 @@ class newUser {
   });
 
   // Factory constructor to instantiate object from json format
-  factory newUser.fromJson(Map<String, dynamic> json) {
-    return newUser(
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
       name: json['name'],
       username: json['username'],
       address: json['address'],
@@ -27,18 +26,18 @@ class newUser {
     );
   }
 
-  static List<newUser> fromJsonArray(String jsonData) {
+  static List<User> fromJsonArray(String jsonData) {
     final Iterable<dynamic> data = jsonDecode(jsonData);
-    return data.map<newUser>((dynamic d) => newUser.fromJson(d)).toList();
+    return data.map<User>((dynamic d) => User.fromJson(d)).toList();
   }
 
-  Map<String, dynamic> toJson(newUser User) {
+  Map<String, dynamic> toJson(User user) {
     return {
-      'name' : User.name,
-      'username' : User.username,
-      'address' : User.address,
-      'type' : User.type,
-      'contact' : User.contact
+      'name': user.name,
+      'username': user.username,
+      'address': user.address,
+      'type': user.type,
+      'contact': user.contact
     };
   }
 }
