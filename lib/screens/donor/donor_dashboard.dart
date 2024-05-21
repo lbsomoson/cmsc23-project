@@ -11,15 +11,7 @@ class _DonorDashboardScreenState extends State<DonorDashboardScreen> {
   @override
 Widget build(BuildContext context) {
   return Scaffold(
-    appBar: AppBar(
-      title: Text(
-        'Dashboard', 
-        style: TextStyle(fontWeight: FontWeight.bold),
-      ),
-      backgroundColor: Colors.white,
-      foregroundColor: Color.fromRGBO(62, 218, 134, 1),
-      elevation: 0,
-    ),
+
     body: CustomScrollView(
       slivers: [
         SliverPadding(
