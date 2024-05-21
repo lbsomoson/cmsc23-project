@@ -14,6 +14,8 @@ class FirebaseAuthAPI {
   }
 
   Future<String?> signIn(String email, String password) async {
+    // TODO: if credentials are correct, return the user type to know where to navigate screen
+
     try {
       await auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
@@ -32,7 +34,10 @@ class FirebaseAuthAPI {
     return null;
   }
 
-  Future<String?> signUp(String email, String password, String name, String address, String contact, String type) async {
+  // TODO: Can either separate this to sign up as donor and sign up as organization
+  // TODO: Or add an optional parameter for uploading the proof of legitimacy
+  Future<String?> signUp(String email, String password, String name,
+      String address, String contact, String type) async {
     UserCredential credential;
     try {
       // signup
@@ -41,14 +46,13 @@ class FirebaseAuthAPI {
         password: password,
       );
 
-      // add firstName, lastName, and email of user to Firestore
+      // add name, and email, address/es, contact, and user type of user to Firestore
       await db.collection('users').doc(credential.user!.uid).set({
         "name": name,
         "email": email,
-        "address" : address,
-        "contact" : contact,
-        "type" : type
-
+        "address": address,
+        "contact": contact,
+        "type": type
       });
 
       await credential.user?.updateDisplayName(name);

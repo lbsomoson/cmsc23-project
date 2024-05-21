@@ -32,20 +32,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
       });
       indexCounter++;
     });
-    print(textFields);
   }
 
   void _deleteTextField(int index) {
-    print("Index to delete: $index");
     setState(() {
       int textFieldIndex =
           textFields.indexWhere((field) => field['index'] == index);
-      print("Index in list: $textFieldIndex");
       if (textFieldIndex != -1) {
         textFields.removeAt(textFieldIndex);
       }
     });
-    print("Updated textFields: $textFields");
   }
 
   Widget _buildTextField(int index) {
@@ -159,7 +155,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         hintText: "Enter your address",
                         type: "String",
                       ),
-                      // Iterate over textFields and cast the widgets to Widget type
+                      // iterate over textFields and cast the widgets to Widget type
                       Column(
                         children: textFields
                             .map((field) => field['widget'] as Widget)

@@ -9,7 +9,6 @@ import 'package:project/providers/authenticator_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:project/widgets/text2.dart';
 
-
 class OrgSignUpScreen extends StatefulWidget {
   const OrgSignUpScreen({super.key});
 
@@ -20,9 +19,10 @@ class OrgSignUpScreen extends StatefulWidget {
 class _OrgSignUpScreenState extends State<OrgSignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   static int indexCounter = 1;
-  String? org_username, org_name, password, address, contactNumber;
-  List<String> addressControllers = [];
+  String? orgUsername, orgName, password, address, contactNumber;
   List<Map<String, dynamic>> textFields = [];
+  String? errorMessage;
+  bool showSignUpErrorMessage = false;
 
   void _addNewTextField() {
     setState(() {
@@ -33,20 +33,16 @@ class _OrgSignUpScreenState extends State<OrgSignUpScreen> {
       });
       indexCounter++;
     });
-    print(textFields);
   }
 
   void _deleteTextField(int index) {
-    print("Index to delete: $index");
     setState(() {
       int textFieldIndex =
           textFields.indexWhere((field) => field['index'] == index);
-      print("Index in list: $textFieldIndex");
       if (textFieldIndex != -1) {
         textFields.removeAt(textFieldIndex);
       }
     });
-    print("Updated textFields: $textFields");
   }
 
   Widget _buildTextField(int index) {
@@ -85,8 +81,17 @@ class _OrgSignUpScreenState extends State<OrgSignUpScreen> {
       ),
     );
   }
-  @override
 
+  Widget get signUpErrorMessage => Padding(
+        padding: const EdgeInsets.only(bottom: 30),
+        child: Text(
+          errorMessage!,
+          style: const TextStyle(
+              color: Colors.red, fontSize: 14, fontWeight: FontWeight.w400),
+        ),
+      );
+
+  @override
   Widget build(BuildContext context) {
     const double sizedBoxHeight = 20;
 
@@ -124,12 +129,13 @@ class _OrgSignUpScreenState extends State<OrgSignUpScreen> {
                       const TextWidget(
                           text: "Sign up as organization", style: 'bodyMedium'),
                       const TextWidget(
-                          text: "Lorem ipsum dolor sit amet", style: "bodySmall"),
+                          text: "Lorem ipsum dolor sit amet",
+                          style: "bodySmall"),
                       const SizedBox(
                         height: sizedBoxHeight,
                       ),
                       TextFieldWidget(
-                          callback: (String val) => org_name  = val,
+                          callback: (String val) => orgName = val,
                           label: "Organization Name",
                           hintText: "Enter organization name",
                           type: "String"),
@@ -137,7 +143,7 @@ class _OrgSignUpScreenState extends State<OrgSignUpScreen> {
                         height: sizedBoxHeight,
                       ),
                       TextFieldWidget(
-                          callback: (String val) => org_username  = val,
+                          callback: (String val) => orgUsername = val,
                           label: "Organization Username",
                           hintText: "Enter organization username",
                           type: "String"),
@@ -150,7 +156,7 @@ class _OrgSignUpScreenState extends State<OrgSignUpScreen> {
                         hintText: "Enter your address",
                         type: "String",
                       ),
-                      // Iterate over textFields and cast the widgets to Widget type
+                      // iterate over textFields and cast the widgets to Widget type
                       Column(
                         children: textFields
                             .map((field) => field['widget'] as Widget)
@@ -208,19 +214,41 @@ class _OrgSignUpScreenState extends State<OrgSignUpScreen> {
                       const SizedBox(
                         height: sizedBoxHeight,
                       ),
+                      showSignUpErrorMessage
+                          ? Column(
+                              children: [
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                signUpErrorMessage,
+                              ],
+                            )
+                          : Container(),
                       ButtonWidget(
                           handleClick: () async {
+                            if (_formKey.currentState!.validate()) {
+                              _formKey.currentState!.save();
+                              String? message = await context
+                                  .read<UserAuthProvider>()
+                                  .authService
+                                  .signUp(orgUsername!, password!, orgName!,
+                                      address!, contactNumber!, 'Organization');
 
-                            if (_formKey.currentState!.validate()){
-                              _formKey.currentState!.save();  
-                              await context
-                              .read<UserAuthProvider>()
-                              .authService
-                              .signUp(org_username!, password!, org_name!, address!, contactNumber!, 'Organization');
-                              //if (mounted) Navigator.pop(context);
-                              Navigator.pushNamed(context, '/organization-navbar');
+                              setState(() {
+                                if (message != null && message.isNotEmpty) {
+                                  errorMessage = message;
+                                  showSignUpErrorMessage = true;
+                                } else {
+                                  showSignUpErrorMessage = false;
+                                }
+                              });
+
+                              if (context.mounted) {
+                                // TODO: if successfully logged in, update the screen to navigate to depending on the returned user type
+                                Navigator.pushNamed(
+                                    context, '/organization-navbar');
+                              }
                             }
-
                           },
                           block: true,
                           label: "Sign In",
@@ -251,7 +279,8 @@ class _OrgSignUpScreenState extends State<OrgSignUpScreen> {
                       IconButtonWidget(
                           block: true,
                           callback: () {
-                            Navigator.pushNamed(context, '/organization-navbar');
+                            Navigator.pushNamed(
+                                context, '/organization-navbar');
                           },
                           icon: './assets/images/google logo.png',
                           label: "Continue with Google"),

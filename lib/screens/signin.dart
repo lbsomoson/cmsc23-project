@@ -18,7 +18,17 @@ class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
   String? username;
   String? password;
+  String? errorMessage;
   bool showSignInErrorMessage = false;
+
+  Widget get signInErrorMessage => Padding(
+        padding: const EdgeInsets.only(bottom: 30),
+        child: Text(
+          errorMessage!,
+          style: const TextStyle(
+              color: Colors.red, fontSize: 14, fontWeight: FontWeight.w400),
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +89,16 @@ class _SignInScreenState extends State<SignInScreen> {
                       const SizedBox(
                         height: sizedBoxHeight,
                       ),
+                      showSignInErrorMessage
+                          ? Column(
+                              children: [
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                signInErrorMessage,
+                              ],
+                            )
+                          : Container(),
                       // showSignInErrorMessage? Text("Wrong credentials"):Container(),
                       ButtonWidget(
                           handleClick: () async {
@@ -88,23 +108,21 @@ class _SignInScreenState extends State<SignInScreen> {
                                   .read<UserAuthProvider>()
                                   .authService
                                   .signIn(username!, password!);
-
-                              print(message);
-                              print(showSignInErrorMessage);
-
                               setState(() {
                                 if (message != null && message.isNotEmpty) {
+                                  errorMessage = message;
                                   showSignInErrorMessage = true;
                                 } else {
                                   showSignInErrorMessage = false;
-                                  Navigator.pushNamed(context, '/donor-navbar');
                                 }
                               });
                             }
+
                             // TODO: Check user type
-                            // if (context.mounted) {
-                              // Navigator.pushNamed(context, '/donor-navbar');
-                            // }
+                            if (context.mounted &&
+                                showSignInErrorMessage == false) {
+                              Navigator.pushNamed(context, '/donor-navbar');
+                            }
                           },
                           block: true,
                           label: "Sign In",
