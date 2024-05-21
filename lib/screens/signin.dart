@@ -99,7 +99,6 @@ class _SignInScreenState extends State<SignInScreen> {
                               ],
                             )
                           : Container(),
-                      // showSignInErrorMessage? Text("Wrong credentials"):Container(),
                       ButtonWidget(
                           handleClick: () async {
                             if (_formKey.currentState!.validate()) {

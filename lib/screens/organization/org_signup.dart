@@ -19,7 +19,7 @@ class OrgSignUpScreen extends StatefulWidget {
 class _OrgSignUpScreenState extends State<OrgSignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   static int indexCounter = 1;
-  String? orgUsername, orgName, password, address, contactNumber;
+  String? email, orgUsername, orgName, password, address, contactNumber;
   List<Map<String, dynamic>> textFields = [];
   String? errorMessage;
   bool showSignUpErrorMessage = false;
@@ -135,10 +135,10 @@ class _OrgSignUpScreenState extends State<OrgSignUpScreen> {
                         height: sizedBoxHeight,
                       ),
                       TextFieldWidget(
-                          callback: (String val) => orgName = val,
-                          label: "Organization Name",
-                          hintText: "Enter organization name",
-                          type: "String"),
+                          callback: (String val) => email = val,
+                          label: "Organization Email",
+                          hintText: "Enter organization email",
+                          type: "Email"),
                       const SizedBox(
                         height: sizedBoxHeight,
                       ),
@@ -146,6 +146,14 @@ class _OrgSignUpScreenState extends State<OrgSignUpScreen> {
                           callback: (String val) => orgUsername = val,
                           label: "Organization Username",
                           hintText: "Enter organization username",
+                          type: "String"),
+                      const SizedBox(
+                        height: sizedBoxHeight,
+                      ),
+                      TextFieldWidget(
+                          callback: (String val) => orgName = val,
+                          label: "Organization Name",
+                          hintText: "Enter organization name",
                           type: "String"),
                       const SizedBox(
                         height: sizedBoxHeight,
@@ -228,11 +236,23 @@ class _OrgSignUpScreenState extends State<OrgSignUpScreen> {
                           handleClick: () async {
                             if (_formKey.currentState!.validate()) {
                               _formKey.currentState!.save();
+
+                              List<String> addresses = textFields
+                                  .map((item) => item['value'] as String)
+                                  .toList();
+                              addresses.insert(0, address!);
+
                               String? message = await context
                                   .read<UserAuthProvider>()
                                   .authService
-                                  .signUp(orgUsername!, password!, orgName!,
-                                      address!, contactNumber!, 'Organization');
+                                  .signUp(
+                                      email!,
+                                      orgUsername!,
+                                      orgName!,
+                                      password!,
+                                      addresses,
+                                      contactNumber!,
+                                      'Organization');
 
                               setState(() {
                                 if (message != null && message.isNotEmpty) {

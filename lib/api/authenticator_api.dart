@@ -36,9 +36,12 @@ class FirebaseAuthAPI {
 
   // TODO: Can either separate this to sign up as donor and sign up as organization
   // TODO: Or add an optional parameter for uploading the proof of legitimacy
-  Future<String?> signUp(String email, String password, String name,
-      String address, String contact, String type) async {
+  Future<String?> signUp(String email, String username, String password,
+      String name, List<String> addresses, String contact, String type) async {
+    print("$email $username $password $name $addresses $contact $type");
+
     UserCredential credential;
+
     try {
       // signup
       credential = await auth.createUserWithEmailAndPassword(
@@ -50,7 +53,7 @@ class FirebaseAuthAPI {
       await db.collection('users').doc(credential.user!.uid).set({
         "name": name,
         "email": email,
-        "address": address,
+        "address": addresses,
         "contact": contact,
         "type": type
       });
