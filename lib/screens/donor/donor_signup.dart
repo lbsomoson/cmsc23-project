@@ -19,7 +19,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   static int indexCounter = 1;
   String? username, name, password, contactNumber, address;
-  List<String> addressControllers = [""];
+  List<String> addressControllers = [];
   List<Map<String, dynamic>> textFields = [];
 
   void _addNewTextField() {
@@ -212,7 +212,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   .read<UserAuthProvider>()
                                   .authService
                                   .signUp(username!, password!, name!, address!, contactNumber!, 'Donor');
-                              if (context.mounted) Navigator.pop(context);
                             }
                             print(address);
                             print(textFields);
