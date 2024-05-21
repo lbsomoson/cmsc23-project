@@ -5,12 +5,7 @@ import 'package:project/widgets/iconbutton.dart';
 import 'package:project/widgets/text.dart';
 import 'package:project/widgets/textfield.dart';
 import 'package:project/widgets/textlink.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:project/models/donor_model.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
-
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -63,12 +58,13 @@ class _SignInScreenState extends State<SignInScreen> {
                       const TextWidget(
                           text: "Sign in to your account", style: 'bodyMedium'),
                       const TextWidget(
-                          text: "Lorem ipsum dolor sit amet", style: "bodySmall"),
+                          text: "Lorem ipsum dolor sit amet",
+                          style: "bodySmall"),
                       const SizedBox(
                         height: sizedBoxHeight,
                       ),
                       TextFieldWidget(
-                          callback: (String val) => username  = val,
+                          callback: (String val) => username = val,
                           label: "Username",
                           hintText: "Enter your username",
                           type: "String"),
@@ -76,16 +72,17 @@ class _SignInScreenState extends State<SignInScreen> {
                         height: sizedBoxHeight,
                       ),
                       TextFieldWidget(
-                          callback: (String val) => password  = val,
+                          callback: (String val) => password = val,
                           label: "Password",
                           hintText: "Enter your password",
                           type: "Password"),
                       const SizedBox(
                         height: sizedBoxHeight,
                       ),
+                      // showSignInErrorMessage? Text("Wrong credentials"):Container(),
                       ButtonWidget(
                           handleClick: () async {
-                            if(_formKey.currentState!.validate()){
+                            if (_formKey.currentState!.validate()) {
                               _formKey.currentState!.save();
                               String? message = await context
                                   .read<UserAuthProvider>()
@@ -104,7 +101,10 @@ class _SignInScreenState extends State<SignInScreen> {
                                 }
                               });
                             }
-                            // TODO: Check user type _formKey.currentState!.save();
+                            // TODO: Check user type
+                            // if (context.mounted) {
+                              // Navigator.pushNamed(context, '/donor-navbar');
+                            // }
                           },
                           block: true,
                           label: "Sign In",

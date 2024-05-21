@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:project/models/user_model.dart';
 import 'package:project/widgets/button.dart';
 import 'package:project/widgets/iconbutton.dart';
 import 'package:project/widgets/image_upload.dart';
@@ -8,7 +7,8 @@ import 'package:project/widgets/textfield.dart';
 import 'package:project/widgets/textlink.dart';
 import 'package:project/providers/authenticator_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:project/widgets/text2.dart';
+
 
 class OrgSignUpScreen extends StatefulWidget {
   const OrgSignUpScreen({super.key});
@@ -19,10 +19,72 @@ class OrgSignUpScreen extends StatefulWidget {
 
 class _OrgSignUpScreenState extends State<OrgSignUpScreen> {
   final _formKey = GlobalKey<FormState>();
-  String? org_username;
-  String? org_name;
-  String? password;
+  static int indexCounter = 1;
+  String? org_username, org_name, password, address, contactNumber;
+  List<String> addressControllers = [];
+  List<Map<String, dynamic>> textFields = [];
 
+  void _addNewTextField() {
+    setState(() {
+      textFields.add({
+        'widget': _buildTextField(indexCounter),
+        'index': indexCounter,
+        'value': ''
+      });
+      indexCounter++;
+    });
+    print(textFields);
+  }
+
+  void _deleteTextField(int index) {
+    print("Index to delete: $index");
+    setState(() {
+      int textFieldIndex =
+          textFields.indexWhere((field) => field['index'] == index);
+      print("Index in list: $textFieldIndex");
+      if (textFieldIndex != -1) {
+        textFields.removeAt(textFieldIndex);
+      }
+    });
+    print("Updated textFields: $textFields");
+  }
+
+  Widget _buildTextField(int index) {
+    return Center(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            flex: 6,
+            child: TextFieldWidget(
+              callback: (String val) => textFields[index - 1]['value'] = val,
+              label: "Address/es",
+              hintText: "Enter your address",
+              type: "String",
+            ),
+          ),
+          InkWell(
+            onTap: () => {_deleteTextField(index)},
+            child: Ink(
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.transparent,
+              ),
+              child: Icon(
+                Icons.remove_circle_outline,
+                size: 20,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+        ],
+      ),
+    );
+  }
   @override
 
   Widget build(BuildContext context) {
@@ -83,6 +145,56 @@ class _OrgSignUpScreenState extends State<OrgSignUpScreen> {
                         height: sizedBoxHeight,
                       ),
                       TextFieldWidget(
+                        callback: (String val) => address = val,
+                        label: "Address/es",
+                        hintText: "Enter your address",
+                        type: "String",
+                      ),
+                      // Iterate over textFields and cast the widgets to Widget type
+                      Column(
+                        children: textFields
+                            .map((field) => field['widget'] as Widget)
+                            .toList(),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: InkWell(
+                          onTap: () => _addNewTextField(),
+                          child: Ink(
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.transparent,
+                            ),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.add_circle_outline,
+                                  size: 20,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                const Text2Widget(
+                                    text: "Add address", style: "body2"),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: sizedBoxHeight,
+                      ),
+                      TextFieldWidget(
+                        callback: (String val) => contactNumber = val,
+                        type: "Phone",
+                        label: "Contact no.",
+                        hintText: "Enter your contact details",
+                      ),
+                      TextFieldWidget(
                           callback: (String val) => password = val,
                           label: "Password",
                           hintText: "Enter password",
@@ -98,17 +210,17 @@ class _OrgSignUpScreenState extends State<OrgSignUpScreen> {
                       ),
                       ButtonWidget(
                           handleClick: () async {
-                            _formKey.currentState!.save();  
+
                             if (_formKey.currentState!.validate()){
+                              _formKey.currentState!.save();  
                               await context
                               .read<UserAuthProvider>()
                               .authService
-                              .signUp(org_username!, password!);
-                              newUser organization = newUser(name: org_name!, username: org_username!, type: 'Organization');
-                              context.read<UserAuthProvider>().addUser(organization);
+                              .signUp(org_username!, password!, org_name!, address!, contactNumber!, 'Organization');
                               //if (mounted) Navigator.pop(context);
+                              Navigator.pushNamed(context, '/organization-navbar');
                             }
-                            Navigator.pushNamed(context, '/organization-navbar');
+
                           },
                           block: true,
                           label: "Sign In",

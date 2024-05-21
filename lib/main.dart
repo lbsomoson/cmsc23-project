@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:project/screens/donor/homepage.dart';
 import 'screens/admin/admin_approval.dart';
 import 'screens/admin/admin_dashboard.dart';
 import 'screens/admin/admin_view_donors.dart';
@@ -105,7 +104,7 @@ class _RootWidgetState extends State<RootWidget> {
           ),
         ),
       ),
-      initialRoute: "/",
+      initialRoute: "/login",
       onGenerateRoute: (settings) {
         if (settings.name == "/") {
           return MaterialPageRoute(builder: (context) => const SplashScreen());

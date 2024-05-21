@@ -4,7 +4,6 @@ import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:project/screens/admin/admin_dashboard.dart';
 import 'package:project/screens/admin/admin_view_donors.dart';
 import 'package:project/screens/admin/admin_view_orgs.dart';
-import 'package:project/screens/admin/view_org_applications.dart';
 
 class AdminBottomNavBar extends StatefulWidget {
   const AdminBottomNavBar({super.key});

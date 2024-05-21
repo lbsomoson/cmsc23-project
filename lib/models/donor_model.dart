@@ -1,13 +1,13 @@
 import 'dart:convert';
 
 class Donor {
-  String ? id;
+  String? id;
   String name;
   String email;
 
-  Donor({this.id,required this.name, required this.email});
+  Donor({this.id, required this.name, required this.email});
 
-    // Factory constructor to instantiate object from json format
+  // Factory constructor to instantiate object from json format
   factory Donor.fromJson(Map<String, dynamic> json) {
     return Donor(
       id: json['id'],
