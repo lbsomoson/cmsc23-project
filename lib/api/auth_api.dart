@@ -74,8 +74,8 @@ class FirebaseAuthAPI {
       String name,
       List<String> addresses,
       String contact,
-      String? type,
-      String? path,
+      String type,
+      String path,
       File file) async {
     UserCredential credential;
 
@@ -86,33 +86,29 @@ class FirebaseAuthAPI {
         password: password,
       );
 
+      TaskSnapshot taskSnapshot = await storage.ref().child(path).putFile(file);
+
+      // get the download URL
+      String downloadURL = await taskSnapshot.ref.getDownloadURL();
+
       // add name, and email, address/es, contact, and user type of user to `users` collection
       await db
           .collection('users')
           .doc(credential.user!.uid)
           .set({"email": email, "type": type});
 
-      if (type == "donor") {
-        // add name, and email, address/es, contact, and user type of user to `donors` collection
-        await db.collection('donors').doc(credential.user!.uid).set({
-          "userId": credential.user!.uid,
-          "name": name,
-          "email": email,
-          "address": addresses,
-          "contactNumber": contact,
-          "userType": type
-        });
-      } else if (type == "organization") {
-        // add name, and email, address/es, contact, and user type of user to `organizations` collection
-        await db.collection('organizations').doc(credential.user!.uid).set({
-          "userId": credential.user!.uid,
-          "name": name,
-          "email": email,
-          "address": addresses,
-          "contactNumber": contact,
-          "userType": type
-        });
-      }
+      // add name, and email, address/es, contact, and user type of user to `organizations` collection
+      await db.collection('organizations').doc(credential.user!.uid).set({
+        "userId": credential.user!.uid,
+        "name": name,
+        "email": email,
+        "address": addresses,
+        "contactNumber": contact,
+        "userType": type,
+        "proofUrl": downloadURL,
+        "proofPath": path,
+        'uploadedAt': Timestamp.now(),
+      });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         return "The password provided is too weak.";
@@ -149,27 +145,15 @@ class FirebaseAuthAPI {
           .doc(credential.user!.uid)
           .set({"email": email, "type": type});
 
-      if (type == "donor") {
-        // add name, and email, address/es, contact, and user type of user to `donors` collection
-        await db.collection('donors').doc(credential.user!.uid).set({
-          "userId": credential.user!.uid,
-          "name": name,
-          "email": email,
-          "address": addresses,
-          "contactNumber": contact,
-          "userType": type
-        });
-      } else if (type == "organization") {
-        // add name, and email, address/es, contact, and user type of user to `organizations` collection
-        await db.collection('organizations').doc(credential.user!.uid).set({
-          "userId": credential.user!.uid,
-          "name": name,
-          "email": email,
-          "address": addresses,
-          "contactNumber": contact,
-          "userType": type
-        });
-      }
+      // add name, and email, address/es, contact, and user type of user to `donors` collection
+      await db.collection('donors').doc(credential.user!.uid).set({
+        "userId": credential.user!.uid,
+        "name": name,
+        "email": email,
+        "address": addresses,
+        "contactNumber": contact,
+        "userType": type
+      });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         return "The password provided is too weak.";

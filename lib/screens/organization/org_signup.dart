@@ -224,8 +224,6 @@ class _OrgSignUpScreenState extends State<OrgSignUpScreen> {
                           callBack: (String path, File file) => {
                                 imageFile = file,
                                 imagePath = path,
-                                print('PATH: $path'),
-                                print('FILE: $file'),
                               },
                           instruction: "Upload proof of legitimacy",
                           label: "Upload Document"),

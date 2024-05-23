@@ -1,8 +1,11 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:project/providers/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class ImageUploadWidget extends StatefulWidget {
   final String label, instruction;
@@ -22,6 +25,8 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
 
   @override
   Widget build(BuildContext context) {
+    User userId = context.read<UserAuthProvider>().user!;
+
     Future<bool> _requestGalleryPermission() async {
       final PermissionStatus permission = await Permission.photos.status;
       if (permission == PermissionStatus.granted) {
@@ -59,12 +64,12 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
               type: FileType.custom,
               allowedExtensions: ['jpg', 'png', 'HEIC'],
             );
-
+            print(userId);
             if (result == null) return;
             setState(() {
               selectedFile = result.files.first;
             });
-            final path = 'files/${result.files.first.name}';
+            final path = '/${userId.uid}/uploads/${result.files.first.name}';
             final file = File(selectedFile!.path!);
 
             widget.callBack(path, file);

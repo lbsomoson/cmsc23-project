@@ -9,11 +9,12 @@ class UserAuthProvider with ChangeNotifier {
   FirebaseAuthAPI auth = FirebaseAuthAPI();
 
   late Stream<User?> uStream;
-  User? userObj;
+
   UserAuthProvider() {
     authService = FirebaseAuthAPI();
     fetchAuthentication();
   }
+
   Stream<User?> get userStream => uStream;
   User? get user => authService.getUser();
 
