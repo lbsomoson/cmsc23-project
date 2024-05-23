@@ -35,7 +35,7 @@ class FirebaseAuthAPI {
 
         if (userDoc.exists) {
           // extract and return the userType field
-          String userType = userDoc.get('type');
+          String userType = userDoc.get('userType');
           return userType;
         } else {
           return 'User document in donors collection does not exist.';
@@ -80,14 +80,27 @@ class FirebaseAuthAPI {
           .doc(credential.user!.uid)
           .set({"email": email, "type": type});
 
-      // add name, and email, address/es, contact, and user type of user to `donors` collection
-      await db.collection('donors').doc(credential.user!.uid).set({
-        "name": name,
-        "email": email,
-        "address": addresses,
-        "contact": contact,
-        "type": type
-      });
+      if (type == "donor") {
+        // add name, and email, address/es, contact, and user type of user to `donors` collection
+        await db.collection('donors').doc(credential.user!.uid).set({
+          "userId": credential.user!.uid,
+          "name": name,
+          "email": email,
+          "address": addresses,
+          "contactNumber": contact,
+          "userType": type
+        });
+      } else if (type == "organization") {
+        // add name, and email, address/es, contact, and user type of user to `organizations` collection
+        await db.collection('organizations').doc(credential.user!.uid).set({
+          "userId": credential.user!.uid,
+          "name": name,
+          "email": email,
+          "address": addresses,
+          "contactNumber": contact,
+          "userType": type
+        });
+      }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         return "The password provided is too weak.";

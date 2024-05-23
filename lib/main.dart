@@ -104,7 +104,7 @@ class _RootWidgetState extends State<RootWidget> {
           ),
         ),
       ),
-      initialRoute: "/login",
+      initialRoute: "/organization-signup",
       onGenerateRoute: (settings) {
         if (settings.name == "/") {
           return MaterialPageRoute(builder: (context) => const SplashScreen());
