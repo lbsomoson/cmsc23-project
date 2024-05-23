@@ -1,13 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:project/providers/auth_provider.dart';
 import 'package:project/widgets/button.dart';
 import 'package:project/widgets/iconbutton.dart';
 import 'package:project/widgets/image_upload.dart';
 import 'package:project/widgets/text.dart';
 import 'package:project/widgets/textfield.dart';
 import 'package:project/widgets/textlink.dart';
-import 'package:project/providers/auth_provider.dart';
-import 'package:provider/provider.dart';
 import 'package:project/widgets/text2.dart';
+import 'package:provider/provider.dart';
 
 class OrgSignUpScreen extends StatefulWidget {
   const OrgSignUpScreen({super.key});
@@ -20,6 +22,8 @@ class _OrgSignUpScreenState extends State<OrgSignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   static int indexCounter = 1;
   String? email, orgUsername, orgName, password, address, contactNumber;
+  late String imagePath;
+  late File imageFile;
   List<Map<String, dynamic>> textFields = [];
   String? errorMessage;
   bool showSignUpErrorMessage = false;
@@ -216,7 +220,13 @@ class _OrgSignUpScreenState extends State<OrgSignUpScreen> {
                       const SizedBox(
                         height: sizedBoxHeight,
                       ),
-                      const ImageUploadWidget(
+                      ImageUploadWidget(
+                          callBack: (String path, File file) => {
+                                imageFile = file,
+                                imagePath = path,
+                                print('PATH: $path'),
+                                print('FILE: $file'),
+                              },
                           instruction: "Upload proof of legitimacy",
                           label: "Upload Document"),
                       const SizedBox(
@@ -245,14 +255,17 @@ class _OrgSignUpScreenState extends State<OrgSignUpScreen> {
                               String? message = await context
                                   .read<UserAuthProvider>()
                                   .authService
-                                  .signUp(
-                                      email!,
-                                      orgUsername!,
-                                      password!,
-                                      orgName!,
-                                      addresses,
-                                      contactNumber!,
-                                      'organization');
+                                  .orgSignUp(
+                                    email!,
+                                    orgUsername!,
+                                    password!,
+                                    orgName!,
+                                    addresses,
+                                    contactNumber!,
+                                    'organization',
+                                    imagePath,
+                                    imageFile,
+                                  );
 
                               setState(() {
                                 if (message != null && message.isNotEmpty) {
@@ -264,7 +277,6 @@ class _OrgSignUpScreenState extends State<OrgSignUpScreen> {
                               });
 
                               if (context.mounted) {
-                                // TODO: if successfully logged in, update the screen to navigate to depending on the returned user type
                                 Navigator.pushNamed(
                                     context, '/organization-navbar');
                               }
