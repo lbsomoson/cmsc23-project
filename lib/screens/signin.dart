@@ -67,7 +67,29 @@ class _SignInScreenState extends State<SignInScreen> {
     }
 
     void handleGoogleSignIn() async {
-      await context.read<UserAuthProvider>().authService.signInWithGoogle();
+      String? res =
+          await context.read<UserAuthProvider>().authService.signInWithGoogle();
+      setState(() {
+        if (res == "organization") {
+          userType = "organization";
+        } else if (res == "donor") {
+          userType = "donor";
+        } else if (res == "admin") {
+          userType = "admin";
+        } else {
+          errorMessage = res;
+          showSignInErrorMessage = false;
+        }
+      });
+      if (context.mounted && showSignInErrorMessage == false) {
+        if (userType == 'organization') {
+          Navigator.pushNamed(context, '/organization-navbar');
+        } else if (userType == 'donor') {
+          Navigator.pushNamed(context, '/donor-navbar');
+        } else if (userType == 'admin') {
+          Navigator.pushNamed(context, '/admin-navbar');
+        }
+      }
     }
 
     return Scaffold(

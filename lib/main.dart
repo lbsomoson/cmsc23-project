@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:project/providers/org_provider.dart';
+import 'providers/admin_provider.dart';
 import 'screens/admin/admin_approval.dart';
 import 'screens/admin/admin_dashboard.dart';
 import 'screens/admin/admin_view_donors.dart';
@@ -35,7 +37,9 @@ Future<void> main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: ((context) => UserAuthProvider()))
+        ChangeNotifierProvider(create: ((context) => UserAuthProvider())),
+        ChangeNotifierProvider(create: ((context) => OrgProvider())),
+        ChangeNotifierProvider(create: ((context) => AdminProvider())),
       ],
       child: const RootWidget(),
     ),

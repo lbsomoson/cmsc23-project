@@ -44,16 +44,15 @@ class _OrgDashboardScreenState extends State<OrgDashboardScreen> {
           body: TabBarView(
             children: [
               Container(
-                color: Colors.white,
-                child: const Column(
-                  children: [
-                    DonationCard(),
-                    DonationCard(),
-                    DonationCard(),
-                    DonationCard(),
-                  ],
-                )
-              ),
+                  color: Colors.white,
+                  child: const Column(
+                    children: [
+                      DonationCard(),
+                      DonationCard(),
+                      DonationCard(),
+                      DonationCard(),
+                    ],
+                  )),
               Container(
                 color: Colors.white,
                 child: const Center(

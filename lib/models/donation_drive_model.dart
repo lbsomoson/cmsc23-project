@@ -3,18 +3,22 @@ import 'dart:convert';
 class DonationDrive {
   final String? driveId;
   final String organizationId;
-  List<String> donationId;
+  List<String>? donationIds;
   String title;
-  String description;
+  String recipient;
+  String plan;
+  DateTime date;
   String status;
   String? donationDeliveryProof;
 
   DonationDrive({
     this.driveId,
     required this.organizationId,
-    required this.donationId,
+    required this.donationIds,
     required this.title,
-    required this.description,
+    required this.recipient,
+    required this.plan,
+    required this.date,
     required this.status,
     this.donationDeliveryProof,
   });
@@ -24,9 +28,11 @@ class DonationDrive {
     return DonationDrive(
       driveId: json['driveId'],
       organizationId: json['organizationId'],
-      donationId: json['donationId'],
+      donationIds: json['donationIds'],
       title: json['title'],
-      description: json['description'],
+      recipient: json['recipient'],
+      plan: json['plan'],
+      date: json['date'],
       status: json['status'],
       donationDeliveryProof: json['donationDeliveryProof'],
     );
@@ -43,9 +49,11 @@ class DonationDrive {
     return {
       'driveId': donationDrive.driveId,
       'organizationId': donationDrive.organizationId,
-      'donationId': donationDrive.donationId,
+      'donationIds': donationDrive.donationIds,
       'title': donationDrive.title,
-      'description': donationDrive.description,
+      'recipient': donationDrive.recipient,
+      'plan': donationDrive.plan,
+      'date': donationDrive.date,
       'status': donationDrive.status,
       'donationDeliveryProof': donationDrive.donationDeliveryProof,
     };

@@ -167,7 +167,7 @@ class FirebaseAuthAPI {
     return null;
   }
 
-  Future<UserCredential?> signInWithGoogle() async {
+  Future signInWithGoogle() async {
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
@@ -182,10 +182,28 @@ class FirebaseAuthAPI {
     );
 
     // Once signed in, return the UserCredential
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+    UserCredential userCredential =
+        await FirebaseAuth.instance.signInWithCredential(credential);
+
+    // retrieve the User object
+    User? user = userCredential.user;
+
+    // retrieve additional user data from Firestore
+    if (user != null) {
+      DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
+      // access user data from the userSnapshot
+      String userType = userSnapshot['type'];
+      return userType;
+    }
+
+    return null;
   }
 
   Future<void> signOut() async {
     await auth.signOut();
+    await GoogleSignIn().signOut();
   }
 }

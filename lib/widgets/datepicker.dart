@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project/widgets/text.dart';
 
 class DatePickerWidget extends StatefulWidget {
-  final Function callback;
+  final Function(String) callback;
   final String hintText;
   final String? label;
   final DateTime? initialValue;
@@ -33,6 +33,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
   }
 
   Future<void> _selectDate(BuildContext context) async {
+    // TODO: do not allow user to pick dates from the past
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: _selectedDate,
@@ -57,6 +58,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
         _selectedDate = picked;
         _controller.text = "${picked.month}/${picked.day}/${picked.year}";
       });
+      widget.callback(_controller.text);
     }
   }
 
@@ -96,6 +98,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
           },
           child: AbsorbPointer(
             child: TextFormField(
+              readOnly: true,
               controller: _controller,
               style: TextStyle(
                 color: Colors.grey[800],
@@ -111,8 +114,6 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
                 }
                 return null;
               },
-              onChanged: (value) =>
-                  {if (value.isNotEmpty) widget.callback(value)},
               decoration: InputDecoration(
                 isDense: true,
                 enabledBorder: OutlineInputBorder(

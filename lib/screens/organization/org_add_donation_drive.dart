@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:project/providers/auth_provider.dart';
+import 'package:project/providers/org_provider.dart';
 import 'package:project/widgets/appbar_title.dart';
 import 'package:project/widgets/button.dart';
 import 'package:project/widgets/datepicker.dart';
@@ -6,6 +9,9 @@ import 'package:project/widgets/divider.dart';
 import 'package:project/widgets/image_upload2.dart';
 import 'package:project/widgets/text2.dart';
 import 'package:project/widgets/textfield.dart';
+import 'package:provider/provider.dart';
+
+import '../../models/donation_drive_model.dart';
 
 class OrgAddDonationDriveScreen extends StatefulWidget {
   const OrgAddDonationDriveScreen({super.key});
@@ -16,8 +22,64 @@ class OrgAddDonationDriveScreen extends StatefulWidget {
 }
 
 class _OrgAddDonationDriveScreenState extends State<OrgAddDonationDriveScreen> {
+  final _formKey = GlobalKey<FormState>();
+  Map<String, dynamic> donationDrive = {
+    'driveId': '',
+    'organizationId': '',
+    'donationIds': <String>[],
+    'title': '',
+    'recipient': '',
+    'plan': '',
+    'status': '',
+    'date': '',
+    'donationDeliveryProof': '',
+  };
+
+  void handleAddClick(String id) {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState?.save();
+
+      DateTime? parsedDate;
+
+      // convert string date to DateTime object
+      // DateTime parsedDate = DateTime.parse(donationDrive['date']);
+
+      List<String> dateParts = donationDrive['date'].split('/');
+      if (dateParts.length == 3) {
+        int month = int.parse(dateParts[0]);
+        int day = int.parse(dateParts[1]);
+        int year = int.parse(dateParts[2]);
+        parsedDate = DateTime(year, month, day);
+        print(parsedDate);
+      } else {
+        print('Invalid date format: ${donationDrive['date']}');
+      }
+
+      DonationDrive newDonationDrive = DonationDrive(
+          organizationId: id,
+          donationIds: donationDrive['donationIds'],
+          recipient: donationDrive['recipient'],
+          title: donationDrive['title'],
+          plan: donationDrive['plan'],
+          date: parsedDate!,
+          status: donationDrive['status']);
+
+      print("donation drive new: $newDonationDrive");
+
+      context.read<OrgProvider>().addDonationDrive(newDonationDrive);
+
+      final snackBar = SnackBar(
+        content: const Text('Successfully added donation drive!'),
+        action: SnackBarAction(label: 'Close', onPressed: () {}),
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    User? user = context.watch<UserAuthProvider>().user;
     return Scaffold(
       appBar: AppBar(
         title: const AppBarTitle(title: "Create Donation Drive"),
@@ -29,62 +91,70 @@ class _OrgAddDonationDriveScreenState extends State<OrgAddDonationDriveScreen> {
           margin: const EdgeInsets.symmetric(horizontal: 12),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text2Widget(text: "Details", style: "sectionHeader"),
-                TextFieldWidget(
-                  callback: () {},
-                  hintText: "Title",
-                  type: "String",
-                  label: "Title",
-                  isRequired: true,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextFieldWidget(
-                  callback: () {},
-                  hintText: "Name of Recipient",
-                  type: "String",
-                  label: "Name of Recipient",
-                  isRequired: true,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextFieldWidget(
-                  callback: () {},
-                  hintText: "Usage Plan",
-                  type: "String",
-                  maxLines: 5,
-                  label: "Usage Plan",
-                  isRequired: true,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                DatePickerWidget(
-                  callback: () {},
-                  hintText: "Date of Expiration",
-                  isRequired: true,
-                  label: "Date of Expiration",
-                ),
-                const DividerWidget(),
-                const Text2Widget(text: "Upload Image", style: "sectionHeader"),
-                const SizedBox(
-                  height: 10,
-                ),
-                const ImageUpload2Widget(),
-                const SizedBox(
-                  height: 20,
-                ),
-                ButtonWidget(
-                    handleClick: () {},
-                    block: true,
-                    label: "Add",
-                    style: 'filled'),
-              ],
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text2Widget(text: "Details", style: "sectionHeader"),
+                  TextFieldWidget(
+                    callback: (String val) => donationDrive['title'] = val,
+                    hintText: "Title",
+                    type: "String",
+                    label: "Title",
+                    isRequired: true,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextFieldWidget(
+                    callback: (String val) => donationDrive['recipient'] = val,
+                    hintText: "Name of Recipient",
+                    type: "String",
+                    label: "Name of Recipient",
+                    isRequired: true,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextFieldWidget(
+                    callback: (String val) => donationDrive['plan'] = val,
+                    hintText: "Usage Plan",
+                    type: "String",
+                    maxLines: 5,
+                    label: "Usage Plan",
+                    isRequired: true,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  DatePickerWidget(
+                    callback: (String val) => {
+                      donationDrive['date'] = val,
+                    },
+                    hintText: "Date of Expiration",
+                    isRequired: true,
+                    label: "Date of Expiration",
+                  ),
+                  const DividerWidget(),
+                  const Text2Widget(
+                      text: "Upload Image", style: "sectionHeader"),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const ImageUpload2Widget(),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  ButtonWidget(
+                      handleClick: () {
+                        handleAddClick(user!.uid);
+                      },
+                      block: true,
+                      label: "Add",
+                      style: 'filled'),
+                ],
+              ),
             ),
           ),
         )),
