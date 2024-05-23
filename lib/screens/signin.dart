@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project/providers/authenticator_provider.dart';
+import 'package:project/providers/auth_provider.dart';
 import 'package:project/widgets/button.dart';
 import 'package:project/widgets/iconbutton.dart';
 import 'package:project/widgets/text.dart';
@@ -19,6 +19,7 @@ class _SignInScreenState extends State<SignInScreen> {
   String? email;
   String? password;
   String? errorMessage;
+  String? userType;
   bool showSignInErrorMessage = false;
 
   Widget get signInErrorMessage => Padding(
@@ -33,6 +34,38 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     const double sizedBoxHeight = 20;
+
+    void handleClick() async {
+      if (_formKey.currentState!.validate()) {
+        _formKey.currentState!.save();
+        String? res = await context
+            .read<UserAuthProvider>()
+            .authService
+            .signIn(email!, password!);
+        setState(() {
+          if (res == "Organization") {
+            userType = "Organization";
+          } else if (res == "Donor") {
+            userType = "Donor";
+          } else if (res == "Admin") {
+            userType = "Admin";
+          } else {
+            errorMessage = res;
+            showSignInErrorMessage = false;
+          }
+        });
+      }
+
+      if (context.mounted && showSignInErrorMessage == false) {
+        if (userType == 'Organization') {
+          Navigator.pushNamed(context, '/organization-navbar');
+        } else if (userType == 'Donor') {
+          Navigator.pushNamed(context, '/donor-navbar');
+        } else if (userType == 'Admin') {
+          Navigator.pushNamed(context, '/admin-navbar');
+        }
+      }
+    }
 
     return Scaffold(
       body: Stack(
@@ -100,29 +133,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             )
                           : Container(),
                       ButtonWidget(
-                          handleClick: () async {
-                            if (_formKey.currentState!.validate()) {
-                              _formKey.currentState!.save();
-                              String? message = await context
-                                  .read<UserAuthProvider>()
-                                  .authService
-                                  .signIn(email!, password!);
-                              setState(() {
-                                if (message != null && message.isNotEmpty) {
-                                  errorMessage = message;
-                                  showSignInErrorMessage = true;
-                                } else {
-                                  showSignInErrorMessage = false;
-                                }
-                              });
-                            }
-
-                            // TODO: Check user type
-                            if (context.mounted &&
-                                showSignInErrorMessage == false) {
-                              Navigator.pushNamed(context, '/donor-navbar');
-                            }
-                          },
+                          handleClick: () => handleClick(),
                           block: true,
                           label: "Sign In",
                           style: "filled"),

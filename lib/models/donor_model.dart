@@ -5,6 +5,8 @@ class Donor {
   String name;
   String email;
   String userType;
+  String contactNumber;
+  List<String> addresses;
   List<String> organizations;
 
   Donor(
@@ -12,6 +14,8 @@ class Donor {
       required this.name,
       required this.email,
       required this.userType,
+      required this.contactNumber,
+      required this.addresses,
       required this.organizations});
 
   // Factory constructor to instantiate object from json format
@@ -21,6 +25,8 @@ class Donor {
       name: json['name'],
       email: json['email'],
       userType: json['userType'],
+      contactNumber: json['contactNumber'],
+      addresses: json['addresses'],
       organizations: json['organizations'],
     );
   }
@@ -36,6 +42,8 @@ class Donor {
       'name': donor.name,
       'email': donor.email,
       'userType': donor.userType,
+      'contactNumber': donor.contactNumber,
+      'addresses': donor.addresses,
       'organizations': donor.organizations,
     };
   }

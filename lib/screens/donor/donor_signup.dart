@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project/providers/authenticator_provider.dart';
+import 'package:project/providers/auth_provider.dart';
 import 'package:project/widgets/button.dart';
 import 'package:project/widgets/iconbutton.dart';
 import 'package:project/widgets/text.dart';
@@ -240,7 +240,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   .read<UserAuthProvider>()
                                   .authService
                                   .signUp(email!, username!, password!, name!,
-                                      addresses, contactNumber!, 'Donor');
+                                      addresses, contactNumber!, 'donor');
 
                               setState(() {
                                 if (message != null && message.isNotEmpty) {

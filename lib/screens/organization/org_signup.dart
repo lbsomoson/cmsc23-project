@@ -5,7 +5,7 @@ import 'package:project/widgets/image_upload.dart';
 import 'package:project/widgets/text.dart';
 import 'package:project/widgets/textfield.dart';
 import 'package:project/widgets/textlink.dart';
-import 'package:project/providers/authenticator_provider.dart';
+import 'package:project/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:project/widgets/text2.dart';
 
@@ -252,7 +252,7 @@ class _OrgSignUpScreenState extends State<OrgSignUpScreen> {
                                       orgName!,
                                       addresses,
                                       contactNumber!,
-                                      'Organization');
+                                      'organization');
 
                               setState(() {
                                 if (message != null && message.isNotEmpty) {
