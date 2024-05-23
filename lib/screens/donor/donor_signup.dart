@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project/providers/authenticator_provider.dart';
+import 'package:project/providers/auth_provider.dart';
 import 'package:project/widgets/button.dart';
 import 'package:project/widgets/iconbutton.dart';
 import 'package:project/widgets/text.dart';
@@ -18,7 +18,7 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   static int indexCounter = 1;
-  String? username, name, password, contactNumber, address;
+  String? username, name, password, contactNumber, address, email;
   List<Map<String, dynamic>> textFields = [];
   String? errorMessage;
   bool showSignUpErrorMessage = false;
@@ -134,18 +134,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         height: sizedBoxHeight,
                       ),
                       TextFieldWidget(
-                          callback: (String val) => name = val,
-                          label: "Name",
-                          hintText: "Enter your name",
-                          type: "String"),
+                          callback: (String val) => email = val,
+                          label: "Email",
+                          hintText: "Enter your email",
+                          type: "Email"),
                       const SizedBox(
                         height: sizedBoxHeight,
                       ),
                       TextFieldWidget(
                           callback: (String val) => username = val,
-                          label: "Email",
-                          hintText: "Enter your email",
-                          type: "Email"),
+                          label: "Username",
+                          hintText: "Enter your username",
+                          type: "String"),
+                      const SizedBox(
+                        height: sizedBoxHeight,
+                      ),
+                      TextFieldWidget(
+                          callback: (String val) => name = val,
+                          label: "Name",
+                          hintText: "Enter your name",
+                          type: "String"),
                       const SizedBox(
                         height: sizedBoxHeight,
                       ),
@@ -224,11 +232,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           handleClick: () async {
                             _formKey.currentState!.save();
                             if (_formKey.currentState!.validate()) {
+                              List<String> addresses = textFields
+                                  .map((item) => item['value'] as String)
+                                  .toList();
+                              addresses.insert(0, address!);
                               String? message = await context
                                   .read<UserAuthProvider>()
                                   .authService
-                                  .signUp(username!, password!, name!, address!,
-                                      contactNumber!, 'Donor');
+                                  .signUp(email!, username!, password!, name!,
+                                      addresses, contactNumber!, 'donor');
 
                               setState(() {
                                 if (message != null && message.isNotEmpty) {

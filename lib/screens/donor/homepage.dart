@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:project/providers/authenticator_provider.dart';
+import 'package:project/providers/auth_provider.dart';
 import 'package:project/screens/signin.dart';
 import 'package:provider/provider.dart';
 import '../donor/donor_dashboard.dart';
