@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class FirebaseAuthAPI {
   static final FirebaseAuth auth = FirebaseAuth.instance;
   static final FirebaseFirestore db = FirebaseFirestore.instance;
+  static final FirebaseStorage storage = FirebaseStorage.instance;
 
   User? getUser() {
     return auth.currentUser;
@@ -63,8 +67,69 @@ class FirebaseAuthAPI {
   // TODO: Refactor code, use the appropriate models
   // TODO: Can either separate this to sign up as donor and sign up as organization
   // TODO: Or add an optional parameter for uploading the proof of legitimacy
-  Future<String?> signUp(String email, String username, String password,
-      String name, List<String> addresses, String contact, String type) async {
+  Future<String?> orgSignUp(
+      String email,
+      String username,
+      String password,
+      String name,
+      List<String> addresses,
+      String contact,
+      String type,
+      String path,
+      File file) async {
+    UserCredential credential;
+
+    try {
+      // signup
+      credential = await auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      TaskSnapshot taskSnapshot = await storage.ref().child(path).putFile(file);
+
+      // get the download URL
+      String downloadURL = await taskSnapshot.ref.getDownloadURL();
+
+      // add name, and email, address/es, contact, and user type of user to `users` collection
+      await db
+          .collection('users')
+          .doc(credential.user!.uid)
+          .set({"email": email, "type": type});
+
+      // add name, and email, address/es, contact, and user type of user to `organizations` collection
+      await db.collection('organizations').doc(credential.user!.uid).set({
+        "userId": credential.user!.uid,
+        "name": name,
+        "email": email,
+        "address": addresses,
+        "contactNumber": contact,
+        "userType": type,
+        "proofUrl": downloadURL,
+        "proofPath": path,
+        'uploadedAt': Timestamp.now(),
+      });
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        return "The password provided is too weak.";
+      } else if (e.code == 'email-already-in-use') {
+        return "The account already exists for that email.";
+      }
+    } catch (e) {
+      return e.toString();
+    }
+    return null;
+  }
+
+  Future<String?> donorSignUp(
+    String email,
+    String username,
+    String password,
+    String name,
+    List<String> addresses,
+    String contact,
+    String? type,
+  ) async {
     UserCredential credential;
 
     try {
@@ -80,27 +145,15 @@ class FirebaseAuthAPI {
           .doc(credential.user!.uid)
           .set({"email": email, "type": type});
 
-      if (type == "donor") {
-        // add name, and email, address/es, contact, and user type of user to `donors` collection
-        await db.collection('donors').doc(credential.user!.uid).set({
-          "userId": credential.user!.uid,
-          "name": name,
-          "email": email,
-          "address": addresses,
-          "contactNumber": contact,
-          "userType": type
-        });
-      } else if (type == "organization") {
-        // add name, and email, address/es, contact, and user type of user to `organizations` collection
-        await db.collection('organizations').doc(credential.user!.uid).set({
-          "userId": credential.user!.uid,
-          "name": name,
-          "email": email,
-          "address": addresses,
-          "contactNumber": contact,
-          "userType": type
-        });
-      }
+      // add name, and email, address/es, contact, and user type of user to `donors` collection
+      await db.collection('donors').doc(credential.user!.uid).set({
+        "userId": credential.user!.uid,
+        "name": name,
+        "email": email,
+        "address": addresses,
+        "contactNumber": contact,
+        "userType": type
+      });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         return "The password provided is too weak.";

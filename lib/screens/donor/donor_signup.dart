@@ -239,8 +239,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               String? message = await context
                                   .read<UserAuthProvider>()
                                   .authService
-                                  .signUp(email!, username!, password!, name!,
-                                      addresses, contactNumber!, 'donor');
+                                  .donorSignUp(
+                                      email!,
+                                      username!,
+                                      password!,
+                                      name!,
+                                      addresses,
+                                      contactNumber!,
+                                      'donor');
 
                               setState(() {
                                 if (message != null && message.isNotEmpty) {
