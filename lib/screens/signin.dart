@@ -55,9 +55,6 @@ class _SignInScreenState extends State<SignInScreen> {
           }
         });
       }
-
-      print(userType);
-
       if (context.mounted && showSignInErrorMessage == false) {
         if (userType == 'organization') {
           Navigator.pushNamed(context, '/organization-navbar');
@@ -67,6 +64,10 @@ class _SignInScreenState extends State<SignInScreen> {
           Navigator.pushNamed(context, '/admin-navbar');
         }
       }
+    }
+
+    void handleGoogleSignIn() async {
+      await context.read<UserAuthProvider>().authService.signInWithGoogle();
     }
 
     return Scaffold(
@@ -164,10 +165,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                       IconButtonWidget(
                           block: true,
-                          callback: () {
-                            // TODO: Check user type
-                            Navigator.pushNamed(context, '/admin-navbar');
-                          },
+                          callback: () => {handleGoogleSignIn()},
                           icon: './assets/images/google logo.png',
                           label: "Continue with Google"),
                       Row(
