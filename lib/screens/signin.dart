@@ -43,12 +43,12 @@ class _SignInScreenState extends State<SignInScreen> {
             .authService
             .signIn(email!, password!);
         setState(() {
-          if (res == "Organization") {
-            userType = "Organization";
-          } else if (res == "Donor") {
-            userType = "Donor";
-          } else if (res == "Admin") {
-            userType = "Admin";
+          if (res == "organization") {
+            userType = "organization";
+          } else if (res == "donor") {
+            userType = "donor";
+          } else if (res == "admin") {
+            userType = "admin";
           } else {
             errorMessage = res;
             showSignInErrorMessage = false;
@@ -56,12 +56,14 @@ class _SignInScreenState extends State<SignInScreen> {
         });
       }
 
+      print(userType);
+
       if (context.mounted && showSignInErrorMessage == false) {
-        if (userType == 'Organization') {
+        if (userType == 'organization') {
           Navigator.pushNamed(context, '/organization-navbar');
-        } else if (userType == 'Donor') {
+        } else if (userType == 'donor') {
           Navigator.pushNamed(context, '/donor-navbar');
-        } else if (userType == 'Admin') {
+        } else if (userType == 'admin') {
           Navigator.pushNamed(context, '/admin-navbar');
         }
       }

@@ -35,7 +35,7 @@ class FirebaseAuthAPI {
 
         if (userDoc.exists) {
           // extract and return the userType field
-          String userType = userDoc.get('userType');
+          String userType = userDoc.get('type');
           return userType;
         } else {
           return 'User document in donors collection does not exist.';
