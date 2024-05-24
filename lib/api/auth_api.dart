@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseAuthAPI {
   static final FirebaseAuth auth = FirebaseAuth.instance;
@@ -105,7 +106,7 @@ class FirebaseAuthAPI {
         "address": addresses,
         "contactNumber": contact,
         "userType": type,
-        "proofUrl": downloadURL,
+        "photoUrl": downloadURL,
         "proofPath": path,
         'uploadedAt': Timestamp.now(),
       });
@@ -166,7 +167,43 @@ class FirebaseAuthAPI {
     return null;
   }
 
+  Future signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    // Once signed in, return the UserCredential
+    UserCredential userCredential =
+        await FirebaseAuth.instance.signInWithCredential(credential);
+
+    // retrieve the User object
+    User? user = userCredential.user;
+
+    // retrieve additional user data from Firestore
+    if (user != null) {
+      DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
+      // access user data from the userSnapshot
+      String userType = userSnapshot['type'];
+      return userType;
+    }
+
+    return null;
+  }
+
   Future<void> signOut() async {
     await auth.signOut();
+    await GoogleSignIn().signOut();
   }
 }

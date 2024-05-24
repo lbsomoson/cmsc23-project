@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/models/donation_drive_model.dart';
 import 'package:project/widgets/button.dart';
 import 'package:project/widgets/divider.dart';
 import 'package:project/widgets/donor_card.dart';
@@ -8,13 +9,20 @@ import 'package:project/widgets/text3.dart';
 import 'package:project/widgets/text4.dart';
 
 class ViewOrgDonationDrive extends StatefulWidget {
-  const ViewOrgDonationDrive({super.key});
+  final DonationDrive drive;
+  const ViewOrgDonationDrive({required this.drive, super.key});
 
   @override
   State<ViewOrgDonationDrive> createState() => _ViewOrgDonationDriveState();
 }
 
 class _ViewOrgDonationDriveState extends State<ViewOrgDonationDrive> {
+  int _computeDaysLeft() {
+    final now = DateTime.now();
+    final difference = widget.drive.date.difference(now);
+    return difference.inDays;
+  }
+
   void _showDeleteDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -27,8 +35,8 @@ class _ViewOrgDonationDriveState extends State<ViewOrgDonationDrive> {
             fontSize: 16,
           ),
           title: const Text("Delete?"),
-          content: const Text(
-              "Are you sure you want to delete this donation drive?"),
+          content:
+              Text("Are you sure you want to delete ${widget.drive.title}?"),
           actions: [
             TextButton(
               child: const Text("OK"),
@@ -36,8 +44,7 @@ class _ViewOrgDonationDriveState extends State<ViewOrgDonationDrive> {
                 Navigator.pop(context);
                 final snackBar = SnackBar(
                   backgroundColor: const Color.fromARGB(255, 245, 88, 77),
-                  content:
-                      const Text('Deleted Organization Drive successfully!'),
+                  content: const Text('Deleted drive successfully!'),
                   action: SnackBarAction(label: 'Close', onPressed: () {}),
                 );
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -57,6 +64,8 @@ class _ViewOrgDonationDriveState extends State<ViewOrgDonationDrive> {
 
   @override
   Widget build(BuildContext context) {
+    final daysLeft = _computeDaysLeft();
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -75,33 +84,32 @@ class _ViewOrgDonationDriveState extends State<ViewOrgDonationDrive> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text("Help Animal Sanctuary",
-                            style: TextStyle(
+                        Text(widget.drive.title,
+                            style: const TextStyle(
                               fontFamily: 'Inter',
                               fontSize: 20,
                               fontWeight: FontWeight.w700,
                               color: Color.fromRGBO(22, 57, 30, 1),
                             )),
-                        const Text3Widget(
+                        Text3Widget(
                           size: 16,
-                          text1: "Mama's Cradle Animal Sanctuary",
-                          text2: 1 > 1 ? "• 4 days left" : "• 1 day left",
+                          text1: widget.drive.recipient,
+                          text2: daysLeft > 1
+                              ? "• $daysLeft days left"
+                              : "• $daysLeft day left",
                         ),
                         const SizedBox(
                           height: 10,
                         ),
-                        const Text2Widget(
-                            text:
-                                "Lorem ipsum dolor sit amet, consectetur  adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in",
-                            style: 'body'),
+                        Text2Widget(text: widget.drive.plan, style: 'body'),
                         const SizedBox(
                           height: 10,
                         ),
-                        const Text4Widget(
-                            text1: "by", text2: "Cats of UPLB", size: 16),
-                        // SizedBox(
-                        //   height: 10,
-                        // ),
+                        // TODO: Get name of organization using ID
+                        Text4Widget(
+                            text1: "by",
+                            text2: widget.drive.organizationId,
+                            size: 16),
                         const DividerWidget(),
                         const Text2Widget(
                             text: "Summary", style: "sectionHeader"),
@@ -112,6 +120,8 @@ class _ViewOrgDonationDriveState extends State<ViewOrgDonationDrive> {
                         const DividerWidget(),
                         const Text2Widget(
                             text: "Recent Donors", style: "sectionHeader"),
+
+                        // TODO: GET DONOR NAME USING ID
                         const Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Column(

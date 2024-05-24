@@ -51,13 +51,36 @@ class _SignInScreenState extends State<SignInScreen> {
             userType = "admin";
           } else {
             errorMessage = res;
-            showSignInErrorMessage = false;
+            showSignInErrorMessage = true;
           }
         });
       }
+      if (context.mounted && showSignInErrorMessage == false) {
+        if (userType == 'organization') {
+          Navigator.pushNamed(context, '/organization-navbar');
+        } else if (userType == 'donor') {
+          Navigator.pushNamed(context, '/donor-navbar');
+        } else if (userType == 'admin') {
+          Navigator.pushNamed(context, '/admin-navbar');
+        }
+      }
+    }
 
-      print(userType);
-
+    void handleGoogleSignIn() async {
+      String? res =
+          await context.read<UserAuthProvider>().authService.signInWithGoogle();
+      setState(() {
+        if (res == "organization") {
+          userType = "organization";
+        } else if (res == "donor") {
+          userType = "donor";
+        } else if (res == "admin") {
+          userType = "admin";
+        } else {
+          errorMessage = res;
+          showSignInErrorMessage = true;
+        }
+      });
       if (context.mounted && showSignInErrorMessage == false) {
         if (userType == 'organization') {
           Navigator.pushNamed(context, '/organization-navbar');
@@ -164,10 +187,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                       IconButtonWidget(
                           block: true,
-                          callback: () {
-                            // TODO: Check user type
-                            Navigator.pushNamed(context, '/admin-navbar');
-                          },
+                          callback: () => {handleGoogleSignIn()},
                           icon: './assets/images/google logo.png',
                           label: "Continue with Google"),
                       Row(

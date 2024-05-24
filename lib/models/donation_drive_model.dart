@@ -1,21 +1,34 @@
 import 'dart:convert';
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DonationDrive {
-  final String? driveId;
+  String? driveId;
   final String organizationId;
-  List<String> donationId;
+  List<String>? donationIds;
   String title;
-  String description;
+  String recipient;
+  String plan;
+  DateTime date;
   String status;
+  String path;
+  File? file;
+  String photoUrl;
   String? donationDeliveryProof;
 
   DonationDrive({
     this.driveId,
     required this.organizationId,
-    required this.donationId,
+    required this.donationIds,
     required this.title,
-    required this.description,
+    required this.recipient,
+    required this.plan,
+    required this.date,
     required this.status,
+    required this.path,
+    this.file,
+    required this.photoUrl,
     this.donationDeliveryProof,
   });
 
@@ -24,10 +37,17 @@ class DonationDrive {
     return DonationDrive(
       driveId: json['driveId'],
       organizationId: json['organizationId'],
-      donationId: json['donationId'],
-      title: json['title'],
-      description: json['description'],
-      status: json['status'],
+      donationIds: json['donationIds'] != null
+          ? List<String>.from(json['donationIds'])
+          : null,
+      title: json['title'] ?? '',
+      recipient: json['recipient'] ?? '',
+      plan: json['plan'] ?? '',
+      date: (json['date'] as Timestamp).toDate(),
+      status: json['status'] ?? '',
+      path: json['path'] ?? '',
+      file: json['file'] != null ? File(json['file']) : null,
+      photoUrl: json['photoUrl'] ?? '',
       donationDeliveryProof: json['donationDeliveryProof'],
     );
   }
@@ -43,10 +63,15 @@ class DonationDrive {
     return {
       'driveId': donationDrive.driveId,
       'organizationId': donationDrive.organizationId,
-      'donationId': donationDrive.donationId,
+      'donationIds': donationDrive.donationIds,
       'title': donationDrive.title,
-      'description': donationDrive.description,
+      'recipient': donationDrive.recipient,
+      'plan': donationDrive.plan,
+      'date': donationDrive.date,
       'status': donationDrive.status,
+      'path': donationDrive.path,
+      'file': donationDrive.file?.path,
+      'photoUrl': donationDrive.photoUrl,
       'donationDeliveryProof': donationDrive.donationDeliveryProof,
     };
   }

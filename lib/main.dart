@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:project/models/donation_drive_model.dart';
+import 'package:project/providers/org_provider.dart';
+import 'providers/admin_provider.dart';
 import 'screens/admin/admin_approval.dart';
 import 'screens/admin/admin_dashboard.dart';
 import 'screens/admin/admin_view_donors.dart';
@@ -35,7 +38,9 @@ Future<void> main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: ((context) => UserAuthProvider()))
+        ChangeNotifierProvider(create: ((context) => UserAuthProvider())),
+        ChangeNotifierProvider(create: ((context) => OrgProvider())),
+        ChangeNotifierProvider(create: ((context) => AdminProvider())),
       ],
       child: const RootWidget(),
     ),
@@ -104,7 +109,7 @@ class _RootWidgetState extends State<RootWidget> {
           ),
         ),
       ),
-      initialRoute: "/organization-signup",
+      initialRoute: "/login",
       onGenerateRoute: (settings) {
         if (settings.name == "/") {
           return MaterialPageRoute(builder: (context) => const SplashScreen());
@@ -132,8 +137,9 @@ class _RootWidgetState extends State<RootWidget> {
               builder: (context) => const AdminBottomNavBar());
         }
         if (settings.name == "/view-donation-drive") {
+          final args = settings.arguments as DonationDrive;
           return MaterialPageRoute(
-              builder: (context) => const ViewOrgDonationDrive());
+              builder: (context) => ViewOrgDonationDrive(drive: args));
         }
         if (settings.name == "/donor-dashboard") {
           return MaterialPageRoute(
