@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 class DonationDrive {
   final String? driveId;
@@ -9,6 +10,9 @@ class DonationDrive {
   String plan;
   DateTime date;
   String status;
+  String path;
+  File file;
+  String photoUrl;
   String? donationDeliveryProof;
 
   DonationDrive({
@@ -20,6 +24,9 @@ class DonationDrive {
     required this.plan,
     required this.date,
     required this.status,
+    required this.path,
+    required this.file,
+    required this.photoUrl,
     this.donationDeliveryProof,
   });
 
@@ -34,6 +41,9 @@ class DonationDrive {
       plan: json['plan'],
       date: json['date'],
       status: json['status'],
+      path: json['path'],
+      file: json['file'],
+      photoUrl: json['photoUrl'],
       donationDeliveryProof: json['donationDeliveryProof'],
     );
   }
@@ -55,6 +65,9 @@ class DonationDrive {
       'plan': donationDrive.plan,
       'date': donationDrive.date,
       'status': donationDrive.status,
+      'path': donationDrive.path,
+      'file': donationDrive.file,
+      'photoUrl': donationDrive.photoUrl,
       'donationDeliveryProof': donationDrive.donationDeliveryProof,
     };
   }

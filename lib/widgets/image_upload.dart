@@ -64,7 +64,6 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
               type: FileType.custom,
               allowedExtensions: ['jpg', 'png', 'HEIC'],
             );
-            print(userId);
             if (result == null) return;
             setState(() {
               selectedFile = result.files.first;

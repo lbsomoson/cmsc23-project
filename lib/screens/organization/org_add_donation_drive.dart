@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project/providers/auth_provider.dart';
@@ -23,7 +25,7 @@ class OrgAddDonationDriveScreen extends StatefulWidget {
 
 class _OrgAddDonationDriveScreenState extends State<OrgAddDonationDriveScreen> {
   final _formKey = GlobalKey<FormState>();
-  Map<String, dynamic> donationDrive = {
+  late Map<String, dynamic> donationDrive = {
     'driveId': '',
     'organizationId': '',
     'donationIds': <String>[],
@@ -33,27 +35,32 @@ class _OrgAddDonationDriveScreenState extends State<OrgAddDonationDriveScreen> {
     'status': '',
     'date': '',
     'donationDeliveryProof': '',
+    'path': '',
+    'file': '',
+    'photoUrl': '',
   };
 
-  void handleAddClick(String id) {
+  void handleAddClick(String id) async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState?.save();
 
       DateTime? parsedDate;
-
-      // convert string date to DateTime object
-      // DateTime parsedDate = DateTime.parse(donationDrive['date']);
-
       List<String> dateParts = donationDrive['date'].split('/');
       if (dateParts.length == 3) {
         int month = int.parse(dateParts[0]);
         int day = int.parse(dateParts[1]);
         int year = int.parse(dateParts[2]);
         parsedDate = DateTime(year, month, day);
-        print(parsedDate);
-      } else {
-        print('Invalid date format: ${donationDrive['date']}');
       }
+
+      print(donationDrive['donationIds']);
+      print(donationDrive['recipient']);
+      print(donationDrive['title']);
+      print(donationDrive['plan']);
+      print(parsedDate);
+      print(donationDrive['photoUrl']);
+      print(donationDrive['path']);
+      print(donationDrive['file']);
 
       DonationDrive newDonationDrive = DonationDrive(
           organizationId: id,
@@ -62,18 +69,21 @@ class _OrgAddDonationDriveScreenState extends State<OrgAddDonationDriveScreen> {
           title: donationDrive['title'],
           plan: donationDrive['plan'],
           date: parsedDate!,
-          status: donationDrive['status']);
+          status: 'open',
+          photoUrl: donationDrive['photoUrl'],
+          path: donationDrive['path'],
+          file: donationDrive['file']); // upon creation, set status to open
 
-      print("donation drive new: $newDonationDrive");
-
-      context.read<OrgProvider>().addDonationDrive(newDonationDrive);
+      await context.read<OrgProvider>().addDonationDrive(newDonationDrive);
 
       final snackBar = SnackBar(
         content: const Text('Successfully added donation drive!'),
         action: SnackBarAction(label: 'Close', onPressed: () {}),
       );
 
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
     }
   }
 
@@ -142,7 +152,12 @@ class _OrgAddDonationDriveScreenState extends State<OrgAddDonationDriveScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-                  const ImageUpload2Widget(),
+                  ImageUpload2Widget(
+                    callBack: (String path, File file) => {
+                      donationDrive['file'] = file,
+                      donationDrive['path'] = path,
+                    },
+                  ),
                   const SizedBox(
                     height: 20,
                   ),

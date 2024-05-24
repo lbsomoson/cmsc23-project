@@ -106,7 +106,7 @@ class FirebaseAuthAPI {
         "address": addresses,
         "contactNumber": contact,
         "userType": type,
-        "proofUrl": downloadURL,
+        "photoUrl": downloadURL,
         "proofPath": path,
         'uploadedAt': Timestamp.now(),
       });
