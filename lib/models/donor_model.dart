@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class Donor {
-  final String? donorId;
+  String? donorId;
   String name;
   String email;
   String userType;

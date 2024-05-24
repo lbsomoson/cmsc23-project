@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class Donation {
-  final String? donationId;
+  String? donationId;
   final String donorId;
   List<String> itemCategory;
   String transferMode;

@@ -53,15 +53,6 @@ class _OrgAddDonationDriveScreenState extends State<OrgAddDonationDriveScreen> {
         parsedDate = DateTime(year, month, day);
       }
 
-      print(donationDrive['donationIds']);
-      print(donationDrive['recipient']);
-      print(donationDrive['title']);
-      print(donationDrive['plan']);
-      print(parsedDate);
-      print(donationDrive['photoUrl']);
-      print(donationDrive['path']);
-      print(donationDrive['file']);
-
       DonationDrive newDonationDrive = DonationDrive(
           organizationId: id,
           donationIds: donationDrive['donationIds'],
@@ -83,6 +74,7 @@ class _OrgAddDonationDriveScreenState extends State<OrgAddDonationDriveScreen> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        Navigator.pop(context);
       }
     }
   }

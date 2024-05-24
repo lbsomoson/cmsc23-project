@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class Admin {
-  final String? adminId;
+  String? adminId;
   String name;
   String email;
   String userType;

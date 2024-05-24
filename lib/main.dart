@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/models/donation_drive_model.dart';
 import 'package:project/providers/org_provider.dart';
 import 'providers/admin_provider.dart';
 import 'screens/admin/admin_approval.dart';
@@ -136,8 +137,9 @@ class _RootWidgetState extends State<RootWidget> {
               builder: (context) => const AdminBottomNavBar());
         }
         if (settings.name == "/view-donation-drive") {
+          final args = settings.arguments as DonationDrive;
           return MaterialPageRoute(
-              builder: (context) => const ViewOrgDonationDrive());
+              builder: (context) => ViewOrgDonationDrive(drive: args));
         }
         if (settings.name == "/donor-dashboard") {
           return MaterialPageRoute(

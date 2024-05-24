@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class Organization {
-  final String? organizationId;
+  String? organizationId;
   String name;
   String email;
   String userName;

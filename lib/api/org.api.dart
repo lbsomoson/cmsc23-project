@@ -22,7 +22,6 @@ class FirebaseOrgAPI {
       // remove the 'file' key from the donationDrive map
       donationDrive.remove('file');
 
-      print(donationDrive);
       await db.collection('donation_drives').add(donationDrive);
       return "Successfully added donation drive!";
     } on FirebaseException catch (e) {
