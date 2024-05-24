@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/providers/org_provider.dart';
 import 'package:project/widgets/appbar_title.dart';
 import 'package:project/widgets/button.dart';
 import 'package:project/widgets/datepicker.dart';
@@ -6,10 +7,13 @@ import 'package:project/widgets/divider.dart';
 import 'package:project/widgets/image_upload2.dart';
 import 'package:project/widgets/text2.dart';
 import 'package:project/widgets/textfield.dart';
+import 'package:project/models/donation_drive_model.dart';
+import 'package:provider/provider.dart';
 
 class OrgEditDonationDriveScreen extends StatefulWidget {
   // final Map<String, dynamic> drive;
-  const OrgEditDonationDriveScreen({super.key});
+  final DonationDrive drive;
+  const OrgEditDonationDriveScreen({required this.drive, super.key});
 
   @override
   State<OrgEditDonationDriveScreen> createState() =>
@@ -18,20 +22,30 @@ class OrgEditDonationDriveScreen extends StatefulWidget {
 
 class _OrgEditDonationDriveScreenState
     extends State<OrgEditDonationDriveScreen> {
-  Map<String, dynamic> drive = {
-    'title': "Help Animal Sanctuary",
-    'expirationDate': DateTime.now(),
-    'usagePlan':
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    'recipient': "Mama’s Cradle Animal Sanctuary",
-    'photo': ""
-  };
+  // Map<String, dynamic> drive = {
+  //   'title': "Help Animal Sanctuary",
+  //   'expirationDate': DateTime.now(),
+  //   'usagePlan':
+  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+  //   'recipient': "Mama’s Cradle Animal Sanctuary",
+  //   'photo': ""
+  // };
+
+  void editValues(Map<String, dynamic> toEdit,String title, String plan, String recipient){
+    toEdit['title'] = title;
+    toEdit['usagePlan'] = plan;
+    toEdit['recipient'] = recipient; 
+  }
+
+  String? title, plan, recipient;
 
   @override
   Widget build(BuildContext context) {
+    Map<String, dynamic> newDrive = {'title':widget.drive.title, 'usagePlan':widget.drive.plan, 'recipient':widget.drive.recipient,'status':widget.drive.status,};
+
     return Scaffold(
       appBar: AppBar(
-        title: AppBarTitle(title: "Edit ${drive['title']}"),
+        title: AppBarTitle(title: "Edit ${widget.drive.title}"),
         iconTheme: IconThemeData(color: Theme.of(context).colorScheme.primary),
       ),
       body: SafeArea(
@@ -45,8 +59,8 @@ class _OrgEditDonationDriveScreenState
               children: [
                 const Text2Widget(text: "Details", style: "sectionHeader"),
                 TextFieldWidget(
-                  initialValue: drive['title'],
-                  callback: () {},
+                  initialValue: widget.drive.title,
+                  callback: (String val)  => title = val,
                   hintText: "Title",
                   type: "String",
                   label: "Title",
@@ -56,8 +70,8 @@ class _OrgEditDonationDriveScreenState
                   height: 10,
                 ),
                 TextFieldWidget(
-                  initialValue: drive['recipient'],
-                  callback: () {},
+                  initialValue: widget.drive.recipient,
+                  callback: (String val)  => recipient = val,
                   hintText: "Name of Recipient",
                   type: "String",
                   label: "Name of Recipient",
@@ -67,8 +81,8 @@ class _OrgEditDonationDriveScreenState
                   height: 10,
                 ),
                 TextFieldWidget(
-                  initialValue: drive['usagePlan'],
-                  callback: () {},
+                  initialValue: widget.drive.plan,
+                  callback: (String val)  => plan = val,
                   hintText: "Usage Plan",
                   type: "String",
                   maxLines: 5,
@@ -100,7 +114,9 @@ class _OrgEditDonationDriveScreenState
                   height: 20,
                 ),
                 ButtonWidget(
-                    handleClick: () {},
+                    handleClick: () {
+                      editValues(newDrive, title!, plan!, recipient!);
+                      context.read<OrgProvider>().editDonationDrive(widget.drive.driveId!, newDrive); print(newDrive['title']);},
                     block: true,
                     label: "Add",
                     style: 'filled'),

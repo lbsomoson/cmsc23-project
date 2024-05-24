@@ -76,7 +76,7 @@ class _OrgDonationDrivesScreenState extends State<OrgDonationDrivesScreen> {
                 ));
               } else if (!snapshot.hasData) {
                 return const Center(
-                  child: Text("No Friends Found"),
+                  child: Text("No donation drives Found"),
                 );
               }
               return ListView.builder(

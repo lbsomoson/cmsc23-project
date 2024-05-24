@@ -13,8 +13,8 @@ class OrgProvider with ChangeNotifier {
     return res;
   }
 
-  void editDonationDrive(String driveId) async {
-    await firebaseService.editDonationDrive(driveId);
+  void editDonationDrive(String driveId, Map<String,dynamic> editedDrive) async {
+    await firebaseService.editDonationDrive(driveId, editedDrive);
     notifyListeners();
   }
 

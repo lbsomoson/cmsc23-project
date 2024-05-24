@@ -29,9 +29,11 @@ class FirebaseOrgAPI {
     }
   }
 
-  Future<String> editDonationDrive(String driveId) async {
+  Future<String> editDonationDrive(String driveId, Map<String, dynamic> editedDrive) async {
     try {
-      await db.collection('donation_drives').doc(driveId).update({});
+      await db.collection('donation_drives').doc(driveId).update({"title": editedDrive['title']});
+      await db.collection('donation_drives').doc(driveId).update({"recipient": editedDrive['recipient']});
+      await db.collection('donation_drives').doc(driveId).update({"plan": editedDrive['usagePlan']});
       return "Successfully edited donation drive!";
     } on FirebaseException catch (e) {
       return "Failed with error '${e.code}: ${e.message}'";

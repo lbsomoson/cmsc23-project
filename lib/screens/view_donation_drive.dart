@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/models/donation_drive_model.dart';
+import 'package:project/providers/org_provider.dart';
+import 'package:project/screens/organization/org_edit_donation_drive.dart';
 import 'package:project/widgets/button.dart';
 import 'package:project/widgets/divider.dart';
 import 'package:project/widgets/donor_card.dart';
@@ -7,6 +9,7 @@ import 'package:project/widgets/summary.dart';
 import 'package:project/widgets/text2.dart';
 import 'package:project/widgets/text3.dart';
 import 'package:project/widgets/text4.dart';
+import 'package:provider/provider.dart';
 
 
 class ViewOrgDonationDrive extends StatefulWidget {
@@ -42,6 +45,7 @@ class _ViewOrgDonationDriveState extends State<ViewOrgDonationDrive> {
             TextButton(
               child: const Text("OK"),
               onPressed: () {
+                context.read<OrgProvider>().deleteDonationDrive(widget.drive.driveId!);
                 Navigator.pop(context);
                 final snackBar = SnackBar(
                   backgroundColor: const Color.fromARGB(255, 245, 88, 77),
@@ -141,8 +145,9 @@ class _ViewOrgDonationDriveState extends State<ViewOrgDonationDrive> {
                         ),
                         ButtonWidget(
                             handleClick: () {
-                              Navigator.pushNamed(
-                                  context, '/organization-edit-drive');
+                              // Navigator.pushNamed(
+                              //     context, '/organization-edit-drive');
+                              Navigator.push(context, MaterialPageRoute(builder: (context) {return OrgEditDonationDriveScreen(drive:widget.drive);}));
                             },
                             block: true,
                             label: "Edit",

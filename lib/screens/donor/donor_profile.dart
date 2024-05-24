@@ -20,9 +20,6 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // floatingActionButton: FloatingActionButton(onPressed: () async {
-      //   userDetails();
-      //   }),
       appBar: AppBar(
         title: Text(
           'My Profile',
