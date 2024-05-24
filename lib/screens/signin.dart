@@ -47,11 +47,12 @@ class _SignInScreenState extends State<SignInScreen> {
             userType = "organization";
           } else if (res == "donor") {
             userType = "donor";
+            showSignInErrorMessage = false;
           } else if (res == "admin") {
             userType = "admin";
           } else {
             errorMessage = res;
-            showSignInErrorMessage = false;
+            showSignInErrorMessage = true;
           }
         });
       }
