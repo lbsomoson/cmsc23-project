@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:project/models/donation_drive_model.dart';
+import 'package:project/screens/view_donation_drive.dart';
 import 'package:project/widgets/text3.dart';
 
 class OrgDriveCard extends StatefulWidget {
-  const OrgDriveCard({super.key});
+  final DonationDrive drive;
+  const OrgDriveCard({required this.drive, super.key});
 
   @override
   State<OrgDriveCard> createState() => _OrgDriveCardState();
@@ -13,7 +16,12 @@ class _OrgDriveCardState extends State<OrgDriveCard> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, '/view-donation-drive');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ViewOrgDonationDrive(drive: widget.drive),
+          ),
+        );
       },
       child: Card(
         elevation: 0,
@@ -43,8 +51,8 @@ class _OrgDriveCardState extends State<OrgDriveCard> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text("Help Animal Sanctuary",
-                        style: TextStyle(
+                    Text(widget.drive.title,
+                        style: const TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 16,
                           fontWeight: FontWeight.w600,

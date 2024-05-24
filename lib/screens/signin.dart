@@ -79,7 +79,7 @@ class _SignInScreenState extends State<SignInScreen> {
           userType = "admin";
         } else {
           errorMessage = res;
-          showSignInErrorMessage = false;
+          showSignInErrorMessage = true;
         }
       });
       if (context.mounted && showSignInErrorMessage == false) {

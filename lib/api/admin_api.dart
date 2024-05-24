@@ -25,8 +25,22 @@ class FirebaseAdminAPI {
     return org;
   }
 
-  // TODO: VIEW ORG DONATION DRIVES
-  // TODO: VIEW ORG DONATION DRIVE
+  // fetch all instances of `donation_drives` as a Stream of QuerySnapshot
+  Stream<QuerySnapshot> getDonationDrives(String orgId) {
+    return db
+        .collection("donation_drives")
+        .where("organizationId", isEqualTo: orgId)
+        .snapshots();
+  }
+
+  // fetch one intance of donation drive
+  Future<Map<String, dynamic>> getDonationDrive(String id) async {
+    DocumentSnapshot drive =
+        await db.collection("donation_drives").doc(id).get();
+    Map<String, dynamic> donationDrive = drive.data() as Map<String, dynamic>;
+
+    return donationDrive;
+  }
 
   // TODO: VIEW DONATION DRIVE DONATIONS
   // TODO: VIEW DONATION DRIVE DONATIONS

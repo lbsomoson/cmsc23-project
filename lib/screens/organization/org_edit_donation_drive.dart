@@ -90,7 +90,12 @@ class _OrgEditDonationDriveScreenState
                 const SizedBox(
                   height: 10,
                 ),
-                const ImageUpload2Widget(),
+                // ImageUpload2Widget(
+                //   callBack: (String path, File file) => {
+                //     donationDrive['file'] = file,
+                //     donationDrive['path'] = path,
+                //   },
+                // ),
                 const SizedBox(
                   height: 20,
                 ),

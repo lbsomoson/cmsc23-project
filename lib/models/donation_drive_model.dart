@@ -1,7 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DonationDrive {
-  final String? driveId;
+  String? driveId;
   final String organizationId;
   List<String>? donationIds;
   String title;
@@ -9,6 +12,9 @@ class DonationDrive {
   String plan;
   DateTime date;
   String status;
+  String path;
+  File? file;
+  String photoUrl;
   String? donationDeliveryProof;
 
   DonationDrive({
@@ -20,6 +26,9 @@ class DonationDrive {
     required this.plan,
     required this.date,
     required this.status,
+    required this.path,
+    this.file,
+    required this.photoUrl,
     this.donationDeliveryProof,
   });
 
@@ -28,12 +37,17 @@ class DonationDrive {
     return DonationDrive(
       driveId: json['driveId'],
       organizationId: json['organizationId'],
-      donationIds: json['donationIds'],
-      title: json['title'],
-      recipient: json['recipient'],
-      plan: json['plan'],
-      date: json['date'],
-      status: json['status'],
+      donationIds: json['donationIds'] != null
+          ? List<String>.from(json['donationIds'])
+          : null,
+      title: json['title'] ?? '',
+      recipient: json['recipient'] ?? '',
+      plan: json['plan'] ?? '',
+      date: (json['date'] as Timestamp).toDate(),
+      status: json['status'] ?? '',
+      path: json['path'] ?? '',
+      file: json['file'] != null ? File(json['file']) : null,
+      photoUrl: json['photoUrl'] ?? '',
       donationDeliveryProof: json['donationDeliveryProof'],
     );
   }
@@ -55,6 +69,9 @@ class DonationDrive {
       'plan': donationDrive.plan,
       'date': donationDrive.date,
       'status': donationDrive.status,
+      'path': donationDrive.path,
+      'file': donationDrive.file?.path,
+      'photoUrl': donationDrive.photoUrl,
       'donationDeliveryProof': donationDrive.donationDeliveryProof,
     };
   }
