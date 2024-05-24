@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:project/screens/donor/donor_dashboard.dart';
+import 'package:project/screens/donor/donor_donations.dart';
 import 'package:project/screens/donor/donor_profile.dart';
 
 class DonorBottomNavBar extends StatefulWidget {
@@ -24,7 +25,7 @@ class _DonorBottomNavBarState extends State<DonorBottomNavBar> {
               activeForegroundColor: Theme.of(context).colorScheme.primary),
         ),
         PersistentTabConfig(
-          screen: const DonorProfileScreen(),
+          screen: const DonorDonationScreen(),
           item: ItemConfig(
               icon: const FaIcon(FontAwesomeIcons.boxOpen),
               title: "Donations",

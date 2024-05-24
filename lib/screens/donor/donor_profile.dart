@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/screens/donor/donor_edit_profile.dart';
 
 class DonorProfileScreen extends StatefulWidget {
   const DonorProfileScreen({Key? key}) : super(key: key);
@@ -130,8 +131,14 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
                           ),
                           padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                           child: Center(
-                                child: Text(
-                                'Edit Profile',
+                                child: TextButton(
+                                  onPressed:(){
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context)=>DonorEditProfile())
+                                    );
+                                  },
+                                child: Text ('Edit Profile',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Color.fromRGBO(255, 255, 255, 1),
@@ -142,6 +149,7 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
                                   height: 1,
                                 ),
                               ),
+                                ),
                             
                           ),
                         ),
