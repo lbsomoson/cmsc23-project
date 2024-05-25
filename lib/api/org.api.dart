@@ -62,4 +62,16 @@ class FirebaseOrgAPI {
       return "Failed with error '${e.code}: ${e.message}'";
     }
   }
+
+  Stream<QuerySnapshot> getorgDonations(String orgId) {
+    return db.collection('donations').where("organizationId", isEqualTo: orgId).snapshots();
+  }
+
+  Future<Map<String, dynamic>> getorgDonation(String id) async {
+    DocumentSnapshot donation = await db.collection("donations").doc(id).get();
+    Map<String, dynamic> orgDonation = donation.data() as Map<String, dynamic>;
+
+    return orgDonation;
+  }
+
 }
