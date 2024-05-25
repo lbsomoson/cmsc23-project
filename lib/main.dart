@@ -90,7 +90,7 @@ class _RootWidgetState extends State<RootWidget> {
         ),
       ),
       // initialRoute: "/admin-navbar",
-      initialRoute: "/login",
+      initialRoute: "/donor-dashboard",
       onGenerateRoute: (settings) {
         if (settings.name == "/login") {
           return MaterialPageRoute(builder: (context) => const SignInScreen());

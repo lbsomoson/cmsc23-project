@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:project/widgets/donation_card.dart';
+import 'package:project/widgets/donor_card.dart';
+
+import '../../widgets/appbar_title.dart';
+import '../../widgets/text.dart';
 
 class DonorDashboardScreen extends StatefulWidget {
   const DonorDashboardScreen({Key? key}) : super(key: key);
@@ -9,91 +14,91 @@ class DonorDashboardScreen extends StatefulWidget {
 
 class _DonorDashboardScreenState extends State<DonorDashboardScreen> {
   @override
-Widget build(BuildContext context) {
-  return Scaffold(
-
-    body: CustomScrollView(
-      slivers: [
-        SliverPadding(
-          padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
-          sliver: SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                Container(
-                  width: 130,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    color: Color(0xFFF4F4F4),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Center(
-                  child: RichText(
-                    
-                    textAlign: TextAlign.center,
-          
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: 'Empower ',
-                          style: TextStyle(
-                            color: Color(0xFF3EDA86),
-                            fontFamily: 'Lato',
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: AppBarTitle(title: 'Donor Dashboard'),
+        backgroundColor: Colors.white,
+      ),
+      body: CustomScrollView(
+        slivers: [
+          SliverPadding(
+            padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+            sliver: SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  Container(
+                    width: 130,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      color: Color(0xFFF4F4F4),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Center(
+                      child: RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: 'Empower ',
+                              style: TextStyle(
+                                color: Color(0xFF3EDA86),
+                                fontFamily: 'Lato',
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            TextSpan(
+                              text: 'their future. ',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'Lato',
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            TextSpan(
+                              text: 'Donate ',
+                              style: TextStyle(
+                                color: Color(0xFF3EDA86),
+                                fontFamily: 'Lato',
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            TextSpan(
+                              text: 'today!',
+                              style: TextStyle(
+                                color: Color(0xFF3EDA86),
+                                fontFamily: 'Lato',
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
-                        TextSpan(
-                          text: 'their future. ',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: 'Lato',
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        TextSpan(
-                          text: 'Donate ',
-                          style: TextStyle(
-                            color: Color(0xFF3EDA86),
-                            fontFamily: 'Lato',
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        TextSpan(
-                          text: 'today!',
-                          style: TextStyle(
-                            color: Color(0xFF3EDA86),
-                            fontFamily: 'Lato',
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) {
-              return Padding(
-                padding: const EdgeInsets.all(15),
-                child: _buildCard(),
-              );
-            },
-            childCount: 3,
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: _buildCard(),
+                );
+              },
+              childCount: 6,
+            ),
           ),
-        ),
-      ],
-    ),
-  );
-}
-
+        ],
+      ),
+    );
+  }
 
   Widget _buildCard() {
     return Container(
@@ -109,7 +114,7 @@ Widget build(BuildContext context) {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: 141,
+            width: 150,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.horizontal(
                 left: Radius.circular(15),
@@ -120,7 +125,6 @@ Widget build(BuildContext context) {
               ),
             ),
           ),
-          SizedBox(width: 10),
           Expanded(
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
@@ -165,7 +169,7 @@ Widget build(BuildContext context) {
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage('assets/images/Location.png'),
-                            fit: BoxFit.fitWidth,
+                            fit: BoxFit.fill,
                           ),
                         ),
                       ),

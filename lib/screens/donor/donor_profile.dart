@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../widgets/appbar_title.dart';
+
 class DonorProfileScreen extends StatefulWidget {
   const DonorProfileScreen({Key? key}) : super(key: key);
 
@@ -12,14 +14,10 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'My Profile',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
+        title: AppBarTitle(title: 'My Profile'),
         backgroundColor: Colors.white,
-        foregroundColor: Color.fromRGBO(62, 218, 134, 1),
-        elevation: 0,
       ),
+      
       body: SingleChildScrollView(
         child: Container(
           width: 428,
@@ -259,5 +257,6 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
         ),
       ),
     );
+    
   }
 }
