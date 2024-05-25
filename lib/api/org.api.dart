@@ -9,6 +9,10 @@ class FirebaseOrgAPI {
 
   Future<String> addDonationDrive(Map<String, dynamic> donationDrive) async {
     try {
+      print("========== DONATION DRIVE IN API ==========");
+      print(donationDrive['file']);
+      print(donationDrive);
+
       TaskSnapshot taskSnapshot = await storage
           .ref()
           .child(donationDrive['path'])
@@ -29,11 +33,21 @@ class FirebaseOrgAPI {
     }
   }
 
-  Future<String> editDonationDrive(String driveId, Map<String, dynamic> editedDrive) async {
+  Future<String> editDonationDrive(
+      String driveId, Map<String, dynamic> editedDrive) async {
     try {
-      await db.collection('donation_drives').doc(driveId).update({"title": editedDrive['title']});
-      await db.collection('donation_drives').doc(driveId).update({"recipient": editedDrive['recipient']});
-      await db.collection('donation_drives').doc(driveId).update({"plan": editedDrive['usagePlan']});
+      await db
+          .collection('donation_drives')
+          .doc(driveId)
+          .update({"title": editedDrive['title']});
+      await db
+          .collection('donation_drives')
+          .doc(driveId)
+          .update({"recipient": editedDrive['recipient']});
+      await db
+          .collection('donation_drives')
+          .doc(driveId)
+          .update({"plan": editedDrive['usagePlan']});
       return "Successfully edited donation drive!";
     } on FirebaseException catch (e) {
       return "Failed with error '${e.code}: ${e.message}'";

@@ -40,14 +40,14 @@ class DonationDrive {
       donationIds: json['donationIds'] != null
           ? List<String>.from(json['donationIds'])
           : null,
-      title: json['title'] ?? '',
-      recipient: json['recipient'] ?? '',
-      plan: json['plan'] ?? '',
+      title: json['title'],
+      recipient: json['recipient'],
+      plan: json['plan'],
       date: (json['date'] as Timestamp).toDate(),
-      status: json['status'] ?? '',
-      path: json['path'] ?? '',
-      file: json['file'] != null ? File(json['file']) : null,
-      photoUrl: json['photoUrl'] ?? '',
+      status: json['status'],
+      path: json['path'],
+      file: json['file'],
+      photoUrl: json['photoUrl'],
       donationDeliveryProof: json['donationDeliveryProof'],
     );
   }
@@ -70,7 +70,7 @@ class DonationDrive {
       'date': donationDrive.date,
       'status': donationDrive.status,
       'path': donationDrive.path,
-      'file': donationDrive.file?.path,
+      'file': donationDrive.file,
       'photoUrl': donationDrive.photoUrl,
       'donationDeliveryProof': donationDrive.donationDeliveryProof,
     };

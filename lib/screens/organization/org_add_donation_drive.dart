@@ -36,13 +36,35 @@ class _OrgAddDonationDriveScreenState extends State<OrgAddDonationDriveScreen> {
     'date': '',
     'donationDeliveryProof': '',
     'path': '',
-    'file': '',
+    'file': null, // Initialize file as null
     'photoUrl': '',
   };
+  String? errorMessage, errorMessage2;
+  bool showImageUploadMessage = false, showDateMessage = false;
+
+  Widget get imageUploadMessage => Padding(
+        padding: const EdgeInsets.only(bottom: 30),
+        child: Text(
+          errorMessage!,
+          style: const TextStyle(
+              color: Colors.red, fontSize: 14, fontWeight: FontWeight.w400),
+        ),
+      );
+
+  Widget get noDateMessage => Padding(
+        padding: const EdgeInsets.only(bottom: 30),
+        child: Text(
+          errorMessage2!,
+          style: const TextStyle(
+              color: Colors.red, fontSize: 14, fontWeight: FontWeight.w400),
+        ),
+      );
 
   void handleAddClick(String id) async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState?.save();
+
+      print(donationDrive);
 
       DateTime? parsedDate;
       List<String> dateParts = donationDrive['date'].split('/');
@@ -51,6 +73,23 @@ class _OrgAddDonationDriveScreenState extends State<OrgAddDonationDriveScreen> {
         int day = int.parse(dateParts[1]);
         int year = int.parse(dateParts[2]);
         parsedDate = DateTime(year, month, day);
+      }
+
+      if (donationDrive['date'] == '') {
+        setState(() {
+          errorMessage2 = "Add a date";
+          showDateMessage = true;
+        });
+        return;
+      }
+
+      if ((donationDrive['file'] == null || donationDrive['file'] == '') &&
+          donationDrive['path'] == '') {
+        setState(() {
+          errorMessage = "Upload your image";
+          showImageUploadMessage = true;
+        });
+        return;
       }
 
       DonationDrive newDonationDrive = DonationDrive(
@@ -63,7 +102,12 @@ class _OrgAddDonationDriveScreenState extends State<OrgAddDonationDriveScreen> {
           status: 'open',
           photoUrl: donationDrive['photoUrl'],
           path: donationDrive['path'],
-          file: donationDrive['file']); // upon creation, set status to open
+          file: donationDrive['file'],
+          donationDeliveryProof: donationDrive[
+              'donationDeliveryProof']); // upon creation, set status to open
+
+      print('---------------------');
+      print(newDonationDrive);
 
       await context.read<OrgProvider>().addDonationDrive(newDonationDrive);
 
@@ -74,7 +118,8 @@ class _OrgAddDonationDriveScreenState extends State<OrgAddDonationDriveScreen> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        Navigator.pop(context);
+        Navigator.pushNamedAndRemoveUntil(
+            context, '/organization-drives', (Route<dynamic> route) => false);
       }
     }
   }
@@ -133,11 +178,24 @@ class _OrgAddDonationDriveScreenState extends State<OrgAddDonationDriveScreen> {
                   DatePickerWidget(
                     callback: (String val) => {
                       donationDrive['date'] = val,
+                      setState(() {
+                        showDateMessage = false;
+                      })
                     },
                     hintText: "Date of Expiration",
                     isRequired: true,
                     label: "Date of Expiration",
                   ),
+                  showDateMessage
+                      ? Column(
+                          children: [
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            noDateMessage,
+                          ],
+                        )
+                      : Container(),
                   const DividerWidget(),
                   const Text2Widget(
                       text: "Upload Image", style: "sectionHeader"),
@@ -148,8 +206,21 @@ class _OrgAddDonationDriveScreenState extends State<OrgAddDonationDriveScreen> {
                     callBack: (String path, File file) => {
                       donationDrive['file'] = file,
                       donationDrive['path'] = path,
+                      setState(() {
+                        showImageUploadMessage = false;
+                      })
                     },
                   ),
+                  showImageUploadMessage
+                      ? Column(
+                          children: [
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            imageUploadMessage,
+                          ],
+                        )
+                      : Container(),
                   const SizedBox(
                     height: 20,
                   ),
