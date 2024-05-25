@@ -118,8 +118,8 @@ class _OrgAddDonationDriveScreenState extends State<OrgAddDonationDriveScreen> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        Navigator.pushNamedAndRemoveUntil(
-            context, '/organization-drives', (Route<dynamic> route) => false);
+        // Navigator.pop(context);
+        // Navigator.pushReplacementNamed(context, '/organization-drives');
       }
     }
   }
