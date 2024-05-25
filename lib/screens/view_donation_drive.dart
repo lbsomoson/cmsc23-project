@@ -53,8 +53,10 @@ class _ViewOrgDonationDriveState extends State<ViewOrgDonationDrive> {
                   action: SnackBarAction(label: 'Close', onPressed: () {}),
                 );
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                Navigator.pushNamedAndRemoveUntil(context,
-                    '/organization-drives', (Route<dynamic> route) => false);
+                Navigator.pop(context);
+                Navigator.pop(context);
+                // Navigator.pushNamedAndRemoveUntil(
+                //     context, '/organization-drives', (route) => false);
               },
             ),
             TextButton(
