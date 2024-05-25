@@ -28,8 +28,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
   void initState() {
     super.initState();
     _selectedDate = widget.initialValue ?? DateTime.now();
-    _controller.text =
-        "${_selectedDate.month}/${_selectedDate.day}/${_selectedDate.year}";
+    _controller.text = "";
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -37,7 +36,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: _selectedDate,
-      firstDate: DateTime(2000),
+      firstDate: DateTime.now(),
       lastDate: DateTime(2101),
       builder: (BuildContext context, Widget? child) {
         return Theme(

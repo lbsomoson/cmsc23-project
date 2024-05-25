@@ -11,7 +11,6 @@ import 'package:project/widgets/text3.dart';
 import 'package:project/widgets/text4.dart';
 import 'package:provider/provider.dart';
 
-
 class ViewOrgDonationDrive extends StatefulWidget {
   final DonationDrive drive;
   const ViewOrgDonationDrive({required this.drive, super.key});
@@ -45,14 +44,17 @@ class _ViewOrgDonationDriveState extends State<ViewOrgDonationDrive> {
             TextButton(
               child: const Text("OK"),
               onPressed: () {
-                context.read<OrgProvider>().deleteDonationDrive(widget.drive.driveId!);
-                Navigator.pop(context);
+                context
+                    .read<OrgProvider>()
+                    .deleteDonationDrive(widget.drive.driveId!);
                 final snackBar = SnackBar(
                   backgroundColor: const Color.fromARGB(255, 245, 88, 77),
                   content: const Text('Deleted drive successfully!'),
                   action: SnackBarAction(label: 'Close', onPressed: () {}),
                 );
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                Navigator.pushNamedAndRemoveUntil(context,
+                    '/organization-drives', (Route<dynamic> route) => false);
               },
             ),
             TextButton(
@@ -147,7 +149,11 @@ class _ViewOrgDonationDriveState extends State<ViewOrgDonationDrive> {
                             handleClick: () {
                               // Navigator.pushNamed(
                               //     context, '/organization-edit-drive');
-                              Navigator.push(context, MaterialPageRoute(builder: (context) {return OrgEditDonationDriveScreen(drive:widget.drive);}));
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return OrgEditDonationDriveScreen(
+                                    drive: widget.drive);
+                              }));
                             },
                             block: true,
                             label: "Edit",
