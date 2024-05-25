@@ -44,4 +44,14 @@ class FirebaseAdminAPI {
 
   // TODO: VIEW DONATION DRIVE DONATIONS
   // TODO: VIEW DONATION DRIVE DONATIONS
+  Stream<QuerySnapshot> getDonations() {
+    return db.collection('donations').snapshots();
+  }
+
+  Future<Map<String, dynamic>> getDonation(String donationId) async {
+    DocumentSnapshot donation = await db.collection("donation").doc(donationId).get();
+    Map<String, dynamic> donationDetails = donation.data() as Map<String, dynamic>;
+
+    return donationDetails;
+  }
 }
