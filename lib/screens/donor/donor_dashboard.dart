@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:project/screens/donor/donor_orgview.dart';
 import 'package:project/widgets/donation_card.dart';
+import 'package:project/widgets/donor_bottom_navbar.dart';
 import 'package:project/widgets/donor_card.dart';
 
 import '../../widgets/appbar_title.dart';
@@ -89,7 +91,15 @@ class _DonorDashboardScreenState extends State<DonorDashboardScreen> {
               (context, index) {
                 return Padding(
                   padding: const EdgeInsets.all(20),
-                  child: _buildCard(),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => DonorOrgView()),
+                      );
+                    },
+                    child: _buildCard(),
+                  ),
                 );
               },
               childCount: 6,
@@ -97,6 +107,7 @@ class _DonorDashboardScreenState extends State<DonorDashboardScreen> {
           ),
         ],
       ),
+
     );
   }
 
@@ -120,8 +131,8 @@ class _DonorDashboardScreenState extends State<DonorDashboardScreen> {
                 left: Radius.circular(15),
               ),
               image: DecorationImage(
-                image: const AssetImage('assets/images/Rectangle 34.png'),
-                fit: BoxFit.fitWidth,
+                image: AssetImage('assets/images/Rectangle 34.png'),
+                fit: BoxFit.fill,
               ),
             ),
           ),

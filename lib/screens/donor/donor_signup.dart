@@ -13,6 +13,7 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  late String name = '';
   @override
   Widget build(BuildContext context) {
     const double sizedBoxHeight = 20;
@@ -54,7 +55,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       height: sizedBoxHeight,
                     ),
                     TextFieldWidget(
-                        callback: () {},
+                        callback: (value) {
+                          setState(() {
+                            name = value;
+                          });
+                        },
                         label: "Name",
                         hintText: "Enter your name",
                         type: "String"),
@@ -79,7 +84,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     ButtonWidget(
                         handleClick: () {
-                          Navigator.pushNamed(context, '/organization-navbar');
+                          Navigator.pushNamed(context, '/organization-navbar', arguments: name);
                         },
                         block: true,
                         label: "Sign In",
