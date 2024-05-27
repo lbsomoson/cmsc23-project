@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/models/donation_drive_model.dart';
+import 'package:project/providers/org_provider.dart';
+import 'package:project/screens/organization/org_edit_donation_drive.dart';
 import 'package:project/widgets/button.dart';
 import 'package:project/widgets/divider.dart';
 import 'package:project/widgets/donor_card.dart';
@@ -7,6 +9,7 @@ import 'package:project/widgets/summary.dart';
 import 'package:project/widgets/text2.dart';
 import 'package:project/widgets/text3.dart';
 import 'package:project/widgets/text4.dart';
+import 'package:provider/provider.dart';
 
 class ViewOrgDonationDrive extends StatefulWidget {
   final DonationDrive drive;
@@ -41,13 +44,19 @@ class _ViewOrgDonationDriveState extends State<ViewOrgDonationDrive> {
             TextButton(
               child: const Text("OK"),
               onPressed: () {
-                Navigator.pop(context);
+                context
+                    .read<OrgProvider>()
+                    .deleteDonationDrive(widget.drive.driveId!);
                 final snackBar = SnackBar(
                   backgroundColor: const Color.fromARGB(255, 245, 88, 77),
                   content: const Text('Deleted drive successfully!'),
                   action: SnackBarAction(label: 'Close', onPressed: () {}),
                 );
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                Navigator.pop(context);
+                Navigator.pop(context);
+                // Navigator.pushNamedAndRemoveUntil(
+                //     context, '/organization-drives', (route) => false);
               },
             ),
             TextButton(
@@ -140,8 +149,13 @@ class _ViewOrgDonationDriveState extends State<ViewOrgDonationDrive> {
                         ),
                         ButtonWidget(
                             handleClick: () {
-                              Navigator.pushNamed(
-                                  context, '/organization-edit-drive');
+                              // Navigator.pushNamed(
+                              //     context, '/organization-edit-drive');
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return OrgEditDonationDriveScreen(
+                                    drive: widget.drive);
+                              }));
                             },
                             block: true,
                             label: "Edit",

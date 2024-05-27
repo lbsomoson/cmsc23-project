@@ -102,6 +102,7 @@ class FirebaseAuthAPI {
       await db.collection('organizations').doc(credential.user!.uid).set({
         "userId": credential.user!.uid,
         "name": name,
+        "username" : username,
         "email": email,
         "address": addresses,
         "contactNumber": contact,
@@ -202,6 +203,27 @@ class FirebaseAuthAPI {
     return null;
   }
 
+  Future<Map> getDetails() async {
+    Map<String, String> details = {};
+    final User user = getUser()!;
+    final String email = user.email!;
+      QuerySnapshot querySnapshot = await db
+          .collection('donors')
+          .where('email', isEqualTo: email)
+          .limit(1)
+          .get();
+        
+        String documentId = querySnapshot.docs.first.id;
+        DocumentSnapshot userDoc =
+            await db.collection("donors").doc(documentId).get();
+        details['name'] = userDoc.get('name');
+        details['username'] = userDoc.get('username');
+        details['email'] = userDoc.get('email');
+        details['contact'] = userDoc.get('contactNumber');
+        //details['address'] = userDoc.get('address');
+        return details;
+  }
+  
   Future<void> signOut() async {
     await auth.signOut();
     await GoogleSignIn().signOut();

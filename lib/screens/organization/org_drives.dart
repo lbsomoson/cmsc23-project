@@ -23,11 +23,9 @@ class _OrgDonationDrivesScreenState extends State<OrgDonationDrivesScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    print("initialize -----------------------");
     User? user = context.read<UserAuthProvider>().user;
     _donationDrivesStream =
         context.read<AdminProvider>().getDonationDrives(user!.uid);
-    print(_donationDrivesStream);
   }
 
   @override
@@ -59,7 +57,7 @@ class _OrgDonationDrivesScreenState extends State<OrgDonationDrivesScreen> {
                   child: CircularProgressIndicator(),
                 );
               } else if (snapshot.data!.docs.isEmpty) {
-                return const Center(
+                return Center(
                     child: Center(
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -68,15 +66,15 @@ class _OrgDonationDrivesScreenState extends State<OrgDonationDrivesScreen> {
                         Icon(
                           Icons.create_new_folder_rounded,
                           size: 150,
-                          color: Color.fromARGB(255, 69, 52, 0),
+                          color: Theme.of(context).colorScheme.primary,
                         ),
-                        Text2Widget(
+                        const Text2Widget(
                             text: "No donation drives yet", style: 'bodyLarge')
                       ]),
                 ));
               } else if (!snapshot.hasData) {
                 return const Center(
-                  child: Text("No Friends Found"),
+                  child: Text("No donation drives Found"),
                 );
               }
               return ListView.builder(

@@ -103,9 +103,6 @@ class _ViewOrganizationScreenState extends State<ViewOrganizationScreen> {
                         const SizedBox(
                           height: 10,
                         ),
-                        // const OrgDriveCard(),
-                        // const OrgDriveCard(),
-                        // const OrgDriveCard(),
                       ],
                     ),
                   ),

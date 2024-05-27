@@ -168,10 +168,10 @@ class _RootWidgetState extends State<RootWidget> {
           return MaterialPageRoute(
               builder: (context) => const OrgAddDonationDriveScreen());
         }
-        if (settings.name == "/organization-edit-drive") {
-          return MaterialPageRoute(
-              builder: (context) => const OrgEditDonationDriveScreen());
-        }
+        // if (settings.name == "/organization-edit-drive") {
+        //   return MaterialPageRoute(
+        //       builder: (context) => const OrgEditDonationDriveScreen());
+        // }
         if (settings.name == "/admin-dashboard") {
           return MaterialPageRoute(
               builder: (context) => const AdminDashboard());

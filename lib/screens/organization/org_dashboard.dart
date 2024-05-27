@@ -22,22 +22,24 @@ class _OrgDashboardScreenState extends State<OrgDashboardScreen> {
         child: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
             const SliverToBoxAdapter(
-              child: Column(
-                children: [
-                  TabBar(
-                    labelStyle: TextStyle(fontSize: 12.0),
-                    indicatorPadding: EdgeInsets.zero,
-                    indicatorSize: TabBarIndicatorSize.label,
-                    unselectedLabelColor: Colors.grey,
-                    tabs: [
-                      Tab(text: "Pending"),
-                      Tab(text: "Confirmed"),
-                      Tab(text: "Scheduled"),
-                      Tab(text: "Complete"),
-                      Tab(text: "Canceled"),
-                    ],
-                  ),
-                ],
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    TabBar(
+                      labelStyle: TextStyle(fontSize: 12.0),
+                      indicatorPadding: EdgeInsets.zero,
+                      indicatorSize: TabBarIndicatorSize.label,
+                      unselectedLabelColor: Colors.grey,
+                      tabs: [
+                        Tab(text: "Pending"),
+                        Tab(text: "Confirmed"),
+                        Tab(text: "Scheduled"),
+                        Tab(text: "Complete"),
+                        Tab(text: "Canceled"),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

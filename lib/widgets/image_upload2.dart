@@ -91,6 +91,7 @@ class _ImageUpload2WidgetState extends State<ImageUpload2Widget> {
                           splashColor: Theme.of(context).colorScheme.primary,
                           onTap: () {
                             _pickImageFromGallery(id);
+                            Navigator.pop(context);
                           },
                           child: const SizedBox(
                             width: double.infinity,
@@ -126,6 +127,7 @@ class _ImageUpload2WidgetState extends State<ImageUpload2Widget> {
                           splashColor: Theme.of(context).colorScheme.primary,
                           onTap: () {
                             _pickImageFromCamera(id);
+                            Navigator.pop(context);
                           },
                           child: const SizedBox(
                             width: double.infinity,
