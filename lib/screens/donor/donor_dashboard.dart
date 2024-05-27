@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:project/providers/auth_provider.dart';
-import 'package:provider/provider.dart';
+import 'package:project/screens/donor/donor_orgview.dart';
+import 'package:project/widgets/donation_card.dart';
+import 'package:project/widgets/donor_bottom_navbar.dart';
+import 'package:project/widgets/donor_card.dart';
+
+import '../../widgets/appbar_title.dart';
+import '../../widgets/text.dart';
 
 class DonorDashboardScreen extends StatefulWidget {
   const DonorDashboardScreen({Key? key}) : super(key: key);
@@ -13,20 +18,9 @@ class _DonorDashboardScreenState extends State<DonorDashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     context.read<UserAuthProvider>().signOut();
-      //   },
-      //   child: Text("Signout"),
-      // ),
       appBar: AppBar(
-        title: Text(
-          'Dashboard',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
+        title: AppBarTitle(title: 'Donor Dashboard'),
         backgroundColor: Colors.white,
-        foregroundColor: Color.fromRGBO(62, 218, 134, 1),
-        elevation: 0,
       ),
       body: CustomScrollView(
         slivers: [
@@ -35,8 +29,9 @@ class _DonorDashboardScreenState extends State<DonorDashboardScreen> {
             sliver: SliverList(
               delegate: SliverChildListDelegate(
                 [
+                  // Your existing Container with rich text
                   Container(
-                    width: 130,
+                    width: 200,
                     height: 60,
                     decoration: BoxDecoration(
                       color: Color(0xFFF4F4F4),
@@ -89,118 +84,38 @@ class _DonorDashboardScreenState extends State<DonorDashboardScreen> {
                     ),
                   ),
                 ],
+
               ),
             ),
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: _buildCard(),
-                );
+                return _buildCard(); 
               },
-              childCount: 3,
+              childCount: 1, 
             ),
-          ),
+          )
         ],
+
+        
       ),
     );
   }
 
   Widget _buildCard() {
     return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        color: Colors.white,
-        border: Border.all(
-          color: Color.fromRGBO(220, 220, 220, 1),
-          width: 1,
-        ),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      color: Colors.white,
+      child: Column(
         children: [
-          Container(
-            width: 141,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.horizontal(
-                left: Radius.circular(15),
-              ),
-              image: DecorationImage(
-                image: const AssetImage('assets/images/Rectangle 34.png'),
-                fit: BoxFit.fitWidth,
-              ),
-            ),
-          ),
-          SizedBox(width: 10),
-          Expanded(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 16),
-                  Text(
-                    'Cats of UPLB',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: 'Inter',
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    'Organization Category',
-                    style: TextStyle(
-                      color: Color.fromRGBO(62, 218, 134, 1),
-                      fontFamily: 'Inter',
-                      fontSize: 10,
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud',
-                    style: TextStyle(
-                      color: Color.fromRGBO(159, 159, 159, 1),
-                      fontFamily: 'Inter',
-                      fontSize: 10,
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    children: [
-                      Container(
-                        width: 12,
-                        height: 12,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage('assets/images/Location.png'),
-                            fit: BoxFit.fitWidth,
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 4),
-                      Text(
-                        'Los Baños, Laguna',
-                        style: TextStyle(
-                          color: Color.fromRGBO(62, 218, 134, 1),
-                          fontFamily: 'Inter',
-                          fontSize: 10,
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
+          DonationCard(),
+          DonationCard(),
+          DonationCard(),
+          DonationCard(),
         ],
       ),
     );
   }
+
+
 }
