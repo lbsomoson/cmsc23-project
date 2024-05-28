@@ -3,18 +3,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class FirebaseAdminAPI {
   static final FirebaseFirestore db = FirebaseFirestore.instance;
 
+  // get USERTYPE by id
   Future<Map<String, dynamic>> getUserType(String userId) async {
     DocumentSnapshot u = await db.collection('users').doc(userId).get();
     Map<String, dynamic> user = u.data() as Map<String, dynamic>;
-    print('user from api: $user');
-
     return user;
   }
 
+  // get ALL DONORS
   Stream<QuerySnapshot> getDonors() {
     return db.collection('donors').snapshots();
   }
 
+  // get ONE donor by id
   Future<Map<String, dynamic>> getDonor(String id) async {
     DocumentSnapshot d = await db.collection("donors").doc(id).get();
     Map<String, dynamic> donor = d.data() as Map<String, dynamic>;
@@ -22,10 +23,12 @@ class FirebaseAdminAPI {
     return donor;
   }
 
+  // get ALL organizations
   Stream<QuerySnapshot> getOrganizations() {
     return db.collection('organizations').snapshots();
   }
 
+  // get ONE organization by id
   Future<Map<String, dynamic>> getOrganization(String id) async {
     DocumentSnapshot o = await db.collection("organizations").doc(id).get();
     Map<String, dynamic> org = o.data() as Map<String, dynamic>;
@@ -50,10 +53,12 @@ class FirebaseAdminAPI {
     return donationDrive;
   }
 
+  // get ALL donations
   Stream<QuerySnapshot> getDonations() {
     return db.collection('donations').snapshots();
   }
 
+  // get ONE donation by id
   Future<Map<String, dynamic>> getDonation(String donationId) async {
     DocumentSnapshot donation =
         await db.collection("donation").doc(donationId).get();
