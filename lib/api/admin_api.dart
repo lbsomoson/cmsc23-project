@@ -88,6 +88,24 @@ class FirebaseAdminAPI {
     return donationDetails;
   }
 
+  // get ALL donations
+  Stream<QuerySnapshot> getDonationsByOrgId(String orgId) {
+    return db
+        .collection('donations')
+        .where("organizationId", isEqualTo: orgId)
+        .snapshots();
+  }
+
+  // get total donations count per organization
+  Future<int> getDonationsCountByOrgId(String orgId) async {
+    QuerySnapshot snapshot = await db
+        .collection('donations')
+        .where("organizationId", isEqualTo: orgId)
+        .get();
+
+    return snapshot.size;
+  }
+
   // get total donations count
   Future<int> getDonationsCount() async {
     QuerySnapshot snapshot = await db.collection('donations').get();

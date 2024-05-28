@@ -10,6 +10,7 @@ class AdminProvider with ChangeNotifier {
   late Stream<QuerySnapshot> _organizationsToApproveStream;
   late Stream<QuerySnapshot> _donationDriveStream;
   late Stream<QuerySnapshot> _donationsStream;
+  late Stream<QuerySnapshot> _donationDriveByOrgIdStream;
 
   AdminProvider() {
     getDonors();
@@ -77,6 +78,18 @@ class AdminProvider with ChangeNotifier {
   // get ONE donation by id
   Future<Map<String, dynamic>> getDonation(String orgId) async {
     return await firebaseService.getDonation(orgId);
+  }
+
+  // get ALL donations by orgId
+  Stream<QuerySnapshot> getDonationsByOrgId(String orgId) {
+    _donationDriveByOrgIdStream = firebaseService.getDonationsByOrgId(orgId);
+    notifyListeners();
+    return _donationDriveByOrgIdStream;
+  }
+
+  // get total donations count per organization
+  Future<int> getDonationsCountByOrgId(String orgId) async {
+    return await firebaseService.getDonationsCountByOrgId(orgId);
   }
 
   // get the number of donations

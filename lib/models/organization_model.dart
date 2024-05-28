@@ -1,65 +1,62 @@
-import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
+// TODO: ADD CATEGORY OF ORGANIZATION
 class Organization {
   String? organizationId;
   String name;
+  String username;
   String email;
-  String userName;
-  String address;
-  int contactNumber;
-  String about;
+  List<String> addresses;
+  String contactNumber;
   String userType;
-  List<String> donationDrives;
-  List<String> donations;
+  String photoUrl;
+  String proofPath;
+  Timestamp uploadedAt;
+  bool isApproved;
 
   Organization({
     this.organizationId,
     required this.name,
+    required this.username,
     required this.email,
-    required this.userName,
-    required this.address,
+    required this.addresses,
     required this.contactNumber,
-    required this.about,
     required this.userType,
-    required this.donationDrives,
-    required this.donations,
+    required this.photoUrl,
+    required this.proofPath,
+    required this.uploadedAt,
+    required this.isApproved,
   });
 
-  // Factory constructor to instantiate object from json format
   factory Organization.fromJson(Map<String, dynamic> json) {
     return Organization(
       organizationId: json['organizationId'],
-      name: json['name'],
-      email: json['email'],
-      userName: json['userName'],
-      address: json['address'],
-      contactNumber: json['contactNumber'],
-      about: json['about'],
-      userType: json['userType'],
-      donationDrives: json['donationDrives'],
-      donations: json['donations'],
+      name: json['name'] ?? '',
+      username: json['username'] ?? '',
+      email: json['email'] ?? '',
+      addresses: List<String>.from(json['addresses'] ?? []),
+      contactNumber: json['contactNumber'] ?? '',
+      userType: json['userType'] ?? '',
+      photoUrl: json['photoUrl'] ?? '',
+      proofPath: json['proofPath'] ?? '',
+      uploadedAt: json['uploadedAt'] ?? Timestamp.now(),
+      isApproved: json['isApproved'] ?? false,
     );
   }
 
-  static List<Organization> fromJsonArray(String jsonData) {
-    final Iterable<dynamic> data = jsonDecode(jsonData);
-    return data
-        .map<Organization>((dynamic d) => Organization.fromJson(d))
-        .toList();
-  }
-
-  Map<String, dynamic> toJson(Organization organization) {
+  Map<String, dynamic> toJson() {
     return {
-      'organizationId': organization.organizationId,
-      'name': organization.name,
-      'email': organization.email,
-      'userName': organization.userName,
-      'address': organization.address,
-      'contactNumber': organization.contactNumber,
-      'about': organization.about,
-      'userType': organization.userType,
-      'donationDrives': organization.donationDrives,
-      'donations': organization.donations,
+      'organizationId': organizationId,
+      'name': name,
+      'username': username,
+      'email': email,
+      'addresses': addresses,
+      'contactNumber': contactNumber,
+      'userType': userType,
+      'photoUrl': photoUrl,
+      'proofPath': proofPath,
+      'uploadedAt': uploadedAt,
+      'isApproved': isApproved,
     };
   }
 }

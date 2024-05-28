@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:project/models/organization_model.dart';
 import 'package:project/widgets/text3.dart';
 
 class OrgCard extends StatefulWidget {
-  const OrgCard({super.key});
+  final Organization org;
+  const OrgCard({required this.org, super.key});
 
   @override
   State<OrgCard> createState() => _OrgCardState();
@@ -11,6 +13,8 @@ class OrgCard extends StatefulWidget {
 class _OrgCardState extends State<OrgCard> {
   @override
   Widget build(BuildContext context) {
+    Future<int>? _donationDrivesCount, _donationsCount;
+
     return InkWell(
       onTap: () {
         Navigator.pushNamed(context, '/admin-view-organizations');
@@ -46,13 +50,15 @@ class _OrgCardState extends State<OrgCard> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text("Metropawlitan",
-                        style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Color.fromRGBO(22, 57, 30, 1),
-                        )),
+                    Text(
+                      widget.org.name,
+                      style: const TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Color.fromRGBO(22, 57, 30, 1),
+                      ),
+                    ),
                     const SizedBox(height: 8),
                     const Text3Widget(
                       size: 14,
@@ -60,6 +66,28 @@ class _OrgCardState extends State<OrgCard> {
                       text2: "",
                     ),
                     const SizedBox(height: 10),
+                    // FutureBuilder<int>(
+                    //   future: _donationDrivesCount,
+                    //   builder: (context, snapshot) {
+                    //     if (snapshot.connectionState ==
+                    //         ConnectionState.waiting) {
+                    //       return const CircularProgressIndicator();
+                    //     }
+                    //     if (snapshot.hasError) {
+                    //       return Text('Error: ${snapshot.error}');
+                    //     }
+                    //     final int donationsCount = snapshot.data!;
+                    //     print(donationsCount);
+                    //     return Container();
+                    //     // return Text3Widget(
+                    //     //   size: 14,
+                    //     //   text1: donationsCount.toString(),
+                    //     //   text2: donationsCount > 1
+                    //     //       ? "donation drives"
+                    //     //       : "donation drives",
+                    //     // );
+                    //   },
+                    // ),
                     Text3Widget(
                       size: 14,
                       text1: 21.toString(),
