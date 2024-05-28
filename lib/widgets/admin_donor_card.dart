@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:project/widgets/text2.dart';
 
 class AdminDonorCard extends StatelessWidget {
-  final String name;
-  const AdminDonorCard({required this.name, super.key});
+  final String name, id;
+  const AdminDonorCard({required this.name, required this.id, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,15 @@ class AdminDonorCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text2Widget(text: name, style: "body4"),
-                  const Text2Widget(text: "Donor ID: 2133", style: "body3"),
+                  Text(
+                    id,
+                    style: const TextStyle(
+                      color: Colors.grey,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: 'Inter',
+                    ),
+                  ),
                 ],
               ),
             )
