@@ -1,16 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:project/models/organization_model.dart';
+import 'package:project/providers/admin_provider.dart';
 import 'package:project/widgets/text3.dart';
+import 'package:provider/provider.dart';
 
 class OrgCard extends StatefulWidget {
-  const OrgCard({super.key});
+  final Organization org;
+  const OrgCard({required this.org, super.key});
 
   @override
   State<OrgCard> createState() => _OrgCardState();
 }
 
 class _OrgCardState extends State<OrgCard> {
+  Future<int>? _donationDrivesCount, _donationsCount;
   @override
   Widget build(BuildContext context) {
+    _donationDrivesCount = context
+        .watch<AdminProvider>()
+        .getDonationDrivesCountByOrgId(widget.org.organizationId!);
+    _donationsCount = context
+        .watch<AdminProvider>()
+        .getDonationsCountByOrgId(widget.org.organizationId!);
     return InkWell(
       onTap: () {
         Navigator.pushNamed(context, '/admin-view-organizations');
@@ -42,33 +53,66 @@ class _OrgCardState extends State<OrgCard> {
             Expanded(
               flex: 2,
               child: Padding(
-                padding: const EdgeInsets.all(15),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text("Metropawlitan",
-                        style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Color.fromRGBO(22, 57, 30, 1),
-                        )),
-                    const SizedBox(height: 8),
+                    Text(
+                      widget.org.name,
+                      style: const TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Color.fromRGBO(22, 57, 30, 1),
+                      ),
+                    ),
                     const Text3Widget(
                       size: 14,
                       text1: "Category of Organization",
                       text2: "",
                     ),
                     const SizedBox(height: 10),
-                    Text3Widget(
-                      size: 14,
-                      text1: 21.toString(),
-                      text2: 21 > 1 ? "donation drives" : "donation drives",
+                    FutureBuilder<int>(
+                      future: _donationDrivesCount,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const CircularProgressIndicator();
+                        }
+                        if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        }
+                        final int donationDrivesCount = snapshot.data!;
+                        return Text3Widget(
+                          size: 14,
+                          text1: donationDrivesCount.toString(),
+                          text2: donationDrivesCount > 1 &&
+                                  donationDrivesCount != 0
+                              ? "donation drives"
+                              : "donation drive",
+                        );
+                      },
                     ),
-                    Text3Widget(
-                      size: 14,
-                      text1: 1000.toString(),
-                      text2: 1000 > 1 ? "donors" : "donor",
+                    FutureBuilder<int>(
+                      future: _donationsCount,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const CircularProgressIndicator();
+                        }
+                        if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        }
+                        final int donationsCount = snapshot.data!;
+                        return Text3Widget(
+                          size: 14,
+                          text1: donationsCount.toString(),
+                          text2: donationsCount > 1 && donationsCount != 0
+                              ? "donors"
+                              : "donor",
+                        );
+                      },
                     ),
                   ],
                 ),

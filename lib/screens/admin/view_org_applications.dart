@@ -27,7 +27,7 @@ class _ViewOrgApplicationsState extends State<ViewOrgApplications> {
           ),
           itemCount: 5,
           itemBuilder: (BuildContext context, int index) {
-            return const OrgApplicationCard();
+            // return const OrgApplicationCard();
           },
         ),
       ),

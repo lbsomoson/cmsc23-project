@@ -64,8 +64,6 @@ class _OrgAddDonationDriveScreenState extends State<OrgAddDonationDriveScreen> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState?.save();
 
-      print(donationDrive);
-
       DateTime? parsedDate;
       List<String> dateParts = donationDrive['date'].split('/');
       if (dateParts.length == 3) {
@@ -105,9 +103,6 @@ class _OrgAddDonationDriveScreenState extends State<OrgAddDonationDriveScreen> {
           file: donationDrive['file'],
           donationDeliveryProof: donationDrive[
               'donationDeliveryProof']); // upon creation, set status to open
-
-      print('---------------------');
-      print(newDonationDrive);
 
       await context.read<OrgProvider>().addDonationDrive(newDonationDrive);
 

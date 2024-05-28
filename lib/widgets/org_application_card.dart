@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project/widgets/button.dart';
 
 class OrgApplicationCard extends StatefulWidget {
+  // final Organization org;
   const OrgApplicationCard({super.key});
 
   @override
