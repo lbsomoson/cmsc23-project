@@ -3,9 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:project/providers/auth_provider.dart';
 import 'package:project/widgets/appbar_title.dart';
-import 'package:project/widgets/button.dart';
 import 'package:project/widgets/divider.dart';
-import 'package:project/widgets/iconbutton.dart';
 import 'package:project/widgets/org_application_card.dart';
 import 'package:project/widgets/text2.dart';
 import 'package:provider/provider.dart';
@@ -170,14 +168,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
                     ),
                   ],
                 ),
-                // CarouselSlider(
-                //   options: CarouselOptions(),
-                //   items: list
-                //       .map(
-                //         (item) => const OrgApplicationCard(),
-                //       )
-                //       .toList(),
-                // ),
                 CarouselSlider(
                   items: const [
                     OrgApplicationCard(),
