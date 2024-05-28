@@ -19,13 +19,14 @@ class AdminDashboard extends StatefulWidget {
 }
 
 class _AdminDashboardState extends State<AdminDashboard> {
-  Future<int>? _organizationsCount, _donorsCount;
+  Future<int>? _organizationsCount, _donorsCount, _donationsCount;
   Stream<QuerySnapshot>? _organizationsToApproveStream;
 
   @override
   Widget build(BuildContext context) {
     _organizationsCount = context.read<AdminProvider>().getOrganizationsCount();
     _donorsCount = context.read<AdminProvider>().getDonorsCount();
+    _donationsCount = context.read<AdminProvider>().getDonationsCount();
     _organizationsToApproveStream =
         context.read<AdminProvider>().getOrganizationsToApprove();
     return Scaffold(
@@ -39,27 +40,40 @@ class _AdminDashboardState extends State<AdminDashboard> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(vertical: 18),
-                  width: double.infinity / 2,
-                  decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary,
-                      borderRadius: BorderRadius.circular(15)),
-                  child: const Column(
-                    children: [
-                      Text(
-                        "₱500,000,000.00",
-                        style: TextStyle(color: Colors.white, fontSize: 32),
+                FutureBuilder<int>(
+                  future: _donationsCount,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    }
+                    if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    }
+                    final int donationsCount = snapshot.data!;
+                    return Container(
+                      padding: const EdgeInsets.symmetric(vertical: 18),
+                      width: double.infinity / 2,
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primary,
+                          borderRadius: BorderRadius.circular(15)),
+                      child: Column(
+                        children: [
+                          Text(
+                            donationsCount.toString(),
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 32),
+                          ),
+                          const Text(
+                            "Total donations",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400),
+                          )
+                        ],
                       ),
-                      Text(
-                        "Total donations",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400),
-                      )
-                    ],
-                  ),
+                    );
+                  },
                 ),
                 const SizedBox(
                   height: 10,
