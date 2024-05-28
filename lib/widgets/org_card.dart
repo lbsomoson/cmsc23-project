@@ -18,11 +18,12 @@ class _OrgCardState extends State<OrgCard> {
   Future<int>? _donationDrivesCount, _donationsCount;
   @override
   Widget build(BuildContext context) {
-    User? user = context.watch<UserAuthProvider>().user;
-    _donationDrivesCount =
-        context.watch<AdminProvider>().getDonationDrivesCountByOrgId(user!.uid);
-    _donationsCount =
-        context.watch<AdminProvider>().getDonationsCountByOrgId(user.uid);
+    _donationDrivesCount = context
+        .watch<AdminProvider>()
+        .getDonationDrivesCountByOrgId(widget.org.organizationId!);
+    _donationsCount = context
+        .watch<AdminProvider>()
+        .getDonationsCountByOrgId(widget.org.organizationId!);
     return InkWell(
       onTap: () {
         Navigator.pushNamed(context, '/admin-view-organizations');
