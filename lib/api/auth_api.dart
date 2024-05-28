@@ -18,6 +18,13 @@ class FirebaseAuthAPI {
     return auth.authStateChanges();
   }
 
+  Future<Map<String, dynamic>> getUserDetails(String userId) async {
+    DocumentSnapshot u = await db.collection("users").doc(userId).get();
+    Map<String, dynamic> user = u.data() as Map<String, dynamic>;
+
+    return user;
+  }
+
   // TODO: Refactor code, use the appropriate models
   Future<String?> signIn(String email, String password) async {
     try {
@@ -102,7 +109,7 @@ class FirebaseAuthAPI {
       await db.collection('organizations').doc(credential.user!.uid).set({
         "userId": credential.user!.uid,
         "name": name,
-        "username" : username,
+        "username": username,
         "email": email,
         "address": addresses,
         "contactNumber": contact,
@@ -169,20 +176,20 @@ class FirebaseAuthAPI {
   }
 
   Future signInWithGoogle() async {
-    // Trigger the authentication flow
+    // trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-    // Obtain the auth details from the request
+    // obtain the auth details from the request
     final GoogleSignInAuthentication? googleAuth =
         await googleUser?.authentication;
 
-    // Create a new credential
+    // create a new credential
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth?.accessToken,
       idToken: googleAuth?.idToken,
     );
 
-    // Once signed in, return the UserCredential
+    // once signed in, return the UserCredential
     UserCredential userCredential =
         await FirebaseAuth.instance.signInWithCredential(credential);
 
@@ -207,23 +214,23 @@ class FirebaseAuthAPI {
     Map<String, String> details = {};
     final User user = getUser()!;
     final String email = user.email!;
-      QuerySnapshot querySnapshot = await db
-          .collection('donors')
-          .where('email', isEqualTo: email)
-          .limit(1)
-          .get();
-        
-        String documentId = querySnapshot.docs.first.id;
-        DocumentSnapshot userDoc =
-            await db.collection("donors").doc(documentId).get();
-        details['name'] = userDoc.get('name');
-        details['username'] = userDoc.get('username');
-        details['email'] = userDoc.get('email');
-        details['contact'] = userDoc.get('contactNumber');
-        //details['address'] = userDoc.get('address');
-        return details;
+    QuerySnapshot querySnapshot = await db
+        .collection('donors')
+        .where('email', isEqualTo: email)
+        .limit(1)
+        .get();
+
+    String documentId = querySnapshot.docs.first.id;
+    DocumentSnapshot userDoc =
+        await db.collection("donors").doc(documentId).get();
+    details['name'] = userDoc.get('name');
+    details['username'] = userDoc.get('username');
+    details['email'] = userDoc.get('email');
+    details['contact'] = userDoc.get('contactNumber');
+    //details['address'] = userDoc.get('address');
+    return details;
   }
-  
+
   Future<void> signOut() async {
     await auth.signOut();
     await GoogleSignIn().signOut();

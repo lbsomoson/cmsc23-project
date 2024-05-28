@@ -3,6 +3,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class FirebaseAdminAPI {
   static final FirebaseFirestore db = FirebaseFirestore.instance;
 
+  Future<Map<String, dynamic>> getUserType(String userId) async {
+    DocumentSnapshot u = await db.collection('users').doc(userId).get();
+    Map<String, dynamic> user = u.data() as Map<String, dynamic>;
+    print('user from api: $user');
+
+    return user;
+  }
+
   Stream<QuerySnapshot> getDonors() {
     return db.collection('donors').snapshots();
   }
@@ -42,15 +50,15 @@ class FirebaseAdminAPI {
     return donationDrive;
   }
 
-  // TODO: VIEW DONATION DRIVE DONATIONS
-  // TODO: VIEW DONATION DRIVE DONATIONS
   Stream<QuerySnapshot> getDonations() {
     return db.collection('donations').snapshots();
   }
 
   Future<Map<String, dynamic>> getDonation(String donationId) async {
-    DocumentSnapshot donation = await db.collection("donation").doc(donationId).get();
-    Map<String, dynamic> donationDetails = donation.data() as Map<String, dynamic>;
+    DocumentSnapshot donation =
+        await db.collection("donation").doc(donationId).get();
+    Map<String, dynamic> donationDetails =
+        donation.data() as Map<String, dynamic>;
 
     return donationDetails;
   }

@@ -14,9 +14,12 @@ class AdminProvider with ChangeNotifier {
   late Stream<QuerySnapshot> _donationsStream;
   late Future<Map<String, dynamic>> _donation;
 
-
   AdminProvider() {
     getDonors();
+  }
+
+  Future<Map<String, dynamic>> getUserType(String id) async {
+    return await firebaseService.getUserType(id);
   }
 
   Stream<QuerySnapshot> getDonors() {
@@ -45,7 +48,7 @@ class AdminProvider with ChangeNotifier {
     return _donationDriveStream;
   }
 
-  Stream<QuerySnapshot> getDonations () {
+  Stream<QuerySnapshot> getDonations() {
     _donationsStream = firebaseService.getDonations();
     notifyListeners();
     return _donationsStream;
@@ -54,6 +57,4 @@ class AdminProvider with ChangeNotifier {
   Future<Map<String, dynamic>> getDonation(String orgId) async {
     return await firebaseService.getDonation(orgId);
   }
-
-
 }
