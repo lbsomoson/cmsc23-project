@@ -149,8 +149,8 @@ class _ViewOrgDonationDriveState extends State<ViewOrgDonationDrive> {
                             text: "Recent Donors", style: "sectionHeader"),
 
                         widget.drive.donationIds != null &&
-                                    widget.drive.donationIds!.isNotEmpty ||
-                                widget.drive.donationIds!.length < 3
+                                widget.drive.donationIds!.isNotEmpty &&
+                                widget.drive.donationIds!.length <= 3
                             ? Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
