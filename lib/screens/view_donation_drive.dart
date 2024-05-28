@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:project/models/donation_drive_model.dart';
+import 'package:project/models/donor_model.dart';
 import 'package:project/models/organization_model.dart';
 import 'package:project/providers/admin_provider.dart';
 import 'package:project/providers/auth_provider.dart';
@@ -80,7 +84,8 @@ class _ViewOrgDonationDriveState extends State<ViewOrgDonationDrive> {
   @override
   Widget build(BuildContext context) {
     User? user = context.watch<UserAuthProvider>().user;
-    String userType = '';
+    Stream<QuerySnapshot>? _donorsStream =
+        context.watch<AdminProvider>().getDonors();
 
     final daysLeft = _computeDaysLeft();
 
@@ -152,18 +157,51 @@ class _ViewOrgDonationDriveState extends State<ViewOrgDonationDrive> {
                             text: "Recent Donors", style: "sectionHeader"),
 
                         // TODO: GET DONOR NAME USING ID
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              DonorCard(name: "Donor Name"),
-                              DonorCard(name: "Donor Name"),
-                              DonorCard(name: "Donor Name"),
-                            ],
-                          ),
-                        ),
-                        // TODO: CHECK USER TYPE IF ORGANIZATION OR ADMIN, DISPLAY BUTTONS IF ORGANIZATION
+                        // widget.drive.donationIds != null
+                        //     ? Padding(
+                        //         padding: const EdgeInsets.all(8.0),
+                        //         child: Column(
+                        //           crossAxisAlignment: CrossAxisAlignment.start,
+                        //           children: [
+                        //             for (int i = 0; i < 3; i++)
+                        //               DonorCard(
+                        //                   name: widget.drive.donationIds![i]),
+                        //           ],
+                        //         ))
+                        //     : Container(),
+
+                        widget.drive.donationIds != null &&
+                                widget.drive.donationIds!.isNotEmpty
+                            ? Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    for (int i = 0; i < 3; i++)
+                                      FutureBuilder<Map<String, dynamic>>(
+                                        future: context
+                                            .read<AdminProvider>()
+                                            .getDonor(
+                                                widget.drive.donationIds![i]),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.waiting) {
+                                            return const CircularProgressIndicator();
+                                          }
+                                          if (snapshot.hasError) {
+                                            return const Text(
+                                                'Error loading donor');
+                                          }
+                                          final donorData = snapshot.data!;
+                                          return DonorCard(
+                                              name: donorData['name']);
+                                        },
+                                      ),
+                                  ],
+                                ),
+                              )
+                            : Container(),
+
                         // TODO: SAVE USERTYPE TO PROVIDER
                         FutureBuilder<Map<String, dynamic>>(
                           future: context
