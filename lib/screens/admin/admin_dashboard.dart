@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:project/models/organization_model.dart';
 import 'package:project/providers/admin_provider.dart';
 import 'package:project/providers/auth_provider.dart';
 import 'package:project/widgets/appbar_title.dart';
