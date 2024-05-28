@@ -6,7 +6,6 @@ import 'package:project/models/donation_drive_model.dart';
 class OrgProvider with ChangeNotifier {
   FirebaseOrgAPI firebaseService = FirebaseOrgAPI();
   late Stream<QuerySnapshot> _orgdonationsStream;
-  late Future<Map<String, dynamic>> _orgdonation;
 
   Future<String> addDonationDrive(DonationDrive donationDrive) async {
     String res = await firebaseService
@@ -15,17 +14,18 @@ class OrgProvider with ChangeNotifier {
     return res;
   }
 
-  void editDonationDrive(String driveId, Map<String,dynamic> editedDrive) async {
+  void editDonationDrive(
+      String driveId, Map<String, dynamic> editedDrive) async {
     await firebaseService.editDonationDrive(driveId, editedDrive);
     notifyListeners();
   }
 
-  void deleteDonationDrive(String driveId) async{
+  void deleteDonationDrive(String driveId) async {
     await firebaseService.deleteDonationDrive(driveId);
     notifyListeners();
   }
 
-  Stream<QuerySnapshot> getDonations (String orgId) {
+  Stream<QuerySnapshot> getDonations(String orgId) {
     _orgdonationsStream = firebaseService.getorgDonations(orgId);
     notifyListeners();
     return _orgdonationsStream;
@@ -34,5 +34,4 @@ class OrgProvider with ChangeNotifier {
   Future<Map<String, dynamic>> getDonation(String orgId) async {
     return await firebaseService.getorgDonation(orgId);
   }
-  
 }

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:project/providers/org_provider.dart';
 import 'package:project/widgets/appbar_title.dart';
 import 'package:project/widgets/button.dart';
-import 'package:project/widgets/datepicker.dart';
+// import 'package:project/widgets/datepicker.dart';
 import 'package:project/widgets/divider.dart';
-import 'package:project/widgets/image_upload2.dart';
+// import 'package:project/widgets/image_upload2.dart';
 import 'package:project/widgets/text2.dart';
 import 'package:project/widgets/textfield.dart';
 import 'package:project/models/donation_drive_model.dart';
@@ -31,17 +31,24 @@ class _OrgEditDonationDriveScreenState
   //   'photo': ""
   // };
 
-  void editValues(Map<String, dynamic> toEdit,String title, String plan, String recipient){
+  void editValues(Map<String, dynamic> toEdit, String title, String plan,
+      String recipient) {
     toEdit['title'] = title;
     toEdit['usagePlan'] = plan;
-    toEdit['recipient'] = recipient; 
+    toEdit['recipient'] = recipient;
   }
 
   String? title, plan, recipient;
 
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> newDrive = {'title':widget.drive.title, 'usagePlan':widget.drive.plan, 'recipient':widget.drive.recipient,'status':widget.drive.status,};
+    Map<String, dynamic> newDrive = {
+      'title': widget.drive.title,
+      'usagePlan': widget.drive.plan,
+      'date': widget.drive.date,
+      'recipient': widget.drive.recipient,
+      'status': widget.drive.status,
+    };
 
     return Scaffold(
       appBar: AppBar(
@@ -60,7 +67,7 @@ class _OrgEditDonationDriveScreenState
                 const Text2Widget(text: "Details", style: "sectionHeader"),
                 TextFieldWidget(
                   initialValue: widget.drive.title,
-                  callback: (String val)  => title = val,
+                  callback: (String val) => title = val,
                   hintText: "Title",
                   type: "String",
                   label: "Title",
@@ -71,7 +78,7 @@ class _OrgEditDonationDriveScreenState
                 ),
                 TextFieldWidget(
                   initialValue: widget.drive.recipient,
-                  callback: (String val)  => recipient = val,
+                  callback: (String val) => recipient = val,
                   hintText: "Name of Recipient",
                   type: "String",
                   label: "Name of Recipient",
@@ -82,7 +89,7 @@ class _OrgEditDonationDriveScreenState
                 ),
                 TextFieldWidget(
                   initialValue: widget.drive.plan,
-                  callback: (String val)  => plan = val,
+                  callback: (String val) => plan = val,
                   hintText: "Usage Plan",
                   type: "String",
                   maxLines: 5,
@@ -93,8 +100,10 @@ class _OrgEditDonationDriveScreenState
                   height: 10,
                 ),
                 // DatePickerWidget(
-                //   initialValue: drive['expirationDate'],
-                //   callback: () {},
+                //   initialValue: widget.drive.date,
+                //   callback: (String val) => {
+                //     date = val,
+                //   },
                 //   hintText: "Date of Expiration",
                 //   isRequired: true,
                 //   label: "Date of Expiration",
@@ -116,7 +125,10 @@ class _OrgEditDonationDriveScreenState
                 ButtonWidget(
                     handleClick: () {
                       editValues(newDrive, title!, plan!, recipient!);
-                      context.read<OrgProvider>().editDonationDrive(widget.drive.driveId!, newDrive); print(newDrive['title']);},
+                      context
+                          .read<OrgProvider>()
+                          .editDonationDrive(widget.drive.driveId!, newDrive);
+                    },
                     block: true,
                     label: "Add",
                     style: 'filled'),

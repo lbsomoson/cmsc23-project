@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:project/providers/auth_provider.dart';
 import 'package:project/widgets/appbar_title.dart';
 import 'package:project/widgets/divider.dart';
 import 'package:project/widgets/org_application_card.dart';
 import 'package:project/widgets/text2.dart';
+import 'package:provider/provider.dart';
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({super.key});
@@ -166,14 +168,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
                     ),
                   ],
                 ),
-                // CarouselSlider(
-                //   options: CarouselOptions(),
-                //   items: list
-                //       .map(
-                //         (item) => const OrgApplicationCard(),
-                //       )
-                //       .toList(),
-                // ),
                 CarouselSlider(
                   items: const [
                     OrgApplicationCard(),
@@ -187,6 +181,27 @@ class _AdminDashboardState extends State<AdminDashboard> {
                       initialPage: 0,
                       padEnds: false),
                 ),
+                TextButton.icon(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color?>(Colors.transparent),
+                    ),
+                    onPressed: () {
+                      context.read<UserAuthProvider>().signOut();
+                      Navigator.pushNamed(context, '/login');
+                    },
+                    label: Text(
+                      "Logout",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18,
+                      ),
+                    ),
+                    icon: Icon(
+                      Icons.logout,
+                      color: Theme.of(context).colorScheme.primary,
+                    )),
               ],
             ),
           ),
