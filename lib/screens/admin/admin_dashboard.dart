@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:project/providers/admin_provider.dart';
 import 'package:project/providers/auth_provider.dart';
 import 'package:project/widgets/appbar_title.dart';
 import 'package:project/widgets/divider.dart';
@@ -16,10 +19,15 @@ class AdminDashboard extends StatefulWidget {
 }
 
 class _AdminDashboardState extends State<AdminDashboard> {
-  List list = [1, 2, 3, 4, 5];
+  Future<int>? _organizationsCount, _donorsCount;
+  Stream<QuerySnapshot>? _organizationsToApproveStream;
 
   @override
   Widget build(BuildContext context) {
+    _organizationsCount = context.read<AdminProvider>().getOrganizationsCount();
+    _donorsCount = context.read<AdminProvider>().getDonorsCount();
+    _organizationsToApproveStream =
+        context.read<AdminProvider>().getOrganizationsToApprove();
     return Scaffold(
       appBar: AppBar(
         title: const AppBarTitle(title: "Admin Dashboard"),
@@ -58,75 +66,111 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 ),
                 Row(
                   children: [
+                    // display the number of donors using future builder
                     Expanded(
                       flex: 2,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 18),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            border: Border.all(
-                                color: Theme.of(context).colorScheme.primary)),
-                        child: Column(
-                          children: [
-                            FaIcon(
-                              FontAwesomeIcons.handHoldingHeart,
-                              size: 18,
-                              color: Theme.of(context).colorScheme.primary,
+                      child: FutureBuilder<int>(
+                        future: _donorsCount,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const CircularProgressIndicator();
+                          }
+                          if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          }
+                          final int donorsCount = snapshot.data!;
+                          return Container(
+                            padding: const EdgeInsets.symmetric(vertical: 18),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              border: Border.all(
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
                             ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              "15,000",
-                              style: TextStyle(
+                            child: Column(
+                              children: [
+                                FaIcon(
+                                  FontAwesomeIcons.handHoldingHeart,
+                                  size: 18,
                                   color: Theme.of(context).colorScheme.primary,
-                                  fontSize: 24),
+                                ),
+                                const SizedBox(height: 5),
+                                Text(
+                                  donorsCount.toString(),
+                                  style: TextStyle(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    fontSize: 24,
+                                  ),
+                                ),
+                                Text(
+                                  "Donors",
+                                  style: TextStyle(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
                             ),
-                            Text(
-                              "Donors",
-                              style: TextStyle(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  fontSize: 14),
-                            ),
-                          ],
-                        ),
+                          );
+                        },
                       ),
                     ),
                     const SizedBox(
                       width: 10,
                     ),
+                    // display the number of organizations using future builder
                     Expanded(
                       flex: 2,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 18),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            border: Border.all(
-                                color: Theme.of(context).colorScheme.primary)),
-                        child: Column(
-                          children: [
-                            FaIcon(
-                              FontAwesomeIcons.globe,
-                              size: 18,
-                              color: Theme.of(context).colorScheme.primary,
+                      child: FutureBuilder<int>(
+                        future: _organizationsCount,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const CircularProgressIndicator();
+                          }
+                          if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          }
+                          final int organizationsCount = snapshot.data!;
+                          return Container(
+                            padding: const EdgeInsets.symmetric(vertical: 18),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              border: Border.all(
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
                             ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              "200",
-                              style: TextStyle(
+                            child: Column(
+                              children: [
+                                FaIcon(
+                                  FontAwesomeIcons.globe,
+                                  size: 18,
                                   color: Theme.of(context).colorScheme.primary,
-                                  fontSize: 24),
+                                ),
+                                const SizedBox(height: 5),
+                                Text(
+                                  organizationsCount.toString(),
+                                  style: TextStyle(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    fontSize: 24,
+                                  ),
+                                ),
+                                Text(
+                                  "Organizations",
+                                  style: TextStyle(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
                             ),
-                            Text(
-                              "Organizations",
-                              style: TextStyle(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  fontSize: 14),
-                            ),
-                          ],
-                        ),
+                          );
+                        },
                       ),
                     ),
                   ],

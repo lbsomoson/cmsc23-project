@@ -116,7 +116,8 @@ class FirebaseAuthAPI {
         "userType": type,
         "photoUrl": downloadURL,
         "proofPath": path,
-        'uploadedAt': Timestamp.now(),
+        "uploadedAt": Timestamp.now(),
+        "isApproved": false,
       });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {

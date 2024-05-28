@@ -10,6 +10,12 @@ class FirebaseAdminAPI {
     return user;
   }
 
+  // get the number of donors
+  Future<int> getDonorsCount() async {
+    QuerySnapshot snapshot = await db.collection('donors').get();
+    return snapshot.docs.length;
+  }
+
   // get ALL DONORS
   Stream<QuerySnapshot> getDonors() {
     return db.collection('donors').snapshots();
@@ -23,6 +29,12 @@ class FirebaseAdminAPI {
     return donor;
   }
 
+  // get the number of organizations
+  Future<int> getOrganizationsCount() async {
+    QuerySnapshot snapshot = await db.collection('organizations').get();
+    return snapshot.docs.length;
+  }
+
   // get ALL organizations
   Stream<QuerySnapshot> getOrganizations() {
     return db.collection('organizations').snapshots();
@@ -34,6 +46,14 @@ class FirebaseAdminAPI {
     Map<String, dynamic> org = o.data() as Map<String, dynamic>;
 
     return org;
+  }
+
+  // get ALL organizations that are not yet approved
+  Stream<QuerySnapshot> getOrganizationsToApprove() {
+    return db
+        .collection("organizations")
+        .where("isApproved", isEqualTo: false)
+        .snapshots();
   }
 
   // fetch all instances of `donation_drives` as a Stream of QuerySnapshot
