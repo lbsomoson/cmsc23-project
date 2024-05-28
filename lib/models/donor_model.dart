@@ -26,8 +26,11 @@ class Donor {
       email: json['email'],
       userType: json['userType'],
       contactNumber: json['contactNumber'],
-      addresses: json['addresses'],
-      organizations: json['organizations'],
+      addresses:
+          json['addresses'] != null ? List<String>.from(json['addresses']) : [],
+      organizations: json['organizations'] != null
+          ? List<String>.from(json['organizations'])
+          : [],
     );
   }
 
