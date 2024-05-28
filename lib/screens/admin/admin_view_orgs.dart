@@ -64,14 +64,6 @@ class _AdminViewOrgsScreenState extends State<AdminViewOrgsScreen> {
                         return OrgCard(org: org);
                       });
                 })
-            // child: Column(
-            //   children: [
-            //     OrgCard(),
-            //     OrgCard(),
-            //     OrgCard(),
-            //     OrgCard(),
-            //   ],
-            // ),
             ));
   }
 }

@@ -1,6 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project/models/organization_model.dart';
+import 'package:project/providers/admin_provider.dart';
+import 'package:project/providers/auth_provider.dart';
 import 'package:project/widgets/text3.dart';
+import 'package:provider/provider.dart';
 
 class OrgCard extends StatefulWidget {
   final Organization org;
@@ -11,10 +15,14 @@ class OrgCard extends StatefulWidget {
 }
 
 class _OrgCardState extends State<OrgCard> {
+  Future<int>? _donationDrivesCount, _donationsCount;
   @override
   Widget build(BuildContext context) {
-    Future<int>? _donationDrivesCount, _donationsCount;
-
+    User? user = context.watch<UserAuthProvider>().user;
+    _donationDrivesCount =
+        context.watch<AdminProvider>().getDonationDrivesCountByOrgId(user!.uid);
+    _donationsCount =
+        context.watch<AdminProvider>().getDonationsCountByOrgId(user.uid);
     return InkWell(
       onTap: () {
         Navigator.pushNamed(context, '/admin-view-organizations');
@@ -46,7 +54,8 @@ class _OrgCardState extends State<OrgCard> {
             Expanded(
               flex: 2,
               child: Padding(
-                padding: const EdgeInsets.all(15),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -59,44 +68,52 @@ class _OrgCardState extends State<OrgCard> {
                         color: Color.fromRGBO(22, 57, 30, 1),
                       ),
                     ),
-                    const SizedBox(height: 8),
                     const Text3Widget(
                       size: 14,
                       text1: "Category of Organization",
                       text2: "",
                     ),
                     const SizedBox(height: 10),
-                    // FutureBuilder<int>(
-                    //   future: _donationDrivesCount,
-                    //   builder: (context, snapshot) {
-                    //     if (snapshot.connectionState ==
-                    //         ConnectionState.waiting) {
-                    //       return const CircularProgressIndicator();
-                    //     }
-                    //     if (snapshot.hasError) {
-                    //       return Text('Error: ${snapshot.error}');
-                    //     }
-                    //     final int donationsCount = snapshot.data!;
-                    //     print(donationsCount);
-                    //     return Container();
-                    //     // return Text3Widget(
-                    //     //   size: 14,
-                    //     //   text1: donationsCount.toString(),
-                    //     //   text2: donationsCount > 1
-                    //     //       ? "donation drives"
-                    //     //       : "donation drives",
-                    //     // );
-                    //   },
-                    // ),
-                    Text3Widget(
-                      size: 14,
-                      text1: 21.toString(),
-                      text2: 21 > 1 ? "donation drives" : "donation drives",
+                    FutureBuilder<int>(
+                      future: _donationDrivesCount,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const CircularProgressIndicator();
+                        }
+                        if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        }
+                        final int donationDrivesCount = snapshot.data!;
+                        return Text3Widget(
+                          size: 14,
+                          text1: donationDrivesCount.toString(),
+                          text2: donationDrivesCount > 1 &&
+                                  donationDrivesCount != 0
+                              ? "donation drives"
+                              : "donation drive",
+                        );
+                      },
                     ),
-                    Text3Widget(
-                      size: 14,
-                      text1: 1000.toString(),
-                      text2: 1000 > 1 ? "donors" : "donor",
+                    FutureBuilder<int>(
+                      future: _donationsCount,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const CircularProgressIndicator();
+                        }
+                        if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        }
+                        final int donationsCount = snapshot.data!;
+                        return Text3Widget(
+                          size: 14,
+                          text1: donationsCount.toString(),
+                          text2: donationsCount > 1 && donationsCount != 0
+                              ? "donors"
+                              : "donor",
+                        );
+                      },
                     ),
                   ],
                 ),

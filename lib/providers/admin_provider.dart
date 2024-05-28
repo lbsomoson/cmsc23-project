@@ -92,6 +92,11 @@ class AdminProvider with ChangeNotifier {
     return await firebaseService.getDonationsCountByOrgId(orgId);
   }
 
+  // get total donations count per organization
+  Future<int> getDonationDrivesCountByOrgId(String orgId) async {
+    return await firebaseService.getDonationDrivesCountByOrgId(orgId);
+  }
+
   // get the number of donations
   Future<int> getDonationsCount() async {
     return await firebaseService.getDonationsCount();
