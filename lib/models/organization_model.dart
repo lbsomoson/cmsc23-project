@@ -7,6 +7,7 @@ class Organization {
   String username;
   String email;
   List<String> addresses;
+  List<String> donationDrives;
   String contactNumber;
   String userType;
   String photoUrl;
@@ -20,6 +21,7 @@ class Organization {
     required this.username,
     required this.email,
     required this.addresses,
+    required this.donationDrives,
     required this.contactNumber,
     required this.userType,
     required this.photoUrl,
@@ -35,6 +37,7 @@ class Organization {
       username: json['username'] ?? '',
       email: json['email'] ?? '',
       addresses: List<String>.from(json['addresses'] ?? []),
+      donationDrives: List<String>.from(json['donationDrives'] ?? []),
       contactNumber: json['contactNumber'] ?? '',
       userType: json['userType'] ?? '',
       photoUrl: json['photoUrl'] ?? '',
@@ -51,6 +54,7 @@ class Organization {
       'username': username,
       'email': email,
       'addresses': addresses,
+      'donationDrives': donationDrives,
       'contactNumber': contactNumber,
       'userType': userType,
       'photoUrl': photoUrl,
