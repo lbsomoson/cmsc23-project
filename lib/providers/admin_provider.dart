@@ -38,7 +38,7 @@ class AdminProvider with ChangeNotifier {
 
   // get the number of organizations
   Future<int> getOrganizationsCount() async {
-    return await firebaseService.getDonorsCount();
+    return await firebaseService.getOrganizationsCount();
   }
 
   // get ALL organizations
@@ -77,5 +77,10 @@ class AdminProvider with ChangeNotifier {
   // get ONE donation by id
   Future<Map<String, dynamic>> getDonation(String orgId) async {
     return await firebaseService.getDonation(orgId);
+  }
+
+  // get the number of donations
+  Future<int> getDonationsCount() async {
+    return await firebaseService.getDonationsCount();
   }
 }

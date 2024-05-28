@@ -87,4 +87,10 @@ class FirebaseAdminAPI {
 
     return donationDetails;
   }
+
+  // get total donations count
+  Future<int> getDonationsCount() async {
+    QuerySnapshot snapshot = await db.collection('donations').get();
+    return snapshot.docs.length;
+  }
 }
