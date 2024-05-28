@@ -1,8 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project/models/organization_model.dart';
 import 'package:project/providers/admin_provider.dart';
-import 'package:project/providers/auth_provider.dart';
 import 'package:project/widgets/text3.dart';
 import 'package:provider/provider.dart';
 
