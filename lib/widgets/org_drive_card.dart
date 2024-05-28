@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project/models/donation_drive_model.dart';
 import 'package:project/screens/view_donation_drive.dart';
 import 'package:project/widgets/text3.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class OrgDriveCard extends StatefulWidget {
   final DonationDrive drive;
@@ -34,24 +35,32 @@ class _OrgDriveCardState extends State<OrgDriveCard> {
           children: [
             Expanded(
               flex: 1,
-              child: ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    bottomLeft: Radius.circular(10),
-                  ),
-                  child: Image.asset(
-                    'assets/images/dog.jpg',
-                    fit: BoxFit.cover,
-                  )),
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      bottomLeft: Radius.circular(10),
+                    ),
+                    child: FadeInImage.memoryNetwork(
+                      placeholder: kTransparentImage,
+                      image: widget.drive.photoUrl,
+                      fit: BoxFit.cover,
+                    )),
+              ),
             ),
             Expanded(
               flex: 2,
               child: Padding(
-                padding: const EdgeInsets.all(15),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 22, horizontal: 15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(widget.drive.title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        softWrap: true,
                         style: const TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 16,

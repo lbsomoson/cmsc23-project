@@ -23,6 +23,10 @@ class UserAuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<Map<String, dynamic>> getUserDetails(String id) async {
+    return await auth.getUserDetails(id);
+  }
+
   Future<String?> orgSignUp(
       String email,
       String username,
@@ -69,8 +73,8 @@ class UserAuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<Map> getDetails() async{
-    Map<dynamic, dynamic> details = await authService.getDetails(); 
+  Future<Map> getDetails() async {
+    Map<dynamic, dynamic> details = await authService.getDetails();
     notifyListeners();
     return details;
   }
