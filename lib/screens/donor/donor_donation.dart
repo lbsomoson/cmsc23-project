@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/widgets/appbar_title.dart';
 import 'package:project/widgets/donation_card.dart';
+import 'package:project/widgets/donor_view_donation_card.dart';
 
 class DonorDonation extends StatefulWidget {
   const DonorDonation({Key? key}) : super(key: key);
@@ -14,7 +15,7 @@ class _DonorDonationState extends State<DonorDonation> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const AppBarTitle(title: "Donations"),
+        title: const AppBarTitle(title: "My Donations"),
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: DefaultTabController(
@@ -49,10 +50,8 @@ class _DonorDonationState extends State<DonorDonation> {
                   color: Colors.white,
                   child: const Column(
                     children: [
-                      DonationCard(),
-                      DonationCard(),
-                      DonationCard(),
-                      DonationCard(),
+                      DonorDonationCard(),
+                      DonorDonationCard(),
                     ],
                   )),
               Container(

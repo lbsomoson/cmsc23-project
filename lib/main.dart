@@ -8,6 +8,7 @@ import 'screens/admin/admin_view_donors.dart';
 import 'screens/admin/admin_view_orgs.dart';
 import 'screens/admin/view_org_applications.dart';
 import 'screens/donor/donor_dashboard.dart';
+import 'screens/donor/donor_orgview.dart';
 import 'screens/donor/donor_profile.dart';
 import 'screens/donor/donor_signup.dart';
 import 'screens/organization/org_add_donation_drive.dart';
@@ -109,7 +110,7 @@ class _RootWidgetState extends State<RootWidget> {
           ),
         ),
       ),
-      initialRoute: "/admin-dashboard",
+      initialRoute: "/login",
       onGenerateRoute: (settings) {
         if (settings.name == "/") {
           return MaterialPageRoute(builder: (context) => const SplashScreen());
@@ -148,6 +149,9 @@ class _RootWidgetState extends State<RootWidget> {
         if (settings.name == "/donor-profile") {
           return MaterialPageRoute(
               builder: (context) => const DonorProfileScreen());
+        }
+        if (settings.name == "/donor-orgview") {
+          return MaterialPageRoute(builder: (context) => const DonorOrgView());
         }
         if (settings.name == "/organization-dashboard") {
           return MaterialPageRoute(

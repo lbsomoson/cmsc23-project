@@ -3,6 +3,8 @@ import 'package:project/screens/donor/donor_orgview.dart';
 import 'package:project/widgets/donation_card.dart';
 import 'package:project/widgets/donor_bottom_navbar.dart';
 import 'package:project/widgets/donor_card.dart';
+import 'package:project/widgets/donor_org_card.dart';
+import 'package:project/widgets/org_card.dart';
 
 import '../../widgets/appbar_title.dart';
 import '../../widgets/text.dart';
@@ -108,10 +110,10 @@ class _DonorDashboardScreenState extends State<DonorDashboardScreen> {
       color: Colors.white,
       child: Column(
         children: [
-          DonationCard(),
-          DonationCard(),
-          DonationCard(),
-          DonationCard(),
+          DonorOrgCard(),
+          DonorOrgCard(),
+          DonorOrgCard(),
+
         ],
       ),
     );
