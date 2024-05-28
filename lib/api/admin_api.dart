@@ -106,6 +106,16 @@ class FirebaseAdminAPI {
     return snapshot.size;
   }
 
+  // get total donation drives count per organization
+  Future<int> getDonationDrivesCountByOrgId(String orgId) async {
+    QuerySnapshot snapshot = await db
+        .collection('donation_drives')
+        .where("organizationId", isEqualTo: orgId)
+        .get();
+
+    return snapshot.size;
+  }
+
   // get total donations count
   Future<int> getDonationsCount() async {
     QuerySnapshot snapshot = await db.collection('donations').get();
