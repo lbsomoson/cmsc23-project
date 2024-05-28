@@ -1,11 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:project/models/donation_drive_model.dart';
-import 'package:project/models/donor_model.dart';
-import 'package:project/models/organization_model.dart';
 import 'package:project/providers/admin_provider.dart';
 import 'package:project/providers/auth_provider.dart';
 import 'package:project/providers/org_provider.dart';
@@ -84,9 +79,6 @@ class _ViewOrgDonationDriveState extends State<ViewOrgDonationDrive> {
   @override
   Widget build(BuildContext context) {
     User? user = context.watch<UserAuthProvider>().user;
-    Stream<QuerySnapshot>? _donorsStream =
-        context.watch<AdminProvider>().getDonors();
-
     final daysLeft = _computeDaysLeft();
 
     return Scaffold(
@@ -156,28 +148,20 @@ class _ViewOrgDonationDriveState extends State<ViewOrgDonationDrive> {
                         const Text2Widget(
                             text: "Recent Donors", style: "sectionHeader"),
 
-                        // TODO: GET DONOR NAME USING ID
-                        // widget.drive.donationIds != null
-                        //     ? Padding(
-                        //         padding: const EdgeInsets.all(8.0),
-                        //         child: Column(
-                        //           crossAxisAlignment: CrossAxisAlignment.start,
-                        //           children: [
-                        //             for (int i = 0; i < 3; i++)
-                        //               DonorCard(
-                        //                   name: widget.drive.donationIds![i]),
-                        //           ],
-                        //         ))
-                        //     : Container(),
-
                         widget.drive.donationIds != null &&
-                                widget.drive.donationIds!.isNotEmpty
+                                    widget.drive.donationIds!.isNotEmpty ||
+                                widget.drive.donationIds!.length < 3
                             ? Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    for (int i = 0; i < 3; i++)
+                                    for (int i = 0;
+                                        i < 3 ||
+                                            i <
+                                                widget
+                                                    .drive.donationIds!.length;
+                                        i++)
                                       FutureBuilder<Map<String, dynamic>>(
                                         future: context
                                             .read<AdminProvider>()
@@ -200,7 +184,8 @@ class _ViewOrgDonationDriveState extends State<ViewOrgDonationDrive> {
                                   ],
                                 ),
                               )
-                            : Container(),
+                            : const Text2Widget(
+                                text: "No donations yet", style: 'body3'),
 
                         // TODO: SAVE USERTYPE TO PROVIDER
                         FutureBuilder<Map<String, dynamic>>(

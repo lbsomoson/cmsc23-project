@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:project/providers/auth_provider.dart';
-import 'package:provider/provider.dart';
 
 class DonorDashboardScreen extends StatefulWidget {
   const DonorDashboardScreen({Key? key}) : super(key: key);

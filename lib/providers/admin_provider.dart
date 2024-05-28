@@ -6,13 +6,9 @@ class AdminProvider with ChangeNotifier {
   FirebaseAdminAPI firebaseService = FirebaseAdminAPI();
 
   late Stream<QuerySnapshot> _donorsStream;
-  late Future<Map<String, dynamic>> _donor;
   late Stream<QuerySnapshot> _organizationsStream;
-  late Future<Map<String, dynamic>> _organization;
   late Stream<QuerySnapshot> _donationDriveStream;
-  late Future<Map<String, dynamic>> _donationDrive;
   late Stream<QuerySnapshot> _donationsStream;
-  late Future<Map<String, dynamic>> _donation;
 
   AdminProvider() {
     getDonors();
