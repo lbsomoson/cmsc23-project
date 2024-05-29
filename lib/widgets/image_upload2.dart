@@ -175,7 +175,10 @@ class _ImageUpload2WidgetState extends State<ImageUpload2Widget> {
               color: Colors.grey[100],
               border: Border.all(width: 2, color: Colors.grey[200]!)),
           child: selectedImage != null
-              ? Image.file(selectedImage!)
+              ? Image.file(
+                  selectedImage!,
+                  fit: BoxFit.cover,
+                )
               : Center(
                   child: Icon(
                     Icons.add,

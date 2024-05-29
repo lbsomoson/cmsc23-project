@@ -12,7 +12,7 @@ import 'screens/donor/donor_orgview.dart';
 import 'screens/donor/donor_profile.dart';
 import 'screens/donor/donor_signup.dart';
 import 'screens/organization/org_add_donation_drive.dart';
-import 'screens/organization/org_edit_donation_drive.dart';
+// import 'screens/organization/org_edit_donation_drive.dart';
 import 'screens/signin.dart';
 import 'screens/organization/org_dashboard.dart';
 import 'screens/organization/org_drives.dart';

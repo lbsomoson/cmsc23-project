@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project/models/donation_drive_model.dart';
+import 'package:project/providers/admin_provider.dart';
+import 'package:project/providers/auth_provider.dart';
 import 'package:project/providers/org_provider.dart';
 import 'package:project/screens/organization/org_edit_donation_drive.dart';
 import 'package:project/widgets/button.dart';
@@ -10,6 +13,7 @@ import 'package:project/widgets/text2.dart';
 import 'package:project/widgets/text3.dart';
 import 'package:project/widgets/text4.dart';
 import 'package:provider/provider.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class ViewOrgDonationDrive extends StatefulWidget {
   final DonationDrive drive;
@@ -53,7 +57,8 @@ class _ViewOrgDonationDriveState extends State<ViewOrgDonationDrive> {
                   action: SnackBarAction(label: 'Close', onPressed: () {}),
                 );
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                Navigator.pop(context);
+
+                // TODO: FIX NAVIGATION AFTER DELETION
                 Navigator.pop(context);
                 // Navigator.pushNamedAndRemoveUntil(
                 //     context, '/organization-drives', (route) => false);
@@ -73,6 +78,7 @@ class _ViewOrgDonationDriveState extends State<ViewOrgDonationDrive> {
 
   @override
   Widget build(BuildContext context) {
+    User? user = context.watch<UserAuthProvider>().user;
     final daysLeft = _computeDaysLeft();
 
     return Scaffold(
@@ -82,11 +88,12 @@ class _ViewOrgDonationDriveState extends State<ViewOrgDonationDrive> {
             children: [
               Column(
                 children: [
-                  Image.asset(
-                    'assets/images/dog.jpg',
+                  FadeInImage.memoryNetwork(
+                    placeholder: kTransparentImage,
+                    image: widget.drive.photoUrl,
                     fit: BoxFit.cover,
-                    width: double.infinity,
                     height: 200,
+                    width: double.infinity,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(15),
@@ -114,11 +121,22 @@ class _ViewOrgDonationDriveState extends State<ViewOrgDonationDrive> {
                         const SizedBox(
                           height: 10,
                         ),
-                        // TODO: Get name of organization using ID
-                        Text4Widget(
-                            text1: "by",
-                            text2: widget.drive.organizationId,
-                            size: 16),
+                        FutureBuilder<Map<String, dynamic>>(
+                          future: context
+                              .read<AdminProvider>()
+                              .getOrganization(widget.drive.organizationId),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasError) {
+                              return const Text(
+                                  'Error loading organization name');
+                            }
+                            final organization = snapshot.data;
+                            return Text4Widget(
+                                text1: "by",
+                                text2: organization?['name'] ?? '',
+                                size: 16);
+                          },
+                        ),
                         const DividerWidget(),
                         const Text2Widget(
                             text: "Summary", style: "sectionHeader"),
@@ -130,46 +148,98 @@ class _ViewOrgDonationDriveState extends State<ViewOrgDonationDrive> {
                         const Text2Widget(
                             text: "Recent Donors", style: "sectionHeader"),
 
-                        // TODO: GET DONOR NAME USING ID
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              DonorCard(name: "Donor Name"),
-                              DonorCard(name: "Donor Name"),
-                              DonorCard(name: "Donor Name"),
-                            ],
-                          ),
+                        widget.drive.donationIds != null &&
+                                    widget.drive.donationIds!.isNotEmpty ||
+                                widget.drive.donationIds!.length < 3
+                            ? Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    for (int i = 0;
+                                        i < 3 ||
+                                            i <
+                                                widget
+                                                    .drive.donationIds!.length;
+                                        i++)
+                                      FutureBuilder<Map<String, dynamic>>(
+                                        future: context
+                                            .read<AdminProvider>()
+                                            .getDonor(
+                                                widget.drive.donationIds![i]),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.waiting) {
+                                            return const CircularProgressIndicator();
+                                          }
+                                          if (snapshot.hasError) {
+                                            return const Text(
+                                                'Error loading donor');
+                                          }
+                                          final donorData = snapshot.data!;
+                                          return DonorCard(
+                                              name: donorData['name']);
+                                        },
+                                      ),
+                                  ],
+                                ),
+                              )
+                            : const Text2Widget(
+                                text: "No donations yet", style: 'body3'),
+
+                        // TODO: SAVE USERTYPE TO PROVIDER
+                        FutureBuilder<Map<String, dynamic>>(
+                          future: context
+                              .watch<UserAuthProvider>()
+                              .getUserDetails(user!.uid),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const CircularProgressIndicator();
+                            }
+                            if (snapshot.hasError) {
+                              return const Text(
+                                  'Error loading organization name');
+                            }
+                            final user = snapshot.data;
+                            if (user?['type'] == 'organization') {
+                              return Column(
+                                children: [
+                                  const DividerWidget(),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  ButtonWidget(
+                                      handleClick: () {
+                                        // Navigator.pushNamed(
+                                        //     context, '/organization-edit-drive');
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return OrgEditDonationDriveScreen(
+                                              drive: widget.drive);
+                                        }));
+                                      },
+                                      block: true,
+                                      label: "Edit",
+                                      style: 'filled'),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  ButtonWidget(
+                                      handleClick: () {
+                                        _showDeleteDialog(context);
+                                      },
+                                      block: true,
+                                      label: "Delete",
+                                      style: 'outlined'),
+                                ],
+                              );
+                            } else {
+                              return Container();
+                            }
+                          },
                         ),
-                        // TODO: CHECK USER TYPE IF ORGANIZATION OR ADMIN, DISPLAY BUTTONS IF ORGANIZATION
-                        const DividerWidget(),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        ButtonWidget(
-                            handleClick: () {
-                              // Navigator.pushNamed(
-                              //     context, '/organization-edit-drive');
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return OrgEditDonationDriveScreen(
-                                    drive: widget.drive);
-                              }));
-                            },
-                            block: true,
-                            label: "Edit",
-                            style: 'filled'),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        ButtonWidget(
-                            handleClick: () {
-                              _showDeleteDialog(context);
-                            },
-                            block: true,
-                            label: "Delete",
-                            style: 'outlined'),
                       ],
                     ),
                   ),

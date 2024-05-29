@@ -86,21 +86,18 @@ class _DonorDashboardScreenState extends State<DonorDashboardScreen> {
                     ),
                   ),
                 ],
-
               ),
             ),
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
-                return _buildCard(); 
+                return _buildCard();
               },
-              childCount: 1, 
+              childCount: 1,
             ),
           )
         ],
-
-        
       ),
     );
   }
@@ -113,11 +110,8 @@ class _DonorDashboardScreenState extends State<DonorDashboardScreen> {
           DonorOrgCard(),
           DonorOrgCard(),
           DonorOrgCard(),
-
         ],
       ),
     );
   }
-
-
 }
