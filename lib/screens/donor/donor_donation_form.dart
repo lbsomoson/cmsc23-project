@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:project/widgets/appbar_title.dart';
 import 'package:project/widgets/text2.dart';
 import 'package:project/widgets/textfield.dart';
+
+import '../../widgets/image_upload2.dart';
 
 class DonorDonationForm extends StatefulWidget {
   const DonorDonationForm({Key? key}) : super(key: key);
@@ -22,6 +26,17 @@ class _DonorDonationFormState extends State<DonorDonationForm> {
     'address': '',
     'contactNumber': ''
   };
+  String? errorMessage, errorMessage2;
+  bool showImageUploadMessage = false, showDateMessage = false;
+
+  Widget get imageUploadMessage => Padding(
+        padding: const EdgeInsets.only(bottom: 30),
+        child: Text(
+          errorMessage!,
+          style: const TextStyle(
+              color: Colors.red, fontSize: 14, fontWeight: FontWeight.w400),
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +113,7 @@ class _DonorDonationFormState extends State<DonorDonationForm> {
                     CheckboxListTile(
                       controlAffinity: ListTileControlAffinity.leading,
                       title: Text2Widget(
-                          text: 'Necessities', style: 'labelMedium'),
+                      text: 'Necessities', style: 'labelMedium'),
                       value: _selectedTypes.contains('Necessities'),
                       onChanged: (checked) {
                         setState(() {
@@ -134,6 +149,39 @@ class _DonorDonationFormState extends State<DonorDonationForm> {
                       label: "Weight of items to donate in kg/lbs",
                       isRequired: true,
                     ),
+                  const Text2Widget(
+                      text: "Upload Image", style: "sectionHeader"),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ImageUpload2Widget(
+                    callBack: (String path, File file) => {
+                      addDonation['file'] = file,
+                      addDonation['path'] = path,
+                      setState(() {
+                        showImageUploadMessage = false;
+                      })
+                    },
+                  ),
+                  showImageUploadMessage
+                      ? Column(
+                          children: [
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            imageUploadMessage,
+                          ],
+                        )
+                      : Container(),
+                  const SizedBox(
+                    height: 20,
+                  ),
+
+
+
+
+
+
                     TextFieldWidget(
                       callback: (String val) => addDonation['address'] = val,
                       hintText: "Address",
