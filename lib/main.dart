@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project/models/donation_drive_model.dart';
+import 'package:project/models/organization_model.dart';
 import 'package:project/providers/org_provider.dart';
 import 'providers/admin_provider.dart';
 import 'screens/admin/admin_approval.dart';
@@ -181,13 +182,10 @@ class _RootWidgetState extends State<RootWidget> {
               builder: (context) => const ViewOrgApplications());
         }
         if (settings.name == "/admin-approval") {
+          final args = settings.arguments as Organization;
           return MaterialPageRoute(
-              builder: (context) => const AdminApprovalScreen());
+              builder: (context) => AdminApprovalScreen(org: args));
         }
-        // if (settings.name == "/admin-view-org-applications") {
-        //   return MaterialPageRoute(
-        //       builder: (context) => const ViewOrgApplications());
-        // }
         if (settings.name == "/admin-view-organizations") {
           return MaterialPageRoute(
               builder: (context) => const ViewOrganizationScreen());
