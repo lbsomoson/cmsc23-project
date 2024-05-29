@@ -13,12 +13,12 @@ class _DonorDashboardScreenState extends State<DonorDashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.read<UserAuthProvider>().signOut();
-        },
-        child: Text("Signout"),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     context.read<UserAuthProvider>().signOut();
+      //   },
+      //   child: Text("Signout"),
+      // ),
       appBar: AppBar(
         title: Text(
           'Dashboard',

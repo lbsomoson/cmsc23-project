@@ -28,4 +28,22 @@ class FirebaseOrgAPI {
       return "Failed with error '${e.code}: ${e.message}'";
     }
   }
+
+  Future<String> editDonationDrive(String driveId) async {
+    try {
+      await db.collection('donation_drives').doc(driveId).update({});
+      return "Successfully edited donation drive!";
+    } on FirebaseException catch (e) {
+      return "Failed with error '${e.code}: ${e.message}'";
+    }
+  }
+
+  Future<String> deleteDonationDrive(String driveId) async {
+    try {
+      await db.collection('donation_drives').doc(driveId).delete();
+      return "Successfully deleted donation drive!";
+    } on FirebaseException catch (e) {
+      return "Failed with error '${e.code}: ${e.message}'";
+    }
+  }
 }

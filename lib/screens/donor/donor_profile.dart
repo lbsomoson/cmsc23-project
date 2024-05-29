@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:project/providers/auth_provider.dart';
+import 'package:provider/provider.dart';
+
+
 class DonorProfileScreen extends StatefulWidget {
   const DonorProfileScreen({Key? key}) : super(key: key);
 
@@ -7,9 +11,18 @@ class DonorProfileScreen extends StatefulWidget {
 }
 
 class _DonorProfileScreenState extends State<DonorProfileScreen> {
+  // Map<dynamic, dynamic> details = {'name':''};
+
+  // void userDetails() async {
+  //   details = await context.read<UserAuthProvider>().getDetails();
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // floatingActionButton: FloatingActionButton(onPressed: () async {
+      //   userDetails();
+      //   }),
       appBar: AppBar(
         title: Text(
           'My Profile',
@@ -35,7 +48,8 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
                         MaterialStateProperty.all<Color?>(Colors.transparent),
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(context, '/login');
+                      context.read<UserAuthProvider>().signOut();
+                      Navigator.pushNamed(context, '/login');
                   },
                   label: Text(
                     "Logout",
@@ -73,7 +87,7 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
                 top: 300,
                 left: 130,
                 child: Text(
-                  'Juan Dela Cruz',
+                  "Juan Dela Cruz",
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     color: Color.fromRGBO(62, 218, 134, 1),

@@ -68,4 +68,10 @@ class UserAuthProvider with ChangeNotifier {
     await authService.signOut();
     notifyListeners();
   }
+
+  Future<Map> getDetails() async{
+    Map<dynamic, dynamic> details = await authService.getDetails(); 
+    notifyListeners();
+    return details;
+  }
 }
