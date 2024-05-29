@@ -230,12 +230,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           : Container(),
                       ButtonWidget(
                           handleClick: () async {
-                            _formKey.currentState!.save();
                             if (_formKey.currentState!.validate()) {
+                              _formKey.currentState!.save();
+
                               List<String> addresses = textFields
                                   .map((item) => item['value'] as String)
                                   .toList();
                               addresses.insert(0, address!);
+
                               String? message = await context
                                   .read<UserAuthProvider>()
                                   .authService
@@ -264,7 +266,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             }
                           },
                           block: true,
-                          label: "Sign In",
+                          label: "Sign Up",
                           style: "filled"),
                       const SizedBox(
                         height: 15,
