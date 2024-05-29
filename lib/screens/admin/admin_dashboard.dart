@@ -229,63 +229,58 @@ class _AdminDashboardState extends State<AdminDashboard> {
                   ],
                 ),
 
-                // CarouselSlider(
-                //   items: const [
-                //     OrgApplicationCard(),
-                //     OrgApplicationCard(),
-                //     OrgApplicationCard(),
-                //   ],
-                //   options: CarouselOptions(
-                //       aspectRatio: 1.10,
-                //       viewportFraction: 0.6,
-                //       enableInfiniteScroll: false,
-                //       initialPage: 0,
-                //       padEnds: false),
-                // ),
-
-                StreamBuilder<QuerySnapshot>(
-                  stream: _organizationsToApproveStream,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasError) {
-                      return Center(
-                        child: Text("Error encountered! ${snapshot.error}"),
-                      );
-                    } else if (snapshot.connectionState ==
-                        ConnectionState.waiting) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else if (!snapshot.hasData) {
-                      return const Center(
-                        child: Text("No Friends Found"),
-                      );
-                    } else if (snapshot.data!.docs.isEmpty) {
-                      return const Center(
-                          child: Center(
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text2Widget(
-                                  text: "No friends yet", style: 'body3')
-                            ]),
-                      ));
-                    }
-                    return ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemCount: snapshot.data?.docs.length,
-                      itemBuilder: (context, index) {
-                        Organization org = Organization.fromJson(
-                          snapshot.data?.docs[index].data()
-                              as Map<String, dynamic>,
+                // TODO: FIX DISPLAY
+                CarouselSlider(
+                  items: [
+                    StreamBuilder<QuerySnapshot>(
+                      stream: _organizationsToApproveStream,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Center(
+                            child: Text("Error encountered! ${snapshot.error}"),
+                          );
+                        } else if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (!snapshot.hasData) {
+                          return const Center(
+                            child: Text("No organizations to approve found"),
+                          );
+                        } else if (snapshot.data!.docs.isEmpty) {
+                          return const Center(
+                              child: Center(
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text2Widget(
+                                      text: "No organizations to approve yet",
+                                      style: 'body3')
+                                ]),
+                          ));
+                        }
+                        return ListView.builder(
+                          itemCount: snapshot.data?.docs.length,
+                          itemBuilder: (context, index) {
+                            Organization org = Organization.fromJson(
+                              snapshot.data?.docs[index].data()
+                                  as Map<String, dynamic>,
+                            );
+                            return OrgApplicationCard(org: org);
+                          },
                         );
-                        return OrgApplicationCard(org: org);
                       },
-                    );
-                  },
+                    ),
+                  ],
+                  options: CarouselOptions(
+                      aspectRatio: 1.10,
+                      viewportFraction: 0.6,
+                      enableInfiniteScroll: false,
+                      initialPage: 0,
+                      padEnds: false),
                 ),
-
                 ButtonWidget(
                     handleClick: () {
                       context.read<UserAuthProvider>().signOut();
