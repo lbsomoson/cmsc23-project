@@ -105,6 +105,20 @@ class _Text2WidgetState extends State<Text2Widget> {
     fontWeight: FontWeight.w600,
     fontFamily: 'Inter',
   );
+  //body5
+    TextStyle body5 = const TextStyle(
+    color: Colors.grey,
+    fontSize: 10,
+    fontWeight: FontWeight.w200,
+    fontFamily: 'Inter',
+  );
+    //body5
+    TextStyle body6 = const TextStyle(
+    color: Color.fromRGBO(62, 218, 134, 1),
+    fontSize: 10,
+    fontWeight: FontWeight.w600,
+    fontFamily: 'Inter',
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -125,6 +139,8 @@ class _Text2WidgetState extends State<Text2Widget> {
         'body2' => body2,
         'body3' => body3,
         'body4' => body4,
+        'body5' => body5,
+        'body6' => body6,
         _ => Theme.of(context).textTheme.bodyMedium,
       },
     );
