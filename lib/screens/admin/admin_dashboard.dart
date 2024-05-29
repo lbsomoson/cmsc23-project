@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:project/models/organization_model.dart';
 import 'package:project/providers/admin_provider.dart';
 import 'package:project/providers/auth_provider.dart';
 import 'package:project/widgets/appbar_title.dart';
@@ -28,7 +29,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
     _donorsCount = context.read<AdminProvider>().getDonorsCount();
     _donationsCount = context.read<AdminProvider>().getDonationsCount();
     _organizationsToApproveStream =
-        context.read<AdminProvider>().getOrganizationsToApprove();
+        context.watch<AdminProvider>().getOrganizationsToApprove();
+
     return Scaffold(
       appBar: AppBar(
         title: const AppBarTitle(title: "Admin Dashboard"),
@@ -227,94 +229,62 @@ class _AdminDashboardState extends State<AdminDashboard> {
                   ],
                 ),
 
-                CarouselSlider(
-                  items: const [
-                    OrgApplicationCard(),
-                    OrgApplicationCard(),
-                    OrgApplicationCard(),
-                  ],
-                  options: CarouselOptions(
-                      aspectRatio: 1.10,
-                      viewportFraction: 0.6,
-                      enableInfiniteScroll: false,
-                      initialPage: 0,
-                      padEnds: false),
-                ),
-
-                // StreamBuilder<QuerySnapshot>(
-                //   stream: _organizationsToApproveStream,
-                //   builder: (context, snapshot) {
-                //     if (snapshot.hasError) {
-                //       return Center(
-                //         child: Text("Error encountered! ${snapshot.error}"),
-                //       );
-                //     } else if (snapshot.connectionState ==
-                //         ConnectionState.waiting) {
-                //       return const Center(
-                //         child: CircularProgressIndicator(),
-                //       );
-                //     } else if (!snapshot.hasData) {
-                //       return const Center(
-                //         child: Text("No Friends Found"),
-                //       );
-                //     } else if (snapshot.data!.docs.isEmpty) {
-                //       return const Center(
-                //           child: Center(
-                //         child: Column(
-                //             mainAxisAlignment: MainAxisAlignment.center,
-                //             crossAxisAlignment: CrossAxisAlignment.center,
-                //             children: [
-                //               Text2Widget(
-                //                   text: "No friends yet", style: 'body3')
-                //             ]),
-                //       ));
-                //     }
-                //     return Expanded(
-                //       child: ListView.builder(
-                //         itemCount: snapshot.data?.docs.length,
-                //         itemBuilder: (context, index) {
-                //           Organization org = Organization.fromJson(
-                //             snapshot.data?.docs[index].data()
-                //                 as Map<String, dynamic>,
-                //           );
-                //           return Text(org.name);
-                //           // return OrgApplicationCard(org: org);
-                //         },
-                //       ),
-                //     );
-
-                //     // return ListView.builder(
-                //     //     itemCount: snapshot.data?.docs.length,
-                //     //     itemBuilder: (context, index) {
-                //     //       Organization org = Organization.fromJson(
-                //     //           snapshot.data?.docs[index].data()
-                //     //               as Map<String, dynamic>);
-                //     //       return OrgApplicationCard(org: org);
-                //     //     });
-                //     // final List<QueryDocumentSnapshot> orgApplications =
-                //     //     snapshot.data!.docs;
-                //     // final limitedOrgApplications =
-                //     //     orgApplications.take(3).toList();
-
-                //     // print("--------------------------------");
-                //     // print(limitedOrgApplications[0]);
-                //     // print("--------------------------------");
-                //     // return Container();
-                //     // return CarouselSlider(
-                //     //   items: limitedOrgApplications
-                //     //       .map((doc) =>
-                //     //           OrgApplicationCard(org: limitedOrgApplications))
-                //     //       .toList(),
-                //     //   options: CarouselOptions(
-                //     //     aspectRatio: 1.10,
-                //     //     viewportFraction: 0.6,
-                //     //     enableInfiniteScroll: false,
-                //     //     initialPage: 0,
-                //     //     padEnds: false,
-                //     //   ),
-                //     // );
-                //   },
+                // CarouselSlider(
+                //   items: const [
+                //     OrgApplicationCard(),
+                //     OrgApplicationCard(),
+                //     OrgApplicationCard(),
+                //   ],
+                //   options: CarouselOptions(
+                //       aspectRatio: 1.10,
+                //       viewportFraction: 0.6,
+                //       enableInfiniteScroll: false,
+                //       initialPage: 0,
+                //       padEnds: false),
                 // ),
+
+                StreamBuilder<QuerySnapshot>(
+                  stream: _organizationsToApproveStream,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: Text("Error encountered! ${snapshot.error}"),
+                      );
+                    } else if (snapshot.connectionState ==
+                        ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (!snapshot.hasData) {
+                      return const Center(
+                        child: Text("No Friends Found"),
+                      );
+                    } else if (snapshot.data!.docs.isEmpty) {
+                      return const Center(
+                          child: Center(
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text2Widget(
+                                  text: "No friends yet", style: 'body3')
+                            ]),
+                      ));
+                    }
+                    return ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: snapshot.data?.docs.length,
+                      itemBuilder: (context, index) {
+                        Organization org = Organization.fromJson(
+                          snapshot.data?.docs[index].data()
+                              as Map<String, dynamic>,
+                        );
+                        return OrgApplicationCard(org: org);
+                      },
+                    );
+                  },
+                ),
 
                 ButtonWidget(
                     handleClick: () {
@@ -324,27 +294,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
                     block: true,
                     label: "Logout",
                     style: 'outlined'),
-                // TextButton.icon(
-                //     style: ButtonStyle(
-                //       backgroundColor:
-                //           MaterialStateProperty.all<Color?>(Colors.transparent),
-                //     ),
-                //     onPressed: () {
-                //       context.read<UserAuthProvider>().signOut();
-                //       Navigator.pushNamed(context, '/login');
-                //     },
-                //     label: Text(
-                //       "Logout",
-                //       style: TextStyle(
-                //         color: Theme.of(context).colorScheme.primary,
-                //         fontWeight: FontWeight.w600,
-                //         fontSize: 18,
-                //       ),
-                //     ),
-                //     icon: Icon(
-                //       Icons.logout,
-                //       color: Theme.of(context).colorScheme.primary,
-                //     )),
               ],
             ),
           ),
