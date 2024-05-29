@@ -64,8 +64,6 @@ class _OrgAddDonationDriveScreenState extends State<OrgAddDonationDriveScreen> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState?.save();
 
-      print(donationDrive);
-
       DateTime? parsedDate;
       List<String> dateParts = donationDrive['date'].split('/');
       if (dateParts.length == 3) {
@@ -106,9 +104,6 @@ class _OrgAddDonationDriveScreenState extends State<OrgAddDonationDriveScreen> {
           donationDeliveryProof: donationDrive[
               'donationDeliveryProof']); // upon creation, set status to open
 
-      print('---------------------');
-      print(newDonationDrive);
-
       await context.read<OrgProvider>().addDonationDrive(newDonationDrive);
 
       final snackBar = SnackBar(
@@ -116,6 +111,7 @@ class _OrgAddDonationDriveScreenState extends State<OrgAddDonationDriveScreen> {
         action: SnackBarAction(label: 'Close', onPressed: () {}),
       );
 
+      // TODO: FIX NAVIGATION AFTER ADDING A DONATION DRIVE
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
         // Navigator.pop(context);

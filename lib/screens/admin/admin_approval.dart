@@ -1,16 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:project/models/organization_model.dart';
+import 'package:project/providers/admin_provider.dart';
 import 'package:project/widgets/button.dart';
 import 'package:project/widgets/divider.dart';
 import 'package:project/widgets/text2.dart';
+import 'package:provider/provider.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class AdminApprovalScreen extends StatefulWidget {
-  const AdminApprovalScreen({super.key});
+  final Organization org;
+  const AdminApprovalScreen({required this.org, super.key});
 
   @override
   State<AdminApprovalScreen> createState() => _AdminApprovalScreenState();
 }
 
 class _AdminApprovalScreenState extends State<AdminApprovalScreen> {
+  bool isApprovedClicked = false;
+
+  void handleApproveClicked(String id) async {
+    String res = await context.read<AdminProvider>().approveOrganization(id);
+
+    print("res: $res");
+
+    final snackBar = SnackBar(
+      content: const Text('Approved organization!'),
+      action: SnackBarAction(label: 'Close', onPressed: () {}),
+    );
+
+    // setState(() {
+    //   isApprovedClicked = true;
+    // });
+
+    // TODO: FIX NAVIGATION AFTER ADDING A DONATION DRIVE
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,8 +58,8 @@ class _AdminApprovalScreenState extends State<AdminApprovalScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text("Metropawlitan",
-                            style: TextStyle(
+                        Text(widget.org.name,
+                            style: const TextStyle(
                               fontFamily: 'Inter',
                               fontSize: 20,
                               fontWeight: FontWeight.w700,
@@ -59,8 +86,7 @@ class _AdminApprovalScreenState extends State<AdminApprovalScreen> {
                             const SizedBox(
                               width: 5,
                             ),
-                            const Text2Widget(
-                                text: "organization@email.org", style: "body3")
+                            Text2Widget(text: widget.org.email, style: "body3")
                           ],
                         ),
                         const SizedBox(
@@ -74,8 +100,8 @@ class _AdminApprovalScreenState extends State<AdminApprovalScreen> {
                             const SizedBox(
                               width: 5,
                             ),
-                            const Text2Widget(
-                                text: "09954695022", style: "body3")
+                            Text2Widget(
+                                text: widget.org.contactNumber, style: "body3")
                           ],
                         ),
                         const SizedBox(
@@ -89,8 +115,9 @@ class _AdminApprovalScreenState extends State<AdminApprovalScreen> {
                             const SizedBox(
                               width: 5,
                             ),
-                            const Text2Widget(
-                                text: "Los Baños, Laguna", style: "body3")
+                            // TODO: DISPLAY ADDRESS
+                            for (String address in widget.org.addresses)
+                              Text(address)
                           ],
                         ),
                         const DividerWidget(),
@@ -100,28 +127,43 @@ class _AdminApprovalScreenState extends State<AdminApprovalScreen> {
                         const SizedBox(
                           height: 10,
                         ),
-                        // TODO: INSERT PICTURE HOLDER HERE FOR PROOF
+                        FadeInImage.memoryNetwork(
+                          placeholder: kTransparentImage,
+                          image: widget.org.photoUrl,
+                          fit: BoxFit.cover,
+                        ),
                         const DividerWidget(),
                         const SizedBox(
                           height: 10,
                         ),
-                        user(),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        ButtonWidget(
-                            handleClick: () {},
-                            block: true,
-                            label: "Approve",
-                            style: 'filled'),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        ButtonWidget(
-                            handleClick: () {},
-                            block: true,
-                            label: "Disapprove",
-                            style: 'outlined'),
+                        // user(),
+                        !isApprovedClicked
+                            ? Column(
+                                children: [
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  ButtonWidget(
+                                      handleClick: () => {
+                                            print(widget.org.organizationId),
+                                            handleApproveClicked(
+                                                widget.org.organizationId!)
+                                          },
+                                      block: true,
+                                      label: "Approve",
+                                      style: 'filled'),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  ButtonWidget(
+                                      handleClick: () {},
+                                      block: true,
+                                      label: "Disapprove",
+                                      style: 'outlined'),
+                                ],
+                              )
+                            : const Center(
+                                child: Text("Organization is Approved"))
                       ],
                     ),
                   ),

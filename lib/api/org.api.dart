@@ -9,10 +9,6 @@ class FirebaseOrgAPI {
 
   Future<String> addDonationDrive(Map<String, dynamic> donationDrive) async {
     try {
-      print("========== DONATION DRIVE IN API ==========");
-      print(donationDrive['file']);
-      print(donationDrive);
-
       TaskSnapshot taskSnapshot = await storage
           .ref()
           .child(donationDrive['path'])
@@ -64,7 +60,10 @@ class FirebaseOrgAPI {
   }
 
   Stream<QuerySnapshot> getorgDonations(String orgId) {
-    return db.collection('donations').where("organizationId", isEqualTo: orgId).snapshots();
+    return db
+        .collection('donations')
+        .where("organizationId", isEqualTo: orgId)
+        .snapshots();
   }
 
   Future<Map<String, dynamic>> getorgDonation(String id) async {
@@ -73,5 +72,4 @@ class FirebaseOrgAPI {
 
     return orgDonation;
   }
-
 }

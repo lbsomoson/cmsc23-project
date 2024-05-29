@@ -10,6 +10,12 @@ class FirebaseAdminAPI {
     return user;
   }
 
+  // get the number of donors
+  Future<int> getDonorsCount() async {
+    QuerySnapshot snapshot = await db.collection('donors').get();
+    return snapshot.docs.length;
+  }
+
   // get ALL DONORS
   Stream<QuerySnapshot> getDonors() {
     return db.collection('donors').snapshots();
@@ -23,6 +29,12 @@ class FirebaseAdminAPI {
     return donor;
   }
 
+  // get the number of organizations
+  Future<int> getOrganizationsCount() async {
+    QuerySnapshot snapshot = await db.collection('organizations').get();
+    return snapshot.docs.length;
+  }
+
   // get ALL organizations
   Stream<QuerySnapshot> getOrganizations() {
     return db.collection('organizations').snapshots();
@@ -34,6 +46,14 @@ class FirebaseAdminAPI {
     Map<String, dynamic> org = o.data() as Map<String, dynamic>;
 
     return org;
+  }
+
+  // get ALL organizations that are not yet approved
+  Stream<QuerySnapshot> getOrganizationsToApprove() {
+    return db
+        .collection("organizations")
+        .where("isApproved", isEqualTo: false)
+        .snapshots();
   }
 
   // fetch all instances of `donation_drives` as a Stream of QuerySnapshot
@@ -66,5 +86,59 @@ class FirebaseAdminAPI {
         donation.data() as Map<String, dynamic>;
 
     return donationDetails;
+  }
+
+  // get ALL donations
+  Stream<QuerySnapshot> getDonationsByOrgId(String orgId) {
+    return db
+        .collection('donations')
+        .where("organizationId", isEqualTo: orgId)
+        .snapshots();
+  }
+
+  // get total donations count per organization
+  Future<int> getDonationsCountByOrgId(String orgId) async {
+    QuerySnapshot snapshot = await db
+        .collection('donations')
+        .where("organizationId", isEqualTo: orgId)
+        .get();
+
+    return snapshot.size;
+  }
+
+  // get total donation drives count per organization
+  Future<int> getDonationDrivesCountByOrgId(String orgId) async {
+    QuerySnapshot snapshot = await db
+        .collection('donation_drives')
+        .where("organizationId", isEqualTo: orgId)
+        .get();
+
+    return snapshot.size;
+  }
+
+  // get total donations count
+  Future<int> getDonationsCount() async {
+    QuerySnapshot snapshot = await db.collection('donations').get();
+    return snapshot.docs.length;
+  }
+
+  // approve org applications
+  Future<String> approveOrganization(String id) async {
+    try {
+      // retrieve the document
+      DocumentSnapshot documentSnapshot =
+          await db.collection('friends').doc(id).get();
+
+      // check if the document exists
+      if (documentSnapshot.exists) {
+        await db
+            .collection('donation_drives')
+            .doc(id)
+            .update({"isApproved": true});
+      }
+      return "Approved organization!";
+    } on FirebaseException catch (e) {
+      return "Error in ${e.code}: ${e.message}";
+    }
   }
 }

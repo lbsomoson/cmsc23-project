@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project/providers/auth_provider.dart';
-import 'package:provider/provider.dart';
 
+import '../../widgets/appbar_title.dart';
 
 class DonorProfileScreen extends StatefulWidget {
   const DonorProfileScreen({Key? key}) : super(key: key);
@@ -11,66 +10,14 @@ class DonorProfileScreen extends StatefulWidget {
 }
 
 class _DonorProfileScreenState extends State<DonorProfileScreen> {
-  // Map<dynamic, dynamic> details = {'name':''};
-
-  // void userDetails() async {
-  //   details = await context.read<UserAuthProvider>().getDetails();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'My Profile',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
+        title: AppBarTitle(title: 'My Profile'),
         backgroundColor: Colors.white,
-        foregroundColor: Color.fromRGBO(62, 218, 134, 1),
-        elevation: 0,
-        actions: [
-          Container(
-            margin: EdgeInsets.only(right: 10),
-            height: 40,
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
-                border: Border.all(
-                    color: Theme.of(context).colorScheme.primary, width: 1.5)),
-            child: SizedBox(
-              height: 45,
-              child: TextButton.icon(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color?>(Colors.transparent),
-                  ),
-                  onPressed: () {
-                      context.read<UserAuthProvider>().signOut();
-                      Navigator.pushNamed(context, '/login');
-                  },
-                  label: Text(
-                    "Logout",
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 18,
-                    ),
-                  ),
-                  icon: Icon(
-                    Icons.logout,
-                    color: Theme.of(context).colorScheme.primary,
-                  )),
-            ),
-          )
-          // IconButtonWidget(
-          //     callback: () {
-          //       Navigator.pushNamed(context, '/login');
-          //     },
-          //     block: false,
-          //     icon: "Icons.logout",
-          //     label: "Logout")
-        ],
       ),
+      
       body: SingleChildScrollView(
         child: Container(
           width: 428,
@@ -84,7 +31,7 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
                 top: 300,
                 left: 130,
                 child: Text(
-                  "Juan Dela Cruz",
+                  'Juan Dela Cruz',
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     color: Color.fromRGBO(62, 218, 134, 1),
@@ -112,6 +59,7 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
                   ),
                 ),
               ),
+
               Positioned(
                 child: Container(
                   width: 428,
@@ -178,21 +126,21 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
                               ],
                             ),
                           ),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 32, vertical: 16),
+                          padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                           child: Center(
-                            child: Text(
-                              'Edit Profile',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Color.fromRGBO(255, 255, 255, 1),
-                                fontFamily: 'Inter',
-                                fontSize: 16,
-                                letterSpacing: 0,
-                                fontWeight: FontWeight.normal,
-                                height: 1,
+                                child: Text(
+                                'Edit Profile',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Color.fromRGBO(255, 255, 255, 1),
+                                  fontFamily: 'Inter',
+                                  fontSize: 16,
+                                  letterSpacing: 0,
+                                  fontWeight: FontWeight.normal,
+                                  height: 1,
+                                ),
                               ),
-                            ),
+                            
                           ),
                         ),
                       ),
@@ -309,5 +257,6 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
         ),
       ),
     );
+    
   }
 }
