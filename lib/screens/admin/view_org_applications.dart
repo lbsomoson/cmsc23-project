@@ -70,31 +70,8 @@ class _ViewOrgApplicationsState extends State<ViewOrgApplications> {
                 return OrgApplicationCard(org: org);
               },
             );
-            // return ListView.builder(
-            //   itemCount: snapshot.data?.docs.length,
-            //   itemBuilder: (context, index) {
-            //     Organization org = Organization.fromJson(
-            //       snapshot.data?.docs[index].data()
-            //           as Map<String, dynamic>,
-            //     );
-            //     return OrgApplicationCard(org: org);
-            //   },
-            // );
           },
         ),
-        // child: GridView.builder(
-        //   padding: EdgeInsets.zero,
-        //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        //     crossAxisCount: 2,
-        //     mainAxisSpacing: 0,
-        //     crossAxisSpacing: 0,
-        //     childAspectRatio: 0.61,
-        //   ),
-        //   itemCount: 5,
-        //   itemBuilder: (BuildContext context, int index) {
-        //     // return const OrgApplicationCard(org);
-        //   },
-        // ),
       ),
     );
   }

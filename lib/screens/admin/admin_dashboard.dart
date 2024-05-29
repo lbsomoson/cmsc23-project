@@ -268,6 +268,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                               snapshot.data?.docs[index].data()
                                   as Map<String, dynamic>,
                             );
+                            org.organizationId = snapshot.data?.docs[index].id;
                             return OrgApplicationCard(org: org);
                           },
                         );

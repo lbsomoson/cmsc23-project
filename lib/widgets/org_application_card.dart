@@ -16,6 +16,7 @@ class _OrgApplicationCardState extends State<OrgApplicationCard> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double cardWidth = screenWidth / 1.75;
+    print(widget.org.organizationId);
 
     return Center(
       child: Padding(

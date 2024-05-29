@@ -101,4 +101,9 @@ class AdminProvider with ChangeNotifier {
   Future<int> getDonationsCount() async {
     return await firebaseService.getDonationsCount();
   }
+
+  // approve organization application
+  Future<String> approveOrganization(String orgId) {
+    return firebaseService.approveOrganization(orgId);
+  }
 }

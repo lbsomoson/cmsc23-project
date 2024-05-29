@@ -121,4 +121,24 @@ class FirebaseAdminAPI {
     QuerySnapshot snapshot = await db.collection('donations').get();
     return snapshot.docs.length;
   }
+
+  // approve org applications
+  Future<String> approveOrganization(String id) async {
+    try {
+      // retrieve the document
+      DocumentSnapshot documentSnapshot =
+          await db.collection('friends').doc(id).get();
+
+      // check if the document exists
+      if (documentSnapshot.exists) {
+        await db
+            .collection('donation_drives')
+            .doc(id)
+            .update({"isApproved": true});
+      }
+      return "Approved organization!";
+    } on FirebaseException catch (e) {
+      return "Error in ${e.code}: ${e.message}";
+    }
+  }
 }
