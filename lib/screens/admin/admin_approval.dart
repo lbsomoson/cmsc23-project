@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:project/models/organization_model.dart';
+import 'package:project/providers/admin_provider.dart';
 import 'package:project/widgets/button.dart';
 import 'package:project/widgets/divider.dart';
 import 'package:project/widgets/text2.dart';
+import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class AdminApprovalScreen extends StatefulWidget {
@@ -15,6 +16,28 @@ class AdminApprovalScreen extends StatefulWidget {
 }
 
 class _AdminApprovalScreenState extends State<AdminApprovalScreen> {
+  bool isApprovedClicked = false;
+
+  void handleApproveClicked(String id) async {
+    String res = await context.read<AdminProvider>().approveOrganization(id);
+
+    print("res: $res");
+
+    final snackBar = SnackBar(
+      content: const Text('Approved organization!'),
+      action: SnackBarAction(label: 'Close', onPressed: () {}),
+    );
+
+    // setState(() {
+    //   isApprovedClicked = true;
+    // });
+
+    // TODO: FIX NAVIGATION AFTER ADDING A DONATION DRIVE
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,15 +47,6 @@ class _AdminApprovalScreenState extends State<AdminApprovalScreen> {
             children: [
               Column(
                 children: [
-                  // AspectRatio(
-                  //   aspectRatio: 1,
-                  //   child: FadeInImage.memoryNetwork(
-                  //     placeholder: kTransparentImage,
-                  //     image: widget.org.photoUrl,
-                  //     fit: BoxFit.cover,
-                  //     height: 200,
-                  //   ),
-                  // ),
                   Image.asset(
                     'assets/images/dog.jpg',
                     fit: BoxFit.cover,
@@ -101,48 +115,55 @@ class _AdminApprovalScreenState extends State<AdminApprovalScreen> {
                             const SizedBox(
                               width: 5,
                             ),
+                            // TODO: DISPLAY ADDRESS
                             for (String address in widget.org.addresses)
                               Text(address)
-                            // [Text2Widget(text: address, style: "body3")]
-                            // for (String address in widget.org.addresses)
-                            //   {Text2Widget(text: address, style: "body3")}
-                            // widget.org.addresses.forEach((var num)=> print(num));
                           ],
                         ),
                         const DividerWidget(),
                         const Text2Widget(
                             text: "Proof/s of Legitimacy",
                             style: "sectionHeader"),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         FadeInImage.memoryNetwork(
                           placeholder: kTransparentImage,
                           image: widget.org.photoUrl,
                           fit: BoxFit.cover,
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        // TODO: INSERT PICTURE HOLDER HERE FOR PROOF
                         const DividerWidget(),
                         const SizedBox(
                           height: 10,
                         ),
                         // user(),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        ButtonWidget(
-                            handleClick: () {},
-                            block: true,
-                            label: "Approve",
-                            style: 'filled'),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        ButtonWidget(
-                            handleClick: () {},
-                            block: true,
-                            label: "Disapprove",
-                            style: 'outlined'),
+                        !isApprovedClicked
+                            ? Column(
+                                children: [
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  ButtonWidget(
+                                      handleClick: () => {
+                                            print(widget.org.organizationId),
+                                            handleApproveClicked(
+                                                widget.org.organizationId!)
+                                          },
+                                      block: true,
+                                      label: "Approve",
+                                      style: 'filled'),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  ButtonWidget(
+                                      handleClick: () {},
+                                      block: true,
+                                      label: "Disapprove",
+                                      style: 'outlined'),
+                                ],
+                              )
+                            : const Center(
+                                child: Text("Organization is Approved"))
                       ],
                     ),
                   ),
