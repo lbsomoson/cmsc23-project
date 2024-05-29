@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:project/models/organization_model.dart';
+import 'package:project/screens/admin/admin_approval.dart';
 import 'package:project/widgets/button.dart';
 
 class OrgApplicationCard extends StatefulWidget {
-  // final Organization org;
-  const OrgApplicationCard({super.key});
+  final Organization org;
+  const OrgApplicationCard({required this.org, super.key});
 
   @override
   State<OrgApplicationCard> createState() => _OrgApplicationCardState();
@@ -48,9 +50,9 @@ class _OrgApplicationCardState extends State<OrgApplicationCard> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        "Metropawlitan",
-                        style: TextStyle(
+                      Text(
+                        widget.org.name,
+                        style: const TextStyle(
                           fontSize: 17,
                           fontWeight: FontWeight.w600,
                           fontFamily: 'Inter',
@@ -70,7 +72,10 @@ class _OrgApplicationCardState extends State<OrgApplicationCard> {
                       const SizedBox(height: 5),
                       ButtonWidget(
                         handleClick: () {
-                          Navigator.pushNamed(context, '/admin-approval');
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return AdminApprovalScreen(org: widget.org);
+                          }));
                         },
                         size: 38,
                         block: true,

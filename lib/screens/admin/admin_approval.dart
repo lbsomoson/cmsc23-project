@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:project/models/organization_model.dart';
 import 'package:project/widgets/button.dart';
 import 'package:project/widgets/divider.dart';
 import 'package:project/widgets/text2.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class AdminApprovalScreen extends StatefulWidget {
-  const AdminApprovalScreen({super.key});
+  final Organization org;
+  const AdminApprovalScreen({required this.org, super.key});
 
   @override
   State<AdminApprovalScreen> createState() => _AdminApprovalScreenState();
@@ -20,6 +24,15 @@ class _AdminApprovalScreenState extends State<AdminApprovalScreen> {
             children: [
               Column(
                 children: [
+                  // AspectRatio(
+                  //   aspectRatio: 1,
+                  //   child: FadeInImage.memoryNetwork(
+                  //     placeholder: kTransparentImage,
+                  //     image: widget.org.photoUrl,
+                  //     fit: BoxFit.cover,
+                  //     height: 200,
+                  //   ),
+                  // ),
                   Image.asset(
                     'assets/images/dog.jpg',
                     fit: BoxFit.cover,
@@ -31,8 +44,8 @@ class _AdminApprovalScreenState extends State<AdminApprovalScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text("Metropawlitan",
-                            style: TextStyle(
+                        Text(widget.org.name,
+                            style: const TextStyle(
                               fontFamily: 'Inter',
                               fontSize: 20,
                               fontWeight: FontWeight.w700,
@@ -59,8 +72,7 @@ class _AdminApprovalScreenState extends State<AdminApprovalScreen> {
                             const SizedBox(
                               width: 5,
                             ),
-                            const Text2Widget(
-                                text: "organization@email.org", style: "body3")
+                            Text2Widget(text: widget.org.email, style: "body3")
                           ],
                         ),
                         const SizedBox(
@@ -74,8 +86,8 @@ class _AdminApprovalScreenState extends State<AdminApprovalScreen> {
                             const SizedBox(
                               width: 5,
                             ),
-                            const Text2Widget(
-                                text: "09954695022", style: "body3")
+                            Text2Widget(
+                                text: widget.org.contactNumber, style: "body3")
                           ],
                         ),
                         const SizedBox(
@@ -89,14 +101,23 @@ class _AdminApprovalScreenState extends State<AdminApprovalScreen> {
                             const SizedBox(
                               width: 5,
                             ),
-                            const Text2Widget(
-                                text: "Los Baños, Laguna", style: "body3")
+                            for (String address in widget.org.addresses)
+                              Text(address)
+                            // [Text2Widget(text: address, style: "body3")]
+                            // for (String address in widget.org.addresses)
+                            //   {Text2Widget(text: address, style: "body3")}
+                            // widget.org.addresses.forEach((var num)=> print(num));
                           ],
                         ),
                         const DividerWidget(),
                         const Text2Widget(
                             text: "Proof/s of Legitimacy",
                             style: "sectionHeader"),
+                        FadeInImage.memoryNetwork(
+                          placeholder: kTransparentImage,
+                          image: widget.org.photoUrl,
+                          fit: BoxFit.cover,
+                        ),
                         const SizedBox(
                           height: 10,
                         ),
@@ -105,7 +126,7 @@ class _AdminApprovalScreenState extends State<AdminApprovalScreen> {
                         const SizedBox(
                           height: 10,
                         ),
-                        user(),
+                        // user(),
                         const SizedBox(
                           height: 20,
                         ),
