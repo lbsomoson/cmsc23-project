@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project/widgets/divider.dart';
+import 'package:project/widgets/donation_drive_card.dart';
 import 'package:project/widgets/text2.dart';
 import 'package:project/widgets/text3.dart';
 
@@ -102,6 +103,8 @@ class _ViewOrganizationScreenState extends State<ViewOrganizationScreen> {
                         const SizedBox(
                           height: 10,
                         ),
+                        // TODO: SHOW DONATION DRIVE CARDS
+                        DonationDriveCard(),
                       ],
                     ),
                   ),
