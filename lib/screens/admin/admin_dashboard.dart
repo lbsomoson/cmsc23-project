@@ -272,8 +272,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                         enableInfiniteScroll: false,
                         initialPage: 0,
                         padEnds: false,
-                        scrollDirection:
-                            Axis.horizontal, // Ensure horizontal scrolling
+                        scrollDirection: Axis.horizontal,
                       ),
                     );
                   },

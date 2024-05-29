@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:project/models/organization_model.dart';
 import 'package:project/providers/admin_provider.dart';
 import 'package:project/widgets/button.dart';
@@ -40,6 +41,7 @@ class _AdminApprovalScreenState extends State<AdminApprovalScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.org.addresses);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -108,6 +110,7 @@ class _AdminApprovalScreenState extends State<AdminApprovalScreen> {
                           height: 5,
                         ),
                         Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Icon(Icons.location_on,
                                 color: Theme.of(context).colorScheme.primary,
@@ -115,9 +118,13 @@ class _AdminApprovalScreenState extends State<AdminApprovalScreen> {
                             const SizedBox(
                               width: 5,
                             ),
-                            // TODO: DISPLAY ADDRESS
-                            for (String address in widget.org.addresses)
-                              Text(address)
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: widget.org.addresses
+                                  .map((address) => Text2Widget(
+                                      text: address, style: 'body3'))
+                                  .toList(),
+                            ),
                           ],
                         ),
                         const DividerWidget(),
@@ -145,7 +152,6 @@ class _AdminApprovalScreenState extends State<AdminApprovalScreen> {
                                   ),
                                   ButtonWidget(
                                       handleClick: () => {
-                                            print(widget.org.organizationId),
                                             handleApproveClicked(
                                                 widget.org.organizationId!)
                                           },
