@@ -110,7 +110,6 @@ class _DonorDashboardScreenState extends State<DonorDashboardScreen> {
           DonorOrgCard(),
           DonorOrgCard(),
           DonorOrgCard(),
-
         ],
       ),
     );
