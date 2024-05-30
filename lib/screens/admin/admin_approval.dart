@@ -21,20 +21,20 @@ class _AdminApprovalScreenState extends State<AdminApprovalScreen> {
   void handleApproveClicked(String id) async {
     String res = await context.read<AdminProvider>().approveOrganization(id);
 
-    print("res: $res");
+    if (res == "Approved organization!") {
+      final snackBar = SnackBar(
+        content: const Text('Approved organization!'),
+        action: SnackBarAction(label: 'Close', onPressed: () {}),
+      );
 
-    final snackBar = SnackBar(
-      content: const Text('Approved organization!'),
-      action: SnackBarAction(label: 'Close', onPressed: () {}),
-    );
+      setState(() {
+        isApprovedClicked = true;
+      });
 
-    // setState(() {
-    //   isApprovedClicked = true;
-    // });
-
-    // TODO: FIX NAVIGATION AFTER ADDING A DONATION DRIVE
-    if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      // TODO: FIX NAVIGATION AFTER ADDING A DONATION DRIVE
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
     }
   }
 
@@ -108,6 +108,7 @@ class _AdminApprovalScreenState extends State<AdminApprovalScreen> {
                           height: 5,
                         ),
                         Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Icon(Icons.location_on,
                                 color: Theme.of(context).colorScheme.primary,
@@ -115,9 +116,13 @@ class _AdminApprovalScreenState extends State<AdminApprovalScreen> {
                             const SizedBox(
                               width: 5,
                             ),
-                            // TODO: DISPLAY ADDRESS
-                            for (String address in widget.org.addresses)
-                              Text(address)
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: widget.org.addresses
+                                  .map((address) => Text2Widget(
+                                      text: address, style: 'body3'))
+                                  .toList(),
+                            ),
                           ],
                         ),
                         const DividerWidget(),
@@ -145,25 +150,19 @@ class _AdminApprovalScreenState extends State<AdminApprovalScreen> {
                                   ),
                                   ButtonWidget(
                                       handleClick: () => {
-                                            print(widget.org.organizationId),
                                             handleApproveClicked(
                                                 widget.org.organizationId!)
                                           },
                                       block: true,
                                       label: "Approve",
                                       style: 'filled'),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  ButtonWidget(
-                                      handleClick: () {},
-                                      block: true,
-                                      label: "Disapprove",
-                                      style: 'outlined'),
                                 ],
                               )
                             : const Center(
-                                child: Text("Organization is Approved"))
+                                child: Text2Widget(
+                                text: "Organization Approved",
+                                style: 'body2',
+                              ))
                       ],
                     ),
                   ),

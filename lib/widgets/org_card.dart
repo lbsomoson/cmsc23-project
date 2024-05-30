@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/models/organization_model.dart';
 import 'package:project/providers/admin_provider.dart';
+import 'package:project/screens/view_organization.dart';
 import 'package:project/widgets/text3.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +25,9 @@ class _OrgCardState extends State<OrgCard> {
         .getDonationsCountByOrgId(widget.org.organizationId!);
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, '/admin-view-organizations');
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return ViewOrganizationScreen(org: widget.org);
+        }));
       },
       child: Card(
         elevation: 0,

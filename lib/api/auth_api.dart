@@ -111,7 +111,7 @@ class FirebaseAuthAPI {
         "name": name,
         "username": username,
         "email": email,
-        "address": addresses,
+        "addresses": addresses,
         "contactNumber": contact,
         "userType": type,
         "photoUrl": downloadURL,

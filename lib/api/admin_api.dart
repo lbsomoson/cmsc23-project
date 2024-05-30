@@ -49,6 +49,14 @@ class FirebaseAdminAPI {
   }
 
   // get ALL organizations that are not yet approved
+  Stream<QuerySnapshot> getApprovedOrganizations() {
+    return db
+        .collection("organizations")
+        .where("isApproved", isEqualTo: true)
+        .snapshots();
+  }
+
+  // get ALL organizations that are not yet approved
   Stream<QuerySnapshot> getOrganizationsToApprove() {
     return db
         .collection("organizations")
@@ -71,6 +79,24 @@ class FirebaseAdminAPI {
     Map<String, dynamic> donationDrive = drive.data() as Map<String, dynamic>;
 
     return donationDrive;
+  }
+
+  // get ALL donation drives by id
+  Stream<QuerySnapshot> getDonationDrivesByOrgId(String orgId) {
+    return db
+        .collection('donation_drives')
+        .where("organizationId", isEqualTo: orgId)
+        .snapshots();
+  }
+
+  // get donations count by drive id
+  Future<int> getDonationsCountByDriveId(String driveId) async {
+    QuerySnapshot snapshot = await db
+        .collection('donation_drives')
+        .where("driveId", isEqualTo: driveId)
+        .get();
+
+    return snapshot.size;
   }
 
   // get ALL donations
@@ -127,12 +153,12 @@ class FirebaseAdminAPI {
     try {
       // retrieve the document
       DocumentSnapshot documentSnapshot =
-          await db.collection('friends').doc(id).get();
+          await db.collection('organizations').doc(id).get();
 
       // check if the document exists
       if (documentSnapshot.exists) {
         await db
-            .collection('donation_drives')
+            .collection('organizations')
             .doc(id)
             .update({"isApproved": true});
       }

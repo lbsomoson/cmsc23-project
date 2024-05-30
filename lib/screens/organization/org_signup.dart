@@ -331,11 +331,11 @@ class _OrgSignUpScreenState extends State<OrgSignUpScreen> {
                               })
                         ],
                       ),
-                      // TextLink(
-                      //     label: "Sign up as donor",
-                      //     callback: () {
-                      //       Navigator.pushNamed(context, '/donor-signup');
-                      //     }),
+                      TextLink(
+                          label: "Sign up as donor",
+                          callback: () {
+                            Navigator.pushNamed(context, '/donor-signup');
+                          }),
                     ],
                   ),
                 ),

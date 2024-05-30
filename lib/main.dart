@@ -191,8 +191,9 @@ class _RootWidgetState extends State<RootWidget> {
               builder: (context) => AdminApprovalScreen(org: args));
         }
         if (settings.name == "/admin-view-organizations") {
+          final args = settings.arguments as Organization;
           return MaterialPageRoute(
-              builder: (context) => const ViewOrganizationScreen());
+              builder: (context) => ViewOrganizationScreen(org: args));
         }
         if (settings.name == "/admin-view-orgs") {
           return MaterialPageRoute(
