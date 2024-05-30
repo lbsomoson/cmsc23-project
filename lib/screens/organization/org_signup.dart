@@ -273,11 +273,16 @@ class _OrgSignUpScreenState extends State<OrgSignUpScreen> {
                                   showSignUpErrorMessage = false;
                                 }
                               });
-
-                              if (context.mounted) {
-                                Navigator.pushNamed(
-                                    context, '/organization-navbar');
-                              }
+                              // if (context.mounted) {
+                              //   Navigator.pushNamed(
+                              //       context, '/organization-navbar');
+                              // }
+                              final snackBar = SnackBar(
+                                backgroundColor: const Color.fromARGB(255, 245, 88, 77),
+                                content: const Text('Please wait for application approval'),
+                                action: SnackBarAction(label: 'Close', onPressed: (){Navigator.pushNamed(context,'/signin');},
+                              ));
+                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
                             }
                           },
                           block: true,

@@ -73,9 +73,15 @@ class UserAuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<Map> getDetails() async {
-    Map<dynamic, dynamic> details = await authService.getDetails();
+  // Future<Map> getDetails() async {
+  //   Map<dynamic, dynamic> details = await authService.getDetails();
+  //   notifyListeners();
+  //   return details;
+  // }
+
+  Future<String> donorProfile() async {
+    String name = await authService.donorProfile();
     notifyListeners();
-    return details;
+    return name;
   }
 }

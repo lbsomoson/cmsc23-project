@@ -256,14 +256,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   showSignUpErrorMessage = true;
                                 } else {
                                   showSignUpErrorMessage = false;
+                                  Navigator.pushNamed(context, '/donor-navbar');
                                 }
                               });
                             }
                             // check if no error and the widget hasn't been disposed of after an asynchronous action
-                            if (context.mounted &&
-                                showSignUpErrorMessage == false) {
-                              Navigator.pushNamed(context, '/donor-navbar');
-                            }
+                            // if (context.mounted &&
+                            //     showSignUpErrorMessage == false) {
+                            //   Navigator.pushNamed(context, '/donor-navbar');
+                            // }
                           },
                           block: true,
                           label: "Sign Up",

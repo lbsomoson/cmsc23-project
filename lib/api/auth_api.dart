@@ -29,7 +29,7 @@ class FirebaseAuthAPI {
   Future<String?> signIn(String email, String password) async {
     try {
       // Sign in the user
-      await auth.signInWithEmailAndPassword(email: email, password: password);
+      //await auth.signInWithEmailAndPassword(email: email, password: password);
 
       // get the user document with the specified email
       QuerySnapshot querySnapshot = await db
@@ -44,10 +44,23 @@ class FirebaseAuthAPI {
         // get the user document from the 'users' collection
         DocumentSnapshot userDoc =
             await db.collection("users").doc(documentId).get();
-
         if (userDoc.exists) {
           // extract and return the userType field
           String userType = userDoc.get('type');
+          if (userType == 'organization') {
+            DocumentSnapshot orgDoc =
+                await db.collection('organizations').doc(documentId).get();
+            bool status = orgDoc.get('isApproved');
+            if (status == false) {
+              return 'Wait for admin approval';
+            } else {
+              await auth.signInWithEmailAndPassword(
+                  email: email, password: password);
+              return userType;
+            }
+          }
+          await auth.signInWithEmailAndPassword(
+              email: email, password: password);
           return userType;
         } else {
           return 'User document in donors collection does not exist.';
@@ -211,25 +224,19 @@ class FirebaseAuthAPI {
     return null;
   }
 
-  Future<Map> getDetails() async {
-    Map<String, String> details = {};
+  Future<String> donorProfile() async {
+    Map<String, dynamic> details = {};
     final User user = getUser()!;
-    final String email = user.email!;
+    String email = user.email!;
     QuerySnapshot querySnapshot = await db
-        .collection('donors')
+        .collection("donors")
         .where('email', isEqualTo: email)
         .limit(1)
         .get();
-
     String documentId = querySnapshot.docs.first.id;
     DocumentSnapshot userDoc =
         await db.collection("donors").doc(documentId).get();
-    details['name'] = userDoc.get('name');
-    details['username'] = userDoc.get('username');
-    details['email'] = userDoc.get('email');
-    details['contact'] = userDoc.get('contactNumber');
-    //details['address'] = userDoc.get('address');
-    return details;
+    return userDoc.get('name');
   }
 
   Future<void> signOut() async {
