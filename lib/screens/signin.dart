@@ -53,6 +53,18 @@ class _SignInScreenState extends State<SignInScreen> {
           } else {
             errorMessage = res;
             showSignInErrorMessage = true;
+            if (errorMessage == 'Wait for admin approval') {
+              final snackBar = SnackBar(
+                  backgroundColor: const Color.fromARGB(255, 245, 88, 77),
+                  content: const Text('Please wait for application approval'),
+                  action: SnackBarAction(
+                    label: 'Close',
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/signin');
+                    },
+                  ));
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            }
           }
         });
       }

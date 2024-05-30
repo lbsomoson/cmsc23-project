@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:project/providers/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../../widgets/appbar_title.dart';
 
@@ -17,7 +20,6 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
         title: AppBarTitle(title: 'My Profile'),
         backgroundColor: Colors.white,
       ),
-      
       body: SingleChildScrollView(
         child: Container(
           width: 428,
@@ -47,7 +49,8 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
                 top: 325,
                 left: 150,
                 child: Text(
-                  '@juandelacruz',
+                  //" @" + context.read<UserAuthProvider>().getDetails(),
+                  "juan@gmail.com",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Color.fromRGBO(0, 0, 0, 1),
@@ -59,7 +62,6 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
                   ),
                 ),
               ),
-
               Positioned(
                 child: Container(
                   width: 428,
@@ -126,21 +128,21 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
                               ],
                             ),
                           ),
-                          padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 32, vertical: 16),
                           child: Center(
-                                child: Text(
-                                'Edit Profile',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Color.fromRGBO(255, 255, 255, 1),
-                                  fontFamily: 'Inter',
-                                  fontSize: 16,
-                                  letterSpacing: 0,
-                                  fontWeight: FontWeight.normal,
-                                  height: 1,
-                                ),
+                            child: Text(
+                              'Edit Profile',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Color.fromRGBO(255, 255, 255, 1),
+                                fontFamily: 'Inter',
+                                fontSize: 16,
+                                letterSpacing: 0,
+                                fontWeight: FontWeight.normal,
+                                height: 1,
                               ),
-                            
+                            ),
                           ),
                         ),
                       ),
@@ -257,6 +259,5 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
         ),
       ),
     );
-    
   }
 }
