@@ -77,6 +77,16 @@ class AdminProvider with ChangeNotifier {
     return _donationDriveStream;
   }
 
+  // get ONE donation drive
+  Future<Map<String, dynamic>> getDonationDrive(String id) async {
+    return await firebaseService.getDonationDrive(id);
+  }
+
+  // get ONE donation by id
+  Future<Map<String, dynamic>> getDonation(String orgId) async {
+    return await firebaseService.getDonation(orgId);
+  }
+
   // get ALL donation drives by organization id
   Stream<QuerySnapshot> getDonationDrivesByOrgId(String orgId) {
     _donationDriveByOrgIdStream =
@@ -90,11 +100,6 @@ class AdminProvider with ChangeNotifier {
     _donationsStream = firebaseService.getDonations();
     notifyListeners();
     return _donationsStream;
-  }
-
-  // get ONE donation by id
-  Future<Map<String, dynamic>> getDonation(String orgId) async {
-    return await firebaseService.getDonation(orgId);
   }
 
   // get ALL donations by orgId

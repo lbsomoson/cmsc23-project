@@ -36,7 +36,7 @@ class _ViewOrganizationScreenState extends State<ViewOrganizationScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Image.asset(
-                    'assets/images/dog.jpg',
+                    'assets/images/org logo.jpg',
                     fit: BoxFit.cover,
                     width: double.infinity,
                     height: 200,
@@ -163,13 +163,13 @@ class _ViewOrganizationScreenState extends State<ViewOrganizationScreen> {
                                   children: [
                                     Icon(
                                       Icons.create_new_folder_rounded,
-                                      size: 150,
+                                      size: 80,
                                       color:
                                           Theme.of(context).colorScheme.primary,
                                     ),
                                     const Text2Widget(
                                       text: "No donation drives yet",
-                                      style: 'bodyLarge',
+                                      style: 'body2',
                                     )
                                   ],
                                 ),
@@ -182,7 +182,7 @@ class _ViewOrganizationScreenState extends State<ViewOrganizationScreen> {
                                 );
                                 drive.driveId = doc.id;
                                 return DonationDriveCard(
-                                  driveId: drive.driveId!,
+                                  drive: drive,
                                 );
                               }).toList(),
                             );

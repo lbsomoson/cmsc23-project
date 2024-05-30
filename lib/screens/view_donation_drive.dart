@@ -187,6 +187,7 @@ class _ViewOrgDonationDriveState extends State<ViewOrgDonationDrive> {
                             : const Text2Widget(
                                 text: "No donations yet", style: 'body3'),
 
+                        // TODO: CHECK USER TYPE, ONLY DISPLAY BUTTONS IF USERTYPE IS ORGANIZATION
                         // TODO: SAVE USERTYPE TO PROVIDER
                         FutureBuilder<Map<String, dynamic>>(
                           future: context

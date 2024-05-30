@@ -3,6 +3,7 @@ import 'dart:convert';
 class Donation {
   String? donationId;
   final String donorId;
+  final String driveId;
   List<String> itemCategory;
   String transferMode;
   double? weight;
@@ -16,6 +17,7 @@ class Donation {
   Donation({
     this.donationId,
     required this.donorId,
+    required this.driveId,
     required this.itemCategory,
     required this.transferMode,
     this.weight,
@@ -32,6 +34,7 @@ class Donation {
     return Donation(
       donationId: json['donationId'],
       donorId: json['donorId'],
+      driveId: json['driveId'],
       itemCategory: json['itemCategory'],
       transferMode: json['transferMode'],
       weight: json['weight'],
@@ -53,6 +56,7 @@ class Donation {
     return {
       'donationId': donation.donationId,
       'donorId': donation.donorId,
+      'driveId': donation.driveId,
       'itemCategory': donation.itemCategory,
       'transferMode': donation.transferMode,
       'weight': donation.weight,
