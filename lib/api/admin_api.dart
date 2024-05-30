@@ -49,6 +49,14 @@ class FirebaseAdminAPI {
   }
 
   // get ALL organizations that are not yet approved
+  Stream<QuerySnapshot> getApprovedOrganizations() {
+    return db
+        .collection("organizations")
+        .where("isApproved", isEqualTo: true)
+        .snapshots();
+  }
+
+  // get ALL organizations that are not yet approved
   Stream<QuerySnapshot> getOrganizationsToApprove() {
     return db
         .collection("organizations")
@@ -71,6 +79,14 @@ class FirebaseAdminAPI {
     Map<String, dynamic> donationDrive = drive.data() as Map<String, dynamic>;
 
     return donationDrive;
+  }
+
+  // get ALL donation drives by id
+  Stream<QuerySnapshot> getDonationDrivesByOrgId(String orgId) {
+    return db
+        .collection('donation_drives')
+        .where("organizationId", isEqualTo: orgId)
+        .snapshots();
   }
 
   // get ALL donations
@@ -136,7 +152,6 @@ class FirebaseAdminAPI {
             .doc(id)
             .update({"isApproved": true});
       }
-      print(documentSnapshot.data());
       return "Approved organization!";
     } on FirebaseException catch (e) {
       return "Error in ${e.code}: ${e.message}";

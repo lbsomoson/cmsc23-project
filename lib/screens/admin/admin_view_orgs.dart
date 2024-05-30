@@ -17,15 +17,15 @@ class AdminViewOrgsScreen extends StatefulWidget {
 class _AdminViewOrgsScreenState extends State<AdminViewOrgsScreen> {
   @override
   Widget build(BuildContext context) {
-    Stream<QuerySnapshot> organizationsStream =
-        context.watch<AdminProvider>().getOrganizations();
+    Stream<QuerySnapshot> approvedOrganizationsStream =
+        context.watch<AdminProvider>().getApprovedOrganizations();
     return Scaffold(
         appBar: AppBar(
           title: const AppBarTitle(title: "Organization List"),
         ),
         body: SafeArea(
             child: StreamBuilder(
-                stream: organizationsStream,
+                stream: approvedOrganizationsStream,
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return Center(

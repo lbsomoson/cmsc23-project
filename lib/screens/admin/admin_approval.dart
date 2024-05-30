@@ -21,20 +21,20 @@ class _AdminApprovalScreenState extends State<AdminApprovalScreen> {
   void handleApproveClicked(String id) async {
     String res = await context.read<AdminProvider>().approveOrganization(id);
 
-    print("res: $res");
+    if (res == "Approved organization!") {
+      final snackBar = SnackBar(
+        content: const Text('Approved organization!'),
+        action: SnackBarAction(label: 'Close', onPressed: () {}),
+      );
 
-    final snackBar = SnackBar(
-      content: const Text('Approved organization!'),
-      action: SnackBarAction(label: 'Close', onPressed: () {}),
-    );
+      setState(() {
+        isApprovedClicked = true;
+      });
 
-    setState(() {
-      isApprovedClicked = true;
-    });
-
-    // TODO: FIX NAVIGATION AFTER ADDING A DONATION DRIVE
-    if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      // TODO: FIX NAVIGATION AFTER ADDING A DONATION DRIVE
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
     }
   }
 

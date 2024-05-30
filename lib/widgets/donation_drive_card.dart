@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:project/widgets/text3.dart';
 
 class DonationDriveCard extends StatefulWidget {
-  const DonationDriveCard({super.key});
+  final String driveId;
+  const DonationDriveCard({required this.driveId, super.key});
 
   @override
   State<DonationDriveCard> createState() => _DonationDriveCardState();
