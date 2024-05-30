@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:project/models/organization_model.dart';
 import 'package:project/providers/admin_provider.dart';
 import 'package:project/widgets/button.dart';
@@ -29,9 +28,9 @@ class _AdminApprovalScreenState extends State<AdminApprovalScreen> {
       action: SnackBarAction(label: 'Close', onPressed: () {}),
     );
 
-    // setState(() {
-    //   isApprovedClicked = true;
-    // });
+    setState(() {
+      isApprovedClicked = true;
+    });
 
     // TODO: FIX NAVIGATION AFTER ADDING A DONATION DRIVE
     if (mounted) {
@@ -41,7 +40,6 @@ class _AdminApprovalScreenState extends State<AdminApprovalScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.org.addresses);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -158,18 +156,13 @@ class _AdminApprovalScreenState extends State<AdminApprovalScreen> {
                                       block: true,
                                       label: "Approve",
                                       style: 'filled'),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  ButtonWidget(
-                                      handleClick: () {},
-                                      block: true,
-                                      label: "Disapprove",
-                                      style: 'outlined'),
                                 ],
                               )
                             : const Center(
-                                child: Text("Organization is Approved"))
+                                child: Text2Widget(
+                                text: "Organization Approved",
+                                style: 'body2',
+                              ))
                       ],
                     ),
                   ),

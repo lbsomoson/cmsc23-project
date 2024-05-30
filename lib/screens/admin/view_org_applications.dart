@@ -67,6 +67,7 @@ class _ViewOrgApplicationsState extends State<ViewOrgApplications> {
                 Organization org = Organization.fromJson(
                   snapshot.data?.docs[index].data() as Map<String, dynamic>,
                 );
+                org.organizationId = snapshot.data?.docs[index].id;
                 return OrgApplicationCard(org: org);
               },
             );

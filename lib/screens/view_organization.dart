@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:project/models/organization_model.dart';
 import 'package:project/widgets/divider.dart';
 import 'package:project/widgets/donation_drive_card.dart';
 import 'package:project/widgets/text2.dart';
 import 'package:project/widgets/text3.dart';
 
 class ViewOrganizationScreen extends StatefulWidget {
-  const ViewOrganizationScreen({super.key});
+  final Organization org;
+  const ViewOrganizationScreen({required this.org, super.key});
 
   @override
   State<ViewOrganizationScreen> createState() => _ViewOrganizationScreenState();
@@ -14,6 +16,7 @@ class ViewOrganizationScreen extends StatefulWidget {
 class _ViewOrganizationScreenState extends State<ViewOrganizationScreen> {
   @override
   Widget build(BuildContext context) {
+    print(widget.org);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -32,8 +35,8 @@ class _ViewOrganizationScreenState extends State<ViewOrganizationScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text("Cats of UPLB",
-                            style: TextStyle(
+                        Text(widget.org.name,
+                            style: const TextStyle(
                               fontFamily: 'Inter',
                               fontSize: 20,
                               fontWeight: FontWeight.w700,

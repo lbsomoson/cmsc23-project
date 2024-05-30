@@ -38,7 +38,10 @@ class _AdminViewOrgsScreenState extends State<AdminViewOrgsScreen> {
                     );
                   } else if (!snapshot.hasData) {
                     return const Center(
-                      child: Text("No Friends Found"),
+                      child: Text2Widget(
+                        text: "No Organizations Found",
+                        style: 'body3',
+                      ),
                     );
                   } else if (snapshot.data!.docs.isEmpty) {
                     return const Center(
@@ -63,7 +66,6 @@ class _AdminViewOrgsScreenState extends State<AdminViewOrgsScreen> {
                         org.organizationId = snapshot.data?.docs[index].id;
                         return OrgCard(org: org);
                       });
-                })
-            ));
+                })));
   }
 }

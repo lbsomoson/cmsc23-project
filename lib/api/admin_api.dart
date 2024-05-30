@@ -127,15 +127,16 @@ class FirebaseAdminAPI {
     try {
       // retrieve the document
       DocumentSnapshot documentSnapshot =
-          await db.collection('friends').doc(id).get();
+          await db.collection('organizations').doc(id).get();
 
       // check if the document exists
       if (documentSnapshot.exists) {
         await db
-            .collection('donation_drives')
+            .collection('organizations')
             .doc(id)
             .update({"isApproved": true});
       }
+      print(documentSnapshot.data());
       return "Approved organization!";
     } on FirebaseException catch (e) {
       return "Error in ${e.code}: ${e.message}";
