@@ -1,10 +1,16 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:project/models/donation_model.dart';
+import 'package:project/models/organization_model.dart';
+import 'package:project/models/user_model.dart';
+import 'package:project/providers/donor_provider.dart';
 import 'package:project/widgets/appbar_title.dart';
 import 'package:project/widgets/button.dart';
 import 'package:project/widgets/buttonSmall.dart';
 import 'package:project/widgets/divider.dart';
+import 'package:project/widgets/qrcode.dart';
 import 'package:project/widgets/text2.dart';
 import 'package:project/widgets/textfield.dart';
 import 'package:toggle_switch/toggle_switch.dart';
@@ -12,9 +18,14 @@ import 'package:toggle_switch/toggle_switch.dart';
 import '../../widgets/datepicker.dart';
 import '../../widgets/image_upload2.dart';
 import '../../widgets/timepicker.dart';
+import 'package:firebase_auth/firebase_auth.dart' as AuthUser;
+import 'package:project/providers/admin_provider.dart';
+import 'package:project/providers/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class DonorDonationForm extends StatefulWidget {
-  const DonorDonationForm({Key? key}) : super(key: key);
+  final Organization org;
+  const DonorDonationForm({required this.org, Key? key}) : super(key: key);
 
   @override
   State<DonorDonationForm> createState() => _DonorDonationFormState();
@@ -24,9 +35,8 @@ class _DonorDonationFormState extends State<DonorDonationForm> {
   final _formKey = GlobalKey<FormState>();
   List<String> _selectedTypes = [];
   bool isPickUp = true;
-
   late Map<String, dynamic> addDonation = {
-    'types': [],
+    'types': ['asasd', 'asdas'],
     'weight': '',
     'file': null,
     'date': '',
@@ -37,31 +47,42 @@ class _DonorDonationFormState extends State<DonorDonationForm> {
   String? errorMessage, errorMessage2;
   bool showImageUploadMessage = false, showDateMessage = false;
 
-void handleClick() {
-  if (_formKey.currentState!.validate()) {
-    _formKey.currentState!.save();
-    if (_selectedTypes.isEmpty) {
-      setState(() {
-        errorMessage2 = "Please select at least one item to donate.";
-      });
-    } else if (addDonation['file'] == null) {
-      setState(() {
-        showImageUploadMessage = true;
-        errorMessage2 = "Please upload an image.";
-      });
-    } else if (addDonation['date'].isEmpty) {
-      setState(() {
-        showDateMessage = true;
-        errorMessage2 = "Please select a date.";
-      });
-    } else if (addDonation['time'].isEmpty) {
-      setState(() {
-        showDateMessage = true;
-        errorMessage2 = "Please select a time.";
-      });
-    } else {
+  void handleAddClick(String donorId) async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      if (_selectedTypes.isEmpty) {
+        setState(() {
+          errorMessage2 = "Please select at least one item to donate.";
+        });
+      } else if (addDonation['file'] == null) {
+        setState(() {
+          showImageUploadMessage = true;
+          errorMessage2 = "Please upload an image.";
+        });
+      } else if (addDonation['date'].isEmpty) {
+        setState(() {
+          showDateMessage = true;
+          errorMessage2 = "Please select a date.";
+        });
+      } else if (addDonation['time'].isEmpty) {
+        setState(() {
+          showDateMessage = true;
+          errorMessage2 = "Please select a time.";
+        });
+      }
       // Proceed with donation process
       print("Donation Data: $addDonation");
+      Donation newDonation = Donation(
+          organizationId: widget.org.organizationId!,
+          donorId: donorId,
+          weight: double.parse(addDonation['weight']),
+          driveId: "",
+          itemCategory: addDonation['types'],
+          transferMode: 'pickup',
+          status: "pending",
+          dateTime: addDonation['date'] + " " + addDonation['time'],
+          contactNumber: addDonation['contactNumber']);
+
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -69,15 +90,16 @@ void handleClick() {
           content: Text("Are you sure you want to donate?"),
           actions: [
             ButtonWidget(
-              handleClick: () {
-                Navigator.of(context).pop();
+              handleClick: () async {
+                Navigator.pop(context);
               },
               block: false,
               label: "Cancel",
               style: "outlined",
             ),
             ButtonWidget(
-              handleClick: () {
+              handleClick: () async {
+                await context.read<DonorProvider>().addDonation(newDonation);
                 Navigator.of(context).pop();
                 // Implement donation submission logic here
               },
@@ -90,7 +112,7 @@ void handleClick() {
       );
     }
   }
-}
+
   Widget get imageUploadMessage => Padding(
         padding: const EdgeInsets.only(bottom: 30),
         child: Text(
@@ -111,6 +133,9 @@ void handleClick() {
 
   @override
   Widget build(BuildContext context) {
+    AuthUser.User? user = context.read<UserAuthProvider>().user;
+    String id = user!.uid;
+
     return Scaffold(
         appBar: AppBar(
           title: const AppBarTitle(title: "Donation Form"),
@@ -138,9 +163,8 @@ void handleClick() {
                         text: "Choose items to donate",
                         style: "titleSmall",
                       ),
-
                       CheckboxListTile(
-                        key: Key('Cash'), 
+                        key: Key('Cash'),
                         controlAffinity: ListTileControlAffinity.leading,
                         title: Text2Widget(text: 'Cash', style: 'labelMedium'),
                         value: _selectedTypes.contains('Cash'),
@@ -156,9 +180,8 @@ void handleClick() {
                           });
                         },
                       ),
-
                       CheckboxListTile(
-                        key: Key('Food'), 
+                        key: Key('Food'),
                         controlAffinity: ListTileControlAffinity.leading,
                         title: Text2Widget(text: 'Food', style: 'labelMedium'),
                         value: _selectedTypes.contains('Food'),
@@ -175,7 +198,7 @@ void handleClick() {
                         },
                       ),
                       CheckboxListTile(
-                        key: Key('Clothes'), 
+                        key: Key('Clothes'),
                         controlAffinity: ListTileControlAffinity.leading,
                         title:
                             Text2Widget(text: 'Clothes', style: 'labelMedium'),
@@ -193,7 +216,7 @@ void handleClick() {
                         },
                       ),
                       CheckboxListTile(
-                        key: Key('Necessities'), 
+                        key: Key('Necessities'),
                         controlAffinity: ListTileControlAffinity.leading,
                         title: Text2Widget(
                             text: 'Necessities', style: 'labelMedium'),
@@ -211,7 +234,7 @@ void handleClick() {
                         },
                       ),
                       CheckboxListTile(
-                        key: Key('Others'), 
+                        key: Key('Others'),
                         controlAffinity: ListTileControlAffinity.leading,
                         title:
                             Text2Widget(text: 'Others', style: 'labelMedium'),
@@ -349,11 +372,20 @@ void handleClick() {
                           isRequired: true,
                         ),
                       ],
+                      if (!isPickUp) ...[
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [QrCode(donationId: 'adsda')],
+                        )
+                      ],
                       const SizedBox(
                         height: 20,
                       ),
                       ButtonWidget(
-                        handleClick: handleClick,
+                        handleClick: () {
+                          handleAddClick(id);
+                        },
                         block: true,
                         label: "Donate",
                         style: "filled",

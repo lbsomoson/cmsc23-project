@@ -18,12 +18,12 @@ class FirebaseDonorAPI {
 
   Future<String> addDonorDonation(Map<String, dynamic> donation) async {
     try {
-      TaskSnapshot taskSnapshot =
-          await storage.ref().child(donation['path']).putFile(donation['file']);
+      // TaskSnapshot taskSnapshot =
+      //     await storage.ref().child(donation['path']).putFile(donation['file']);
 
-      String downloadURL = await taskSnapshot.ref.getDownloadURL();
+      // String downloadURL = await taskSnapshot.ref.getDownloadURL();
 
-      donation['image'] = downloadURL;
+      // donation['image'] = downloadURL;
 
       await db.collection('donations').add(donation);
       return "Please wait for donation confimation, thank you!";
