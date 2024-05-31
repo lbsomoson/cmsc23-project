@@ -72,4 +72,46 @@ class FirebaseOrgAPI {
 
     return orgDonation;
   }
+
+  // update acceptance donation status organization profile
+  Future<bool> openDonations(String orgId) async {
+    try {
+      // retrieve the document
+      DocumentSnapshot documentSnapshot =
+          await db.collection('organizations').doc(orgId).get();
+
+      // check if the document exists
+      if (documentSnapshot.exists) {
+        await db
+            .collection('organizations')
+            .doc(orgId)
+            .update({"isOpen": true});
+      }
+      return true;
+    } on FirebaseException catch (e) {
+      print(e.stackTrace);
+      return false;
+    }
+  }
+
+  // update acceptance donation status organization profile
+  Future<bool> closeDonations(String orgId) async {
+    try {
+      // retrieve the document
+      DocumentSnapshot documentSnapshot =
+          await db.collection('organizations').doc(orgId).get();
+
+      // check if the document exists
+      if (documentSnapshot.exists) {
+        await db
+            .collection('organizations')
+            .doc(orgId)
+            .update({"isOpen": false});
+      }
+      return true;
+    } on FirebaseException catch (e) {
+      print(e.stackTrace);
+      return false;
+    }
+  }
 }
