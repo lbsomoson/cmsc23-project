@@ -129,9 +129,9 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
                               ],
                             ),
                           ),
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               horizontal: 32, vertical: 16),
-                          child: Center(
+                          child: const Center(
                             child: Text(
                               'Edit Profile',
                               textAlign: TextAlign.center,
