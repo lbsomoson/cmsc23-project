@@ -126,11 +126,19 @@ class _OrgProfileScreenState extends State<OrgProfileScreen> {
                       const SizedBox(
                         height: 20,
                       ),
+
+                      // TODO: Toggle button if organization is open for donation, show "Close Donation", else show "Accept Donations"
                       ButtonWidget(
                         handleClick: () {},
                         block: true,
                         label: "Accept Donations",
                         style: "filled",
+                      ),
+                      ButtonWidget(
+                        handleClick: () {},
+                        block: true,
+                        label: "Close Donations",
+                        style: "outlined",
                       ),
                     ],
                   ),
