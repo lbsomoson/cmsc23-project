@@ -848,7 +848,18 @@ packages:
     version: "2.3.0"
 =======
     version: "0.6.1"
+<<<<<<< HEAD
 >>>>>>> c23316054ae90f721b5a419d6ebd9a102a1cfae4
+=======
+  toggle_switch:
+    dependency: "direct main"
+    description:
+      name: toggle_switch
+      sha256: dca04512d7c23ed320d6c5ede1211a404f177d54d353bf785b07d15546a86ce5
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.0"
+>>>>>>> 385c90b7f3277cbd7ae9f9ba9496faf9d12a2853
   transparent_image:
     dependency: "direct main"
     description:
