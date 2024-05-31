@@ -118,6 +118,7 @@ class FirebaseAuthAPI {
         "proofPath": path,
         "uploadedAt": Timestamp.now(),
         "isApproved": false,
+        "isOpen": true,
       });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {

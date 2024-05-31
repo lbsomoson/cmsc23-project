@@ -1,9 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:project/providers/admin_provider.dart';
+import 'package:project/providers/auth_provider.dart';
+import 'package:project/providers/org_provider.dart';
 import 'package:project/widgets/appbar_title.dart';
 import 'package:project/widgets/button.dart';
 import 'package:project/widgets/divider.dart';
 import 'package:project/widgets/text2.dart';
 import 'package:project/widgets/textfield.dart';
+import 'package:provider/provider.dart';
 
 class OrgProfileScreen extends StatefulWidget {
   const OrgProfileScreen({super.key});
@@ -17,6 +22,8 @@ class _OrgProfileScreenState extends State<OrgProfileScreen> {
   Widget build(BuildContext context) {
     // Get the width of the screen
     final screenWidth = MediaQuery.of(context).size.width;
+    User? user = context.read<UserAuthProvider>().user;
+    bool? _isOpen;
 
     return Scaffold(
       appBar: AppBar(
@@ -127,18 +134,59 @@ class _OrgProfileScreenState extends State<OrgProfileScreen> {
                         height: 20,
                       ),
 
-                      // TODO: Toggle button if organization is open for donation, show "Close Donation", else show "Accept Donations"
-                      ButtonWidget(
-                        handleClick: () {},
-                        block: true,
-                        label: "Accept Donations",
-                        style: "filled",
-                      ),
-                      ButtonWidget(
-                        handleClick: () {},
-                        block: true,
-                        label: "Close Donations",
-                        style: "outlined",
+                      // TODO: FIX RENDERING AFTER TOGGLING BUTTONS
+                      FutureBuilder<Map<String, dynamic>>(
+                        future: context
+                            .watch<AdminProvider>()
+                            .getOrganization(user!.uid),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError) {
+                            return const Text('Error loading');
+                          }
+                          final organization = snapshot.data;
+                          if (organization!['isOpen']) {
+                            return ButtonWidget(
+                              handleClick: () {
+                                context
+                                    .read<OrgProvider>()
+                                    .closeDonations(user.uid);
+                                final snackBar = SnackBar(
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 245, 88, 77),
+                                  content: const Text(
+                                      'Successfully closed donation!'),
+                                  action: SnackBarAction(
+                                      label: 'Close', onPressed: () {}),
+                                );
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                              },
+                              block: true,
+                              label: "Close Donations",
+                              style: "outlined",
+                            );
+                          } else {
+                            return ButtonWidget(
+                              handleClick: () {
+                                context
+                                    .read<OrgProvider>()
+                                    .openDonations(user.uid);
+                                final snackBar = SnackBar(
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 245, 88, 77),
+                                  content: const Text('Now open for donation!'),
+                                  action: SnackBarAction(
+                                      label: 'Close', onPressed: () {}),
+                                );
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                              },
+                              block: true,
+                              label: "Accept Donations",
+                              style: "filled",
+                            );
+                          }
+                        },
                       ),
                     ],
                   ),
