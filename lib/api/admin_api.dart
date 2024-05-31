@@ -114,7 +114,7 @@ class FirebaseAdminAPI {
     return donationDetails;
   }
 
-  // get ALL donations
+  // get ALL donations by orgId
   Stream<QuerySnapshot> getDonationsByOrgId(String orgId) {
     return db
         .collection('donations')

@@ -7,6 +7,7 @@ class TextFieldWidget extends StatefulWidget {
   final String? label, initialValue;
   final bool? isRequired;
   final int? maxLines;
+  final bool? disabled;
   const TextFieldWidget(
       {required this.callback,
       this.label,
@@ -15,6 +16,7 @@ class TextFieldWidget extends StatefulWidget {
       this.maxLines,
       required this.hintText,
       required this.type,
+      this.disabled,
       super.key});
 
   @override
@@ -118,6 +120,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
             filled: true,
             fillColor: Colors.grey[100],
           ),
+          readOnly: widget.disabled ?? false,
         ),
       ],
     );

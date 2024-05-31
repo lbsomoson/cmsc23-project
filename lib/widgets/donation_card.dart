@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:project/screens/view_donation.dart';
 import 'package:project/widgets/text2.dart';
 
 class DonationCard extends StatelessWidget {
-  const DonationCard({super.key});
+  final String donationId;
+  const DonationCard({required this.donationId, super.key});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, '/view-donation');
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return ViewDonation(donationId: donationId);
+        }));
       },
       child: Card(
         elevation: 0,
