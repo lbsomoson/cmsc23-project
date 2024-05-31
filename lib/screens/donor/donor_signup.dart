@@ -256,15 +256,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   showSignUpErrorMessage = true;
                                 } else {
                                   showSignUpErrorMessage = false;
-                                  Navigator.pushNamed(context, '/donor-navbar');
                                 }
                               });
                             }
                             // check if no error and the widget hasn't been disposed of after an asynchronous action
-                            // if (context.mounted &&
-                            //     showSignUpErrorMessage == false) {
-                            //   Navigator.pushNamed(context, '/donor-navbar');
-                            // }
+                            if (context.mounted &&
+                                showSignUpErrorMessage == false) {
+                              Navigator.pushNamed(context, '/donor-navbar');
+                            }
                           },
                           block: true,
                           label: "Sign Up",
@@ -292,13 +291,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       const SizedBox(
                         height: 15,
                       ),
-                      IconButtonWidget(
-                          block: true,
-                          callback: () {
-                            Navigator.pushNamed(context, '/donor-navbar');
-                          },
-                          icon: './assets/images/google logo.png',
-                          label: "Continue with Google"),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

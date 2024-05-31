@@ -123,56 +123,56 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
                           ),
                         ),
                       ),
-                      Positioned(
-                        top: 650,
-                        left: 130,
-                        child: SizedBox(
-                          width: 382,
-                          height: 51,
-                          child: Stack(
-                            children: <Widget>[
-                              Positioned(
-                                top: 0,
-                                left: 0,
-                                child: Container(
-                                  decoration: const BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(100),
-                                      topRight: Radius.circular(100),
-                                      bottomLeft: Radius.circular(100),
-                                      bottomRight: Radius.circular(100),
-                                    ),
-                                    gradient: LinearGradient(
-                                      begin: Alignment(1, 0),
-                                      end: Alignment(0, 1),
-                                      colors: [
-                                        Color.fromRGBO(62, 218, 134, 1),
-                                        Color.fromRGBO(142, 229, 0, 1)
-                                      ],
-                                    ),
-                                  ),
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 32, vertical: 16),
-                                  child: const Center(
-                                    child: Text(
-                                      'Edit Profile',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Color.fromRGBO(255, 255, 255, 1),
-                                        fontFamily: 'Inter',
-                                        fontSize: 16,
-                                        letterSpacing: 0,
-                                        fontWeight: FontWeight.normal,
-                                        height: 1,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                      // Positioned(
+                      //   top: 650,
+                      //   left: 130,
+                      //   child: SizedBox(
+                      //     width: 382,
+                      //     height: 51,
+                      //     child: Stack(
+                      //       children: <Widget>[
+                      //         Positioned(
+                      //           top: 0,
+                      //           left: 0,
+                      //           child: Container(
+                      //             decoration: const BoxDecoration(
+                      //               borderRadius: BorderRadius.only(
+                      //                 topLeft: Radius.circular(100),
+                      //                 topRight: Radius.circular(100),
+                      //                 bottomLeft: Radius.circular(100),
+                      //                 bottomRight: Radius.circular(100),
+                      //               ),
+                      //               gradient: LinearGradient(
+                      //                 begin: Alignment(1, 0),
+                      //                 end: Alignment(0, 1),
+                      //                 colors: [
+                      //                   Color.fromRGBO(62, 218, 134, 1),
+                      //                   Color.fromRGBO(142, 229, 0, 1)
+                      //                 ],
+                      //               ),
+                      //             ),
+                      //             padding: const EdgeInsets.symmetric(
+                      //                 horizontal: 32, vertical: 16),
+                      //             child: const Center(
+                      //               child: Text(
+                      //                 'Edit Profile',
+                      //                 textAlign: TextAlign.center,
+                      //                 style: TextStyle(
+                      //                   color: Color.fromRGBO(255, 255, 255, 1),
+                      //                   fontFamily: 'Inter',
+                      //                   fontSize: 16,
+                      //                   letterSpacing: 0,
+                      //                   fontWeight: FontWeight.normal,
+                      //                   height: 1,
+                      //                 ),
+                      //               ),
+                      //             ),
+                      //           ),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
                       const Positioned(
                         top: 450,
                         left: 36,
