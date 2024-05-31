@@ -141,26 +141,36 @@ class _OrgProfileScreenState extends State<OrgProfileScreen> {
                               height: 10,
                             ),
                             Positioned(
-                              top: 480,
-                              left: 36,
-                              child: Column(
-                                children: [
-                                  for (var i in o.addresses)
-                                    Text(
-                                      i,
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        color: Color.fromRGBO(0, 0, 0, 1),
-                                        fontFamily: 'Inter',
-                                        fontSize: 24,
-                                        letterSpacing: 0,
-                                        fontWeight: FontWeight.normal,
-                                        height: 1,
-                                      ),
-                                    )
-                                ],
-                              ),
-                            ),
+                                top: 480,
+                                left: 36,
+                                child: Column(
+                                  children: o.addresses
+                                      .map(
+                                        (address) => Text2Widget(
+                                          text: address,
+                                          style: 'body3',
+                                        ),
+                                      )
+                                      .toList(),
+                                )
+                                // child: Column(
+                                //   children: [
+                                //     for (var i in o.addresses)
+                                //       Text(
+                                //         i,
+                                //         textAlign: TextAlign.left,
+                                //         style: TextStyle(
+                                //           color: Color.fromRGBO(0, 0, 0, 1),
+                                //           fontFamily: 'Inter',
+                                //           fontSize: 24,
+                                //           letterSpacing: 0,
+                                //           fontWeight: FontWeight.normal,
+                                //           height: 1,
+                                //         ),
+                                //       )
+                                //   ],
+                                // ),
+                                ),
                             const SizedBox(
                               height: 10,
                             ),

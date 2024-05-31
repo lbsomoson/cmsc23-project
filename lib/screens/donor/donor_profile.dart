@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:project/models/donor_model.dart';
 import 'package:project/providers/admin_provider.dart';
 import 'package:project/providers/auth_provider.dart';
+import 'package:project/widgets/text2.dart';
 import 'package:provider/provider.dart';
 
 import '../../widgets/appbar_title.dart';
@@ -248,22 +249,30 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
                         top: 480,
                         left: 36,
                         child: Column(
-                          children: [
-                            for (var i in d.addresses)
-                              Text(
-                                i,
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  color: Color.fromRGBO(0, 0, 0, 1),
-                                  fontFamily: 'Inter',
-                                  fontSize: 24,
-                                  letterSpacing: 0,
-                                  fontWeight: FontWeight.normal,
-                                  height: 1,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: d.addresses
+                              .map(
+                                (address) => Text2Widget(
+                                  text: address,
+                                  style: 'body3',
                                 ),
                               )
-                          ],
+                              .toList(),
                         ),
+                        // for (var i in d.addresses)
+                        //   Text(
+                        //     i,
+                        //     textAlign: TextAlign.left,
+                        //     style: TextStyle(
+                        //       color: Color.fromRGBO(0, 0, 0, 1),
+                        //       fontFamily: 'Inter',
+                        //       fontSize: 24,
+                        //       letterSpacing: 0,
+                        //       fontWeight: FontWeight.normal,
+                        //       height: 1,
+                        //     ),
+                        //   )
+
                         // child: Text(
                         //   "Los banos",
                         // textAlign: TextAlign.left,
