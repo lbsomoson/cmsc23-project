@@ -109,7 +109,8 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
                 labelStyle: Theme.of(context).textTheme.bodyMedium,
                 hintText: widget.hintText,
                 hintStyle: Theme.of(context).textTheme.labelMedium,
-                contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
                 filled: true,
                 fillColor: Colors.grey[100],
               ),
