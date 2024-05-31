@@ -53,7 +53,10 @@ class _DonorOrgViewState extends State<DonorOrgView> {
                     height: 224,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage('assets/images/orgpic.png'),
+                        image: true
+                            ? NetworkImage(widget.org.photoUrl)
+                            : AssetImage('assets/images/noImageAvailable.png')
+                                as ImageProvider,
                         fit: BoxFit.fitWidth,
                       ),
                     ),

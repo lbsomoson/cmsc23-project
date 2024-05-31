@@ -45,8 +45,8 @@ class _DonorOrgCardState extends State<DonorOrgCard> {
                       topLeft: Radius.circular(10),
                       bottomLeft: Radius.circular(10),
                     ),
-                    child: Image.asset(
-                      'assets/images/Rectangle 34.png',
+                    child: Image.network(
+                      widget.org.photoUrl,
                       fit: BoxFit.cover,
                     )),
               ),
