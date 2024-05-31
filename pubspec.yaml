@@ -53,8 +53,15 @@ dependencies:
   image_picker: ^1.1.1
   google_sign_in: ^6.2.1
   transparent_image: ^2.0.0
+  flutter_launcher_icons: ^0.13.1
   qr_flutter: ^4.1.0
   qr_code_scanner: ^1.0.1
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/elbigives_logo.png"
+  min_sdk_android: 21
 
 dev_dependencies:
   flutter_test:
@@ -92,6 +99,8 @@ flutter:
     - assets/images/org logo.jpg
     - assets/images/splash.gif
     - assets/images/orgpic.png
+    - assets/images/orgHeader.jpeg
+    - assets/images/elbigives_logo.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
@@ -99,7 +108,7 @@ flutter:
   # https://flutter.dev/assets-and-images/#from-packages
 
   # To add custom fonts to your application, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
+  # in this "flutter" section. Each entry in this list sh ould have a
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
