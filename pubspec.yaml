@@ -58,15 +58,12 @@ dependencies:
   qr_code_scanner: ^1.0.1
   qr_bar_code_scanner_dialog: ^0.0.5
   toggle_switch: ^2.3.0
-<<<<<<< HEAD
 
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/images/elbigives_logo.png"
   min_sdk_android: 21
-=======
->>>>>>> 47864f0 (chore: add donation)
 
 dev_dependencies:
   flutter_test:
