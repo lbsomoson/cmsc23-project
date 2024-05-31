@@ -71,5 +71,4 @@ class UserAuthProvider with ChangeNotifier {
     await authService.signOut();
     notifyListeners();
   }
-
 }

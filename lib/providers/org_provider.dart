@@ -34,4 +34,12 @@ class OrgProvider with ChangeNotifier {
   Future<Map<String, dynamic>> getDonation(String orgId) async {
     return await firebaseService.getorgDonation(orgId);
   }
+
+  Future<bool> openDonations(String orgId) async {
+    return await firebaseService.openDonations(orgId);
+  }
+
+  Future<bool> closeDonations(String orgId) async {
+    return await firebaseService.closeDonations(orgId);
+  }
 }

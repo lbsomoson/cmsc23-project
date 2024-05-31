@@ -14,6 +14,7 @@ class Organization {
   String proofPath;
   Timestamp uploadedAt;
   bool isApproved;
+  bool isOpen;
 
   Organization({
     this.organizationId,
@@ -28,6 +29,7 @@ class Organization {
     required this.proofPath,
     required this.uploadedAt,
     required this.isApproved,
+    required this.isOpen,
   });
 
   factory Organization.fromJson(Map<String, dynamic> json) {
@@ -44,6 +46,7 @@ class Organization {
       proofPath: json['proofPath'] ?? '',
       uploadedAt: json['uploadedAt'] ?? Timestamp.now(),
       isApproved: json['isApproved'] ?? false,
+      isOpen: json['isOpen'] ?? true,
     );
   }
 
@@ -61,6 +64,7 @@ class Organization {
       'proofPath': proofPath,
       'uploadedAt': uploadedAt,
       'isApproved': isApproved,
+      'isOpen': isOpen,
     };
   }
 }

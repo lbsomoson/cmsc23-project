@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:project/models/donation_model.dart';
+import 'package:project/models/organization_model.dart';
 import 'package:project/models/user_model.dart';
 import 'package:project/providers/donor_provider.dart';
 import 'package:project/widgets/appbar_title.dart';
@@ -23,7 +24,8 @@ import 'package:project/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 
 class DonorDonationForm extends StatefulWidget {
-  const DonorDonationForm({Key? key}) : super(key: key);
+  final Organization org;
+  const DonorDonationForm({required this.org, Key? key}) : super(key: key);
 
   @override
   State<DonorDonationForm> createState() => _DonorDonationFormState();
@@ -71,6 +73,7 @@ class _DonorDonationFormState extends State<DonorDonationForm> {
       // Proceed with donation process
       print("Donation Data: $addDonation");
       Donation newDonation = Donation(
+          organizationId: widget.org.organizationId!,
           donorId: donorId,
           weight: double.parse(addDonation['weight']),
           driveId: "",

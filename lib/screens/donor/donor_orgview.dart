@@ -32,7 +32,10 @@ class _DonorOrgViewState extends State<DonorOrgView> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => DonorDonationForm()),
+            MaterialPageRoute(
+                builder: (context) => DonorDonationForm(
+                      org: widget.org,
+                    )),
           );
         },
         label: Text("Donate Now!"),
