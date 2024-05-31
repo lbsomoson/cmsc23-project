@@ -12,12 +12,13 @@ class QrCode extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: Colors.grey[100],
+        color: Color.fromARGB(255, 255, 255, 255),
       ),
-      child:QrImageView(
+      child: QrImageView(
         data: donationId,
         version: QrVersions.auto,
         size: 200.0,
+        backgroundColor: Colors.white,
       ),
     );
   }
