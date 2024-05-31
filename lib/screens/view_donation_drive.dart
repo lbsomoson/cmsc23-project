@@ -8,6 +8,7 @@ import 'package:project/screens/organization/org_edit_donation_drive.dart';
 import 'package:project/widgets/button.dart';
 import 'package:project/widgets/divider.dart';
 import 'package:project/widgets/donor_card.dart';
+import 'package:project/widgets/radio.dart';
 import 'package:project/widgets/summary.dart';
 import 'package:project/widgets/text2.dart';
 import 'package:project/widgets/text3.dart';
@@ -60,8 +61,6 @@ class _ViewOrgDonationDriveState extends State<ViewOrgDonationDrive> {
 
                 // TODO: FIX NAVIGATION AFTER DELETION
                 Navigator.pop(context);
-                // Navigator.pushNamedAndRemoveUntil(
-                //     context, '/organization-drives', (route) => false);
               },
             ),
             TextButton(
@@ -74,6 +73,28 @@ class _ViewOrgDonationDriveState extends State<ViewOrgDonationDrive> {
         );
       },
     );
+  }
+
+  void _showLinkDonationDrive(context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0)),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 20, 10, 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text2Widget(
+                      text: "Link this to a donation drive", style: 'body'),
+                  CustomRadios(callback: () {})
+                ],
+              ),
+            ),
+          );
+        });
   }
 
   @override
@@ -239,6 +260,13 @@ class _ViewOrgDonationDriveState extends State<ViewOrgDonationDrive> {
                             }
                           },
                         ),
+                        ButtonWidget(
+                            handleClick: () {
+                              _showLinkDonationDrive(context);
+                            },
+                            block: true,
+                            label: 'Link Donation Drive',
+                            style: 'filled')
                       ],
                     ),
                   ),

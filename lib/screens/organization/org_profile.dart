@@ -1,14 +1,13 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:project/providers/admin_provider.dart';
-import 'package:project/providers/auth_provider.dart';
-import 'package:project/providers/org_provider.dart';
 import 'package:project/models/organization_model.dart';
 import 'package:project/widgets/appbar_title.dart';
 import 'package:project/widgets/button.dart';
 import 'package:project/widgets/divider.dart';
 import 'package:project/widgets/text2.dart';
 import 'package:project/widgets/textfield.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:project/providers/admin_provider.dart';
+import 'package:project/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 
 class OrgProfileScreen extends StatefulWidget {
@@ -27,7 +26,6 @@ class _OrgProfileScreenState extends State<OrgProfileScreen> {
         context.watch<AdminProvider>().getOrganization(id);
     // Get the width of the screen
     final screenWidth = MediaQuery.of(context).size.width;
-    bool? _isOpen;
 
     return SafeArea(
       child: Scaffold(
@@ -37,16 +35,14 @@ class _OrgProfileScreenState extends State<OrgProfileScreen> {
         body: FutureBuilder(
           future: details,
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              return Text("Error ${snapshot.error}");
-            }
-
             Map<String, dynamic> orgDetails = snapshot.data!;
             Organization o = Organization.fromJson(orgDetails);
             o.organizationId = id;
-
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return (Text("Error ${snapshot.error}"));
+            }
             return SingleChildScrollView(
               child: Container(
                 width: screenWidth,
@@ -98,7 +94,7 @@ class _OrgProfileScreenState extends State<OrgProfileScreen> {
                             Text(
                               o.name,
                               textAlign: TextAlign.center,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: Color.fromRGBO(62, 218, 134, 1),
                                 fontFamily: 'Inter',
                                 fontSize: 22,
@@ -120,13 +116,18 @@ class _OrgProfileScreenState extends State<OrgProfileScreen> {
                               style: 'body',
                             ),
                             const DividerWidget(),
+                            // TextFieldWidget(
+                            //     callback: () {},
+                            //     hintText: "organization@gmail.com",
+                            //     label: "Email",
+                            //     type: 'Email'),
                             Positioned(
                               top: 400,
                               left: 36,
                               child: Text(
                                 o.email,
                                 textAlign: TextAlign.left,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   color: Color.fromRGBO(0, 0, 0, 1),
                                   fontFamily: 'Inter',
                                   fontSize: 24,
@@ -148,7 +149,7 @@ class _OrgProfileScreenState extends State<OrgProfileScreen> {
                                     Text(
                                       i,
                                       textAlign: TextAlign.left,
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         color: Color.fromRGBO(0, 0, 0, 1),
                                         fontFamily: 'Inter',
                                         fontSize: 24,
@@ -169,7 +170,7 @@ class _OrgProfileScreenState extends State<OrgProfileScreen> {
                               child: Text(
                                 o.contactNumber,
                                 textAlign: TextAlign.left,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   color: Color.fromRGBO(0, 0, 0, 1),
                                   fontFamily: 'Inter',
                                   fontSize: 24,
@@ -179,6 +180,26 @@ class _OrgProfileScreenState extends State<OrgProfileScreen> {
                                 ),
                               ),
                             ),
+                            // TextFieldWidget(
+                            //     callback: () {},
+                            //     hintText: "Address 1",
+                            //     label: "Address",
+                            //     type: 'String'),
+                            // const SizedBox(
+                            //   height: 5,
+                            // ),
+                            // TextFieldWidget(
+                            //     callback: () {},
+                            //     hintText: "Address 2",
+                            //     type: 'Email'),
+                            // const SizedBox(
+                            //   height: 10,
+                            // ),
+                            // TextFieldWidget(
+                            //     callback: () {},
+                            //     hintText: "09954695022",
+                            //     label: "Contact Number",
+                            //     type: 'String'),
                             const SizedBox(
                               height: 20,
                             ),
@@ -191,95 +212,6 @@ class _OrgProfileScreenState extends State<OrgProfileScreen> {
                           ],
                         ),
                       ),
-                    ),
-                    const Text2Widget(
-                      maxLines: 10,
-                      text:
-                          "Lorem ipsum dolor sit amet, consectetur  adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in",
-                      style: 'body',
-                    ),
-                    const DividerWidget(),
-                    TextFieldWidget(
-                        callback: () {},
-                        hintText: "organization@gmail.com",
-                        label: "Email",
-                        type: 'Email'),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    TextFieldWidget(
-                        callback: () {},
-                        hintText: "Address 1",
-                        label: "Address",
-                        type: 'String'),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    TextFieldWidget(
-                        callback: () {}, hintText: "Address 2", type: 'Email'),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    TextFieldWidget(
-                        callback: () {},
-                        hintText: "09954695022",
-                        label: "Contact Number",
-                        type: 'String'),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    FutureBuilder<Map<String, dynamic>>(
-                      future: context
-                          .watch<AdminProvider>()
-                          .getOrganization(user.uid),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasError) {
-                          return const Text('Error loading');
-                        }
-                        final organization = snapshot.data;
-                        if (organization!['isOpen']) {
-                          return ButtonWidget(
-                            handleClick: () {
-                              context
-                                  .read<OrgProvider>()
-                                  .closeDonations(user.uid);
-                              final snackBar = SnackBar(
-                                backgroundColor:
-                                    const Color.fromARGB(255, 245, 88, 77),
-                                content:
-                                    const Text('Successfully closed donation!'),
-                                action: SnackBarAction(
-                                    label: 'Close', onPressed: () {}),
-                              );
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
-                            },
-                            block: true,
-                            label: "Close Donations",
-                            style: "outlined",
-                          );
-                        } else {
-                          return ButtonWidget(
-                            handleClick: () {
-                              context
-                                  .read<OrgProvider>()
-                                  .openDonations(user.uid);
-                              final snackBar = SnackBar(
-                                backgroundColor:
-                                    const Color.fromARGB(255, 245, 88, 77),
-                                content: const Text('Now open for donation!'),
-                                action: SnackBarAction(
-                                    label: 'Close', onPressed: () {}),
-                              );
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
-                            },
-                            block: true,
-                            label: "Accept Donations",
-                            style: "filled",
-                          );
-                        }
-                      },
                     ),
                   ],
                 ),
