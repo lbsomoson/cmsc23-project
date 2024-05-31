@@ -152,9 +152,9 @@ class _RootWidgetState extends State<RootWidget> {
           return MaterialPageRoute(
               builder: (context) => const DonorProfileScreen());
         }
-        if (settings.name == "/donor-orgview") {
-          return MaterialPageRoute(builder: (context) => const DonorOrgView());
-        }
+        // if (settings.name == "/donor-orgview") {
+        //   return MaterialPageRoute(builder: (context) => const DonorOrgView());
+        // }
         if (settings.name == "/organization-dashboard") {
           return MaterialPageRoute(
               builder: (context) => const OrgDashboardScreen());

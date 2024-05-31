@@ -1,10 +1,17 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:project/models/organization_model.dart';
 import 'package:project/widgets/text2.dart';
 
-class DonorOrgInfo extends StatelessWidget {
-  const DonorOrgInfo({super.key});
+class DonorOrgInfo extends StatefulWidget {
+  final Organization org;
+  const DonorOrgInfo({required this.org, super.key});
 
+  @override
+  State<DonorOrgInfo> createState() => _DonorOrgInfoState();
+}
+
+class _DonorOrgInfoState extends State<DonorOrgInfo> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -18,8 +25,7 @@ class DonorOrgInfo extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text2Widget(
-                          text: "Cats of UPLB", style: "bodyMedium"),
+                      Text2Widget(text: widget.org.name, style: "bodyMedium"),
                       Row(
                         children: [
                           SizedBox(
@@ -57,7 +63,8 @@ class DonorOrgInfo extends StatelessWidget {
                           SizedBox(
                             width: 5,
                           ),
-                          Text2Widget(text: "Los Baños, Laguna", style: "body6")
+                          Text2Widget(
+                              text: widget.org.addresses[0], style: "body6")
                         ],
                       ),
                       SizedBox(
@@ -71,7 +78,8 @@ class DonorOrgInfo extends StatelessWidget {
                           SizedBox(
                             width: 5,
                           ),
-                          Text2Widget(text: "09123456789", style: "body6")
+                          Text2Widget(
+                              text: widget.org.contactNumber, style: "body6")
                         ],
                       ),
                       SizedBox(
@@ -85,8 +93,7 @@ class DonorOrgInfo extends StatelessWidget {
                           SizedBox(
                             width: 5,
                           ),
-                          Text2Widget(
-                              text: "cats.uplb@gmail.com", style: "body6")
+                          Text2Widget(text: widget.org.email, style: "body6")
                         ],
                       ),
                     ],

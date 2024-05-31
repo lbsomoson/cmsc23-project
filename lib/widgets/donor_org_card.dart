@@ -1,14 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:project/models/organization_model.dart';
+import 'package:project/screens/donor/donor_orgview.dart';
+import 'package:project/widgets/org_card.dart';
 import 'package:project/widgets/text2.dart';
+import 'package:provider/provider.dart';
+import 'package:project/providers/admin_provider.dart';
 
-class DonorOrgCard extends StatelessWidget {
-  const DonorOrgCard({super.key});
+class DonorOrgCard extends StatefulWidget {
+  final Organization org;
+  const DonorOrgCard({required this.org, super.key});
 
   @override
+  State<DonorOrgCard> createState() => _DonorOrgCardState();
+}
+
+class _DonorOrgCardState extends State<DonorOrgCard> {
+  Future<int>? _donationsCount;
+  @override
   Widget build(BuildContext context) {
+    _donationsCount = context
+        .watch<AdminProvider>()
+        .getDonationsCountByOrgId(widget.org.organizationId!);
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, '/donor-orgview');
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return DonorOrgView(org: widget.org);
+        }));
       },
       child: Card(
         elevation: 0,
@@ -41,7 +58,7 @@ class DonorOrgCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text("Cats of UPLB",
+                    Text(widget.org.name,
                         style: TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 16,
@@ -85,8 +102,8 @@ class DonorOrgCard extends StatelessWidget {
                         const SizedBox(
                           width: 5,
                         ),
-                        const Text2Widget(
-                            text: "Los Baños, Laguna", style: "body6")
+                        Text2Widget(
+                            text: widget.org.addresses[0], style: "body6")
                       ],
                     ),
                   ],
