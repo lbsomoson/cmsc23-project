@@ -224,21 +224,6 @@ class FirebaseAuthAPI {
     return null;
   }
 
-  Future<String> donorProfile() async {
-    Map<String, dynamic> details = {};
-    final User user = getUser()!;
-    String email = user.email!;
-    QuerySnapshot querySnapshot = await db
-        .collection("donors")
-        .where('email', isEqualTo: email)
-        .limit(1)
-        .get();
-    String documentId = querySnapshot.docs.first.id;
-    DocumentSnapshot userDoc =
-        await db.collection("donors").doc(documentId).get();
-    return userDoc.get('name');
-  }
-
   Future<void> signOut() async {
     await auth.signOut();
     await GoogleSignIn().signOut();
