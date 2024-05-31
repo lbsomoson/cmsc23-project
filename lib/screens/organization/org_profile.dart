@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project/models/organization_model.dart';
+import 'package:project/screens/signin.dart';
 import 'package:project/widgets/appbar_title.dart';
 import 'package:project/widgets/button.dart';
 import 'package:project/widgets/divider.dart';
@@ -31,6 +32,18 @@ class _OrgProfileScreenState extends State<OrgProfileScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: const AppBarTitle(title: "My Profile"),
+          actions: [
+            ButtonWidget(
+                handleClick: () {
+                  context.read<UserAuthProvider>().signOut();
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return const SignInScreen();
+                  }));
+                },
+                block: false,
+                label: 'Logout',
+                style: 'outlined')
+          ],
         ),
         body: FutureBuilder(
           future: details,

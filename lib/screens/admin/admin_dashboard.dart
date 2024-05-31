@@ -5,6 +5,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:project/models/organization_model.dart';
 import 'package:project/providers/admin_provider.dart';
 import 'package:project/providers/auth_provider.dart';
+import 'package:project/screens/signin.dart';
 import 'package:project/widgets/appbar_title.dart';
 import 'package:project/widgets/button.dart';
 import 'package:project/widgets/divider.dart';
@@ -280,7 +281,10 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 ButtonWidget(
                     handleClick: () {
                       context.read<UserAuthProvider>().signOut();
-                      Navigator.pushNamed(context, '/login');
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return const SignInScreen();
+                      }));
                     },
                     block: true,
                     label: "Logout",

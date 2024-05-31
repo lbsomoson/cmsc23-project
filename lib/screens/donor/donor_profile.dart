@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:project/models/donor_model.dart';
 import 'package:project/providers/admin_provider.dart';
 import 'package:project/providers/auth_provider.dart';
+import 'package:project/screens/signin.dart';
+import 'package:project/widgets/button.dart';
 import 'package:project/widgets/text2.dart';
 import 'package:provider/provider.dart';
 
@@ -29,6 +31,18 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
         appBar: AppBar(
           title: const AppBarTitle(title: 'My Profile'),
           backgroundColor: Colors.white,
+          actions: [
+            ButtonWidget(
+                handleClick: () {
+                  context.read<UserAuthProvider>().signOut();
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return const SignInScreen();
+                  }));
+                },
+                block: false,
+                label: 'Logout',
+                style: 'outlined')
+          ],
         ),
         body: FutureBuilder(
             future: details,
