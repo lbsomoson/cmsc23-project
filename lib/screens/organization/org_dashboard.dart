@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:project/widgets/appbar_title.dart';
 import 'package:project/widgets/donation_card.dart';
+import 'package:project/widgets/qrcode.dart';
+import 'package:project/widgets/qrscanner.dart';
 
 class OrgDashboardScreen extends StatefulWidget {
   const OrgDashboardScreen({Key? key}) : super(key: key);
@@ -63,9 +65,7 @@ class _OrgDashboardScreenState extends State<OrgDashboardScreen> {
               ),
               Container(
                 color: Colors.white,
-                child: const Center(
-                  child: Text("Scheduled"),
-                ),
+                child: const Center(child: QrScanner()),
               ),
               Container(
                 color: Colors.white,
