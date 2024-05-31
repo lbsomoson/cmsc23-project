@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:project/widgets/appbar_title.dart';
+import 'package:project/widgets/divider.dart';
 import 'package:project/widgets/text2.dart';
 import 'package:project/widgets/textfield.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 import '../../widgets/image_upload2.dart';
 
@@ -176,6 +178,29 @@ class _DonorDonationFormState extends State<DonorDonationForm> {
                   const SizedBox(
                     height: 20,
                   ),
+
+                  DividerWidget(),
+
+                  SizedBox(
+      height: 50,
+      child: ToggleSwitch(
+        minWidth: 250.0,
+        cornerRadius: 20.0,
+        activeBgColors: [const [Color.fromRGBO(62, 218, 134, 1)],const [Color.fromRGBO(62, 218, 134, 1)]],
+        activeFgColor: Colors.white,
+        inactiveBgColor: Colors.grey,
+        inactiveFgColor: Colors.white,
+        initialLabelIndex: 1,
+        totalSwitches: 2,
+        labels: ['Pick Up', 'Drop Off'],
+        radiusStyle: true,
+        onToggle: (index) {
+          print('switched to: $index');
+        },
+      ),
+    ),
+
+
 
 
 
