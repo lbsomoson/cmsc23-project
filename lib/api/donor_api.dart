@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:project/providers/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class FirebaseDonorAPI {
   static final FirebaseAuth auth = FirebaseAuth.instance;
@@ -16,6 +18,13 @@ class FirebaseDonorAPI {
 
   Future<String> addDonorDonation(Map<String, dynamic> donation) async {
     try {
+      TaskSnapshot taskSnapshot =
+          await storage.ref().child(donation['path']).putFile(donation['file']);
+
+      String downloadURL = await taskSnapshot.ref.getDownloadURL();
+
+      donation['image'] = downloadURL;
+
       await db.collection('donations').add(donation);
       return "Please wait for donation confimation, thank you!";
     } on FirebaseException catch (e) {

@@ -174,7 +174,7 @@ class FirebaseAuthAPI {
         "userId": credential.user!.uid,
         "name": name,
         "email": email,
-        "address": addresses,
+        "addresses": addresses,
         "contactNumber": contact,
         "userType": type
       });
@@ -229,4 +229,19 @@ class FirebaseAuthAPI {
     await auth.signOut();
     await GoogleSignIn().signOut();
   }
+
+  // Future<String> donorProfile(String name) async {
+  //   final User user = getUser()!;
+  //   String email = user.email!;
+  //   QuerySnapshot querySnapshot = await db
+  //       .collection("donors")
+  //       .where('email', isEqualTo: email)
+  //       .limit(1)
+  //       .get();
+  //   String documentId = querySnapshot.docs.first.id;
+  //   DocumentSnapshot userDoc =
+  //       await db.collection("donors").doc(documentId).get();
+  //   String username = userDoc.get('name');
+  //   return username;
+  // }
 }
