@@ -17,17 +17,16 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
         title: AppBarTitle(title: 'My Profile'),
         backgroundColor: Colors.white,
       ),
-      
       body: SingleChildScrollView(
         child: Container(
           width: 428,
           height: 926,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Color.fromRGBO(255, 255, 255, 1),
           ),
           child: Stack(
             children: <Widget>[
-              Positioned(
+              const Positioned(
                 top: 300,
                 left: 130,
                 child: Text(
@@ -43,7 +42,7 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
                   ),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 top: 325,
                 left: 150,
                 child: Text(
@@ -59,12 +58,11 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
                   ),
                 ),
               ),
-
               Positioned(
                 child: Container(
                   width: 428,
                   height: 165,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage('assets/images/Rectangle 58.png'),
                       fit: BoxFit.fitWidth,
@@ -79,7 +77,7 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
                   width: 168,
                   height: 168,
                   decoration: BoxDecoration(
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
                         color: Color.fromRGBO(0, 0, 0, 0.25),
                         offset: Offset(1, 1),
@@ -87,21 +85,22 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
                       )
                     ],
                     border: Border.all(
-                      color: Color.fromRGBO(255, 255, 255, 1),
+                      color: const Color.fromRGBO(255, 255, 255, 1),
                       width: 5,
                     ),
-                    image: DecorationImage(
+                    image: const DecorationImage(
                       image: AssetImage('assets/images/Ellipse 9.png'),
                       fit: BoxFit.fitWidth,
                     ),
-                    borderRadius: BorderRadius.all(Radius.elliptical(168, 168)),
+                    borderRadius:
+                        const BorderRadius.all(Radius.elliptical(168, 168)),
                   ),
                 ),
               ),
               Positioned(
                 top: 650,
                 left: 130,
-                child: Container(
+                child: SizedBox(
                   width: 382,
                   height: 51,
                   child: Stack(
@@ -110,7 +109,7 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
                         top: 0,
                         left: 0,
                         child: Container(
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(100),
                               topRight: Radius.circular(100),
@@ -126,21 +125,21 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
                               ],
                             ),
                           ),
-                          padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                          child: Center(
-                                child: Text(
-                                'Edit Profile',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Color.fromRGBO(255, 255, 255, 1),
-                                  fontFamily: 'Inter',
-                                  fontSize: 16,
-                                  letterSpacing: 0,
-                                  fontWeight: FontWeight.normal,
-                                  height: 1,
-                                ),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 32, vertical: 16),
+                          child: const Center(
+                            child: Text(
+                              'Edit Profile',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Color.fromRGBO(255, 255, 255, 1),
+                                fontFamily: 'Inter',
+                                fontSize: 16,
+                                letterSpacing: 0,
+                                fontWeight: FontWeight.normal,
+                                height: 1,
                               ),
-                            
+                            ),
                           ),
                         ),
                       ),
@@ -148,7 +147,7 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
                   ),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 top: 450,
                 left: 36,
                 child: Text(
@@ -164,7 +163,7 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
                   ),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 top: 370,
                 left: 36,
                 child: Text(
@@ -180,7 +179,7 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
                   ),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 top: 530,
                 left: 36,
                 child: Text(
@@ -196,15 +195,15 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
                   ),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 top: 874,
                 left: 199,
-                child: Container(
+                child: SizedBox(
                   width: 30,
                   height: 30,
                 ),
               ),
-              Positioned(
+              const Positioned(
                 top: 400,
                 left: 36,
                 child: Text(
@@ -220,7 +219,7 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
                   ),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 top: 480,
                 left: 36,
                 child: Text(
@@ -236,7 +235,7 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
                   ),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 top: 560,
                 left: 36,
                 child: Text(
@@ -257,6 +256,5 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
         ),
       ),
     );
-    
   }
 }
