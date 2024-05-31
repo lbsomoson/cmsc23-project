@@ -14,7 +14,7 @@ class _DonorProfileScreenState extends State<DonorProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: AppBarTitle(title: 'My Profile'),
+        title: const AppBarTitle(title: 'My Profile'),
         backgroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
