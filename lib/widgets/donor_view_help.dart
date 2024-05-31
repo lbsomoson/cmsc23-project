@@ -4,7 +4,6 @@ import 'package:project/models/organization_model.dart';
 import 'package:project/providers/admin_provider.dart';
 import 'package:project/widgets/text2.dart';
 
-import '../screens/donor/donor_view_donation_drive.dart';
 import 'buttonSmall.dart';
 import 'package:project/providers/admin_provider.dart';
 import 'package:provider/provider.dart';
@@ -106,21 +105,6 @@ class _DonorViewHelp extends State<DonorViewHelp> {
                     ),
                     const SizedBox(
                       height: 5,
-                    ),
-                    ButtonSmallWidget(
-                      handleClick: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => DonorViewDonationDrive()),
-                        );
-                      },
-                      block: false,
-                      label: "View",
-                      style: 'outlined',
-                      icon: Icon(Icons.visibility,
-                          size: 16,
-                          color: Theme.of(context).colorScheme.primary),
                     ),
                   ],
                 ),
