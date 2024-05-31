@@ -212,8 +212,6 @@ class _ViewOrgDonationDriveState extends State<ViewOrgDonationDrive> {
                                   ),
                                   ButtonWidget(
                                       handleClick: () {
-                                        // Navigator.pushNamed(
-                                        //     context, '/organization-edit-drive');
                                         Navigator.push(context,
                                             MaterialPageRoute(
                                                 builder: (context) {
