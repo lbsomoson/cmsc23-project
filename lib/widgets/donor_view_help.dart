@@ -1,14 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:project/models/donation_drive_model.dart';
+import 'package:project/models/organization_model.dart';
+import 'package:project/providers/admin_provider.dart';
 import 'package:project/widgets/text2.dart';
 
 import '../screens/donor/donor_view_donation_drive.dart';
 import 'buttonSmall.dart';
+import 'package:project/providers/admin_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class DonorViewHelp extends StatelessWidget {
-  const DonorViewHelp({super.key});
+class DonorViewHelp extends StatefulWidget {
+  final DonationDrive donationDrive;
+  final Organization org;
+  const DonorViewHelp(
+      {required this.org, required this.donationDrive, super.key});
 
   @override
+  State<DonorViewHelp> createState() => _DonorViewHelp();
+}
+
+class _DonorViewHelp extends State<DonorViewHelp> {
+  Future<int>? _drivesCount;
+  @override
   Widget build(BuildContext context) {
+    _drivesCount = context
+        .watch<AdminProvider>()
+        .getDonationDrivesCountByOrgId(widget.org.organizationId!);
     return InkWell(
       child: Card(
         elevation: 0,
@@ -28,8 +46,8 @@ class DonorViewHelp extends StatelessWidget {
                       topLeft: Radius.circular(10),
                       bottomLeft: Radius.circular(10),
                     ),
-                    child: Image.asset(
-                      'assets/images/dog.jpg',
+                    child: Image.network(
+                      widget.donationDrive.photoUrl,
                       fit: BoxFit.cover,
                     )),
               ),
@@ -41,7 +59,7 @@ class DonorViewHelp extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text("Help Animal Sanctuary",
+                    Text(widget.donationDrive.title,
                         style: TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 16,
@@ -68,7 +86,10 @@ class DonorViewHelp extends StatelessWidget {
                         const SizedBox(
                           width: 5,
                         ),
-                        const Text2Widget(text: "donors", style: "body5")
+                        Text2Widget(
+                            text: widget.donationDrive.donationIds!.length
+                                .toString(),
+                            style: "body5")
                       ],
                     ),
                     const SizedBox(

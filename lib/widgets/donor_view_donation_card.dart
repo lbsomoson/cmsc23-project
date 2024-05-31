@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/screens/view_donation.dart';
 import 'package:project/widgets/text2.dart';
 
 class DonorDonationCard extends StatelessWidget {
@@ -8,7 +9,11 @@ class DonorDonationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, '/view-donation');
+        // TODO: ADD DONATION
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => const ViewDonation()),
+        // );
       },
       child: Card(
         elevation: 0,

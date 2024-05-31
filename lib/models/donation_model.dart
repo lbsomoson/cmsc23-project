@@ -4,6 +4,7 @@ class Donation {
   String? donationId;
   final String donorId;
   final String driveId;
+  final String organizationId;
   List<String> itemCategory;
   String transferMode;
   double? weight;
@@ -18,6 +19,7 @@ class Donation {
     this.donationId,
     required this.donorId,
     required this.driveId,
+    required this.organizationId,
     required this.itemCategory,
     required this.transferMode,
     this.weight,
@@ -35,6 +37,7 @@ class Donation {
       donationId: json['donationId'],
       donorId: json['donorId'],
       driveId: json['driveId'],
+      organizationId: json['organizationId'],
       itemCategory: json['itemCategory'],
       transferMode: json['transferMode'],
       weight: json['weight'],
@@ -57,6 +60,7 @@ class Donation {
       'donationId': donation.donationId,
       'donorId': donation.donorId,
       'driveId': donation.driveId,
+      'organizationId': donation.organizationId,
       'itemCategory': donation.itemCategory,
       'transferMode': donation.transferMode,
       'weight': donation.weight,

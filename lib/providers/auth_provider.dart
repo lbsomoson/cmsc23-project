@@ -7,7 +7,6 @@ import '../api/auth_api.dart';
 class UserAuthProvider with ChangeNotifier {
   late FirebaseAuthAPI authService;
   FirebaseAuthAPI auth = FirebaseAuthAPI();
-
   late Stream<User?> uStream;
 
   UserAuthProvider() {
@@ -71,17 +70,5 @@ class UserAuthProvider with ChangeNotifier {
   Future<void> signOut() async {
     await authService.signOut();
     notifyListeners();
-  }
-
-  // Future<Map> getDetails() async {
-  //   Map<dynamic, dynamic> details = await authService.getDetails();
-  //   notifyListeners();
-  //   return details;
-  // }
-
-  Future<String> donorProfile() async {
-    String name = await authService.donorProfile();
-    notifyListeners();
-    return name;
   }
 }

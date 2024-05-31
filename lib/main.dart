@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/models/donation_drive_model.dart';
+import 'package:project/models/donation_model.dart';
+import 'package:project/models/donor_model.dart';
 import 'package:project/models/organization_model.dart';
 import 'package:project/providers/org_provider.dart';
 import 'providers/admin_provider.dart';
@@ -151,9 +153,9 @@ class _RootWidgetState extends State<RootWidget> {
           return MaterialPageRoute(
               builder: (context) => const DonorProfileScreen());
         }
-        if (settings.name == "/donor-orgview") {
-          return MaterialPageRoute(builder: (context) => const DonorOrgView());
-        }
+        // if (settings.name == "/donor-orgview") {
+        //   return MaterialPageRoute(builder: (context) => const DonorOrgView());
+        // }
         if (settings.name == "/organization-dashboard") {
           return MaterialPageRoute(
               builder: (context) => const OrgDashboardScreen());
@@ -167,7 +169,11 @@ class _RootWidgetState extends State<RootWidget> {
               builder: (context) => const OrgDonationDrivesScreen());
         }
         if (settings.name == "/view-donation") {
-          return MaterialPageRoute(builder: (context) => const ViewDonation());
+          final args = settings.arguments as Donation;
+          return MaterialPageRoute(
+              builder: (context) => ViewDonation(
+                    donationId: args.donationId!,
+                  ));
         }
         if (settings.name == "/organization-add-drive") {
           return MaterialPageRoute(
