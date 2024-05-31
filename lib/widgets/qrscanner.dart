@@ -25,7 +25,7 @@ class _QrScannerState extends State<QrScanner> {
                 });
               });
         },
-        child: Text(code ?? "Click me"),
+        child: Text(code ?? "Scan donation QR Code"),
       ),
     );
   }
