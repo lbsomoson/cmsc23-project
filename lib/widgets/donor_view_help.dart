@@ -46,8 +46,8 @@ class _DonorViewHelp extends State<DonorViewHelp> {
                       topLeft: Radius.circular(10),
                       bottomLeft: Radius.circular(10),
                     ),
-                    child: Image.asset(
-                      'assets/images/dog.jpg',
+                    child: Image.network(
+                      widget.donationDrive.photoUrl,
                       fit: BoxFit.cover,
                     )),
               ),
