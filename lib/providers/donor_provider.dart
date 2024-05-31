@@ -13,7 +13,7 @@ class DonorProvider with ChangeNotifier {
     return _donorDonationsStream;
   }
 
-  Future<String> addDonationDrive(Donation donation) async {
+  Future<String> addDonation(Donation donation) async {
     String res =
         await firebaseService.addDonorDonation(donation.toJson(donation));
     notifyListeners();

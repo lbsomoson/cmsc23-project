@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project/models/donation_drive_model.dart';
 import 'package:project/models/donor_model.dart';
 import 'package:project/models/organization_model.dart';
+import 'package:project/providers/donor_provider.dart';
 import 'package:project/providers/org_provider.dart';
 import 'providers/admin_provider.dart';
 import 'screens/admin/admin_approval.dart';
@@ -44,6 +45,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: ((context) => UserAuthProvider())),
         ChangeNotifierProvider(create: ((context) => OrgProvider())),
         ChangeNotifierProvider(create: ((context) => AdminProvider())),
+        ChangeNotifierProvider(create: ((context) => DonorProvider())),
       ],
       child: const RootWidget(),
     ),
