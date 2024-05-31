@@ -84,7 +84,7 @@ class _DonorOrgViewState extends State<DonorOrgView> {
                       } else if (!snapshot.hasData) {
                         return const Center(
                           child: Text2Widget(
-                            text: "No Organizations Found",
+                            text: "No Donation Drives Found",
                             style: 'body3',
                           ),
                         );
@@ -97,7 +97,7 @@ class _DonorOrgViewState extends State<DonorOrgView> {
                               children: [
                                 Center(
                                     child: Text2Widget(
-                                        text: "No organizations yet",
+                                        text: "No Donation Drives yet",
                                         style: 'body2'))
                               ]),
                         ));
