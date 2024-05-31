@@ -45,8 +45,8 @@ class _DonorOrgCardState extends State<DonorOrgCard> {
                       topLeft: Radius.circular(10),
                       bottomLeft: Radius.circular(10),
                     ),
-                    child: Image.asset(
-                      'assets/images/Rectangle 34.png',
+                    child: Image.network(
+                      widget.org.photoUrl,
                       fit: BoxFit.cover,
                     )),
               ),
@@ -77,15 +77,14 @@ class _DonorOrgCardState extends State<DonorOrgCard> {
                     const SizedBox(
                       height: 5,
                     ),
-                    const Row(
+                    Row(
                       children: [
                         SizedBox(
                           width: 2,
                         ),
                         Expanded(
                           child: Text2Widget(
-                            text:
-                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,",
+                            text: widget.org.contactNumber,
                             style: "body5",
                           ),
                         ),

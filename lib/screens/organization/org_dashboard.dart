@@ -8,6 +8,8 @@ import 'package:project/widgets/appbar_title.dart';
 import 'package:project/widgets/donation_card.dart';
 import 'package:project/widgets/text2.dart';
 import 'package:provider/provider.dart';
+import 'package:project/widgets/qrcode.dart';
+import 'package:project/widgets/qrscanner.dart';
 
 class OrgDashboardScreen extends StatefulWidget {
   const OrgDashboardScreen({Key? key}) : super(key: key);
@@ -216,6 +218,7 @@ class _OrgDashboardScreenState extends State<OrgDashboardScreen> {
                             });
                       }),
                 ),
+                child: const Center(child: QrScanner()),
               ),
               Container(
                 color: Colors.white,

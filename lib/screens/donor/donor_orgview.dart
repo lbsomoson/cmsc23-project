@@ -53,7 +53,10 @@ class _DonorOrgViewState extends State<DonorOrgView> {
                     height: 224,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage('assets/images/orgpic.png'),
+                        image: true
+                            ? NetworkImage(widget.org.photoUrl)
+                            : AssetImage('assets/images/noImageAvailable.png')
+                                as ImageProvider,
                         fit: BoxFit.fitWidth,
                       ),
                     ),
@@ -81,7 +84,7 @@ class _DonorOrgViewState extends State<DonorOrgView> {
                       } else if (!snapshot.hasData) {
                         return const Center(
                           child: Text2Widget(
-                            text: "No Organizations Found",
+                            text: "No Donation Drives Found",
                             style: 'body3',
                           ),
                         );
@@ -94,7 +97,7 @@ class _DonorOrgViewState extends State<DonorOrgView> {
                               children: [
                                 Center(
                                     child: Text2Widget(
-                                        text: "No organizations yet",
+                                        text: "No Donation Drives yet",
                                         style: 'body2'))
                               ]),
                         ));
