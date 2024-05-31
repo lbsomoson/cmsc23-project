@@ -7,8 +7,8 @@ import 'package:project/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 
 class ImageUpload2Widget extends StatefulWidget {
-  final Function(String path, File file) callBack;
-  const ImageUpload2Widget({required this.callBack, super.key});
+  final Function(String path, File file)? callBack;
+  const ImageUpload2Widget({this.callBack, super.key});
 
   @override
   State<ImageUpload2Widget> createState() => _ImageUpload2WidgetState();
@@ -38,7 +38,7 @@ class _ImageUpload2WidgetState extends State<ImageUpload2Widget> {
     setState(() {
       path = '/$id/uploads/$fileName';
     });
-    widget.callBack(path!, selectedImage!);
+    widget.callBack!(path!, selectedImage!);
   }
 
   Future _pickImageFromCamera(String id) async {
@@ -59,7 +59,7 @@ class _ImageUpload2WidgetState extends State<ImageUpload2Widget> {
     setState(() {
       path = '/$id/uploads/$fileName';
     });
-    widget.callBack(path!, selectedImage!);
+    widget.callBack!(path!, selectedImage!);
   }
 
   void _showDialog(BuildContext context, String id) {

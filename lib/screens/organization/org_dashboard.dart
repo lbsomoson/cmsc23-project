@@ -1,6 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:project/models/donation_model.dart';
+import 'package:project/providers/admin_provider.dart';
+import 'package:project/providers/auth_provider.dart';
 import 'package:project/widgets/appbar_title.dart';
 import 'package:project/widgets/donation_card.dart';
+import 'package:project/widgets/text2.dart';
+import 'package:provider/provider.dart';
+import 'package:project/widgets/qrcode.dart';
+import 'package:project/widgets/qrscanner.dart';
 
 class OrgDashboardScreen extends StatefulWidget {
   const OrgDashboardScreen({Key? key}) : super(key: key);
@@ -12,6 +21,9 @@ class OrgDashboardScreen extends StatefulWidget {
 class _OrgDashboardScreenState extends State<OrgDashboardScreen> {
   @override
   Widget build(BuildContext context) {
+    User? user = context.watch<UserAuthProvider>().user;
+    Stream<QuerySnapshot> donationsStream =
+        context.watch<AdminProvider>().getDonationsByOrgId(user!.uid);
     return Scaffold(
       appBar: AppBar(
         title: const AppBarTitle(title: "Donations"),
@@ -34,7 +46,7 @@ class _OrgDashboardScreenState extends State<OrgDashboardScreen> {
                         Tab(text: "Pending"),
                         Tab(text: "Confirmed"),
                         Tab(text: "Scheduled"),
-                        Tab(text: "Complete"),
+                        Tab(text: "Completed"),
                         Tab(text: "Canceled"),
                       ],
                     ),
@@ -47,36 +59,275 @@ class _OrgDashboardScreenState extends State<OrgDashboardScreen> {
             children: [
               Container(
                   color: Colors.white,
-                  child: const Column(
-                    children: [
-                      DonationCard(),
-                      DonationCard(),
-                      DonationCard(),
-                      DonationCard(),
-                    ],
-                  )),
+                  child: StreamBuilder(
+                      stream: donationsStream,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Center(
+                            child: Text("Error encountered! ${snapshot.error}"),
+                          );
+                        } else if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (!snapshot.hasData) {
+                          return const Center(
+                            child: Text2Widget(
+                              text: "No Donations Found",
+                              style: 'body3',
+                            ),
+                          );
+                        } else if (snapshot.data!.docs.isEmpty) {
+                          return const Center(
+                              child: Center(
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Center(
+                                      child: Text2Widget(
+                                          text: "No donations yet",
+                                          style: 'body2'))
+                                ]),
+                          ));
+                        }
+                        return ListView.builder(
+                            itemCount: snapshot.data?.docs.length,
+                            itemBuilder: (context, index) {
+                              Donation donation = Donation.fromJson(
+                                  snapshot.data?.docs[index].data()
+                                      as Map<String, dynamic>);
+                              donation.donationId =
+                                  snapshot.data?.docs[index].id;
+                              print(donation.status);
+                              if (donation.status == "pending") {
+                                return DonationCard(
+                                    donationId: donation.donationId!);
+                              } else {
+                                return Container();
+                              }
+                            });
+                      })),
               Container(
                 color: Colors.white,
-                child: const Center(
-                  child: Text("Confirmed"),
+                child: Center(
+                  child: StreamBuilder(
+                      stream: donationsStream,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Center(
+                            child: Text("Error encountered! ${snapshot.error}"),
+                          );
+                        } else if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (!snapshot.hasData) {
+                          return const Center(
+                            child: Text2Widget(
+                              text: "No Donations Found",
+                              style: 'body3',
+                            ),
+                          );
+                        } else if (snapshot.data!.docs.isEmpty) {
+                          return const Center(
+                              child: Center(
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Center(
+                                      child: Text2Widget(
+                                          text: "No donations yet",
+                                          style: 'body2'))
+                                ]),
+                          ));
+                        }
+                        return ListView.builder(
+                            itemCount: snapshot.data?.docs.length,
+                            itemBuilder: (context, index) {
+                              Donation donation = Donation.fromJson(
+                                  snapshot.data?.docs[index].data()
+                                      as Map<String, dynamic>);
+                              donation.donationId =
+                                  snapshot.data?.docs[index].id;
+                              print(donation.status);
+                              if (donation.status == "confirmed") {
+                                return DonationCard(
+                                    donationId: donation.donationId!);
+                              } else {
+                                return Container();
+                              }
+                            });
+                      }),
                 ),
               ),
               Container(
                 color: Colors.white,
-                child: const Center(
-                  child: Text("Scheduled"),
+                child: Center(
+                  child: StreamBuilder(
+                      stream: donationsStream,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Center(
+                            child: Text("Error encountered! ${snapshot.error}"),
+                          );
+                        } else if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (!snapshot.hasData) {
+                          return const Center(
+                            child: Text2Widget(
+                              text: "No Donations Found",
+                              style: 'body3',
+                            ),
+                          );
+                        } else if (snapshot.data!.docs.isEmpty) {
+                          return const Center(
+                              child: Center(
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Center(
+                                      child: Text2Widget(
+                                          text: "No donations yet",
+                                          style: 'body2'))
+                                ]),
+                          ));
+                        }
+                        return ListView.builder(
+                            itemCount: snapshot.data?.docs.length,
+                            itemBuilder: (context, index) {
+                              Donation donation = Donation.fromJson(
+                                  snapshot.data?.docs[index].data()
+                                      as Map<String, dynamic>);
+                              donation.donationId =
+                                  snapshot.data?.docs[index].id;
+                              print(donation.status);
+                              if (donation.status == "scheduled") {
+                                return DonationCard(
+                                    donationId: donation.donationId!);
+                              } else {
+                                return Container();
+                              }
+                            });
+                      }),
+                ),
+                // child: const Center(child: QrScanner()),
+              ),
+              Container(
+                color: Colors.white,
+                child: Center(
+                  child: StreamBuilder(
+                      stream: donationsStream,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Center(
+                            child: Text("Error encountered! ${snapshot.error}"),
+                          );
+                        } else if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (!snapshot.hasData) {
+                          return const Center(
+                            child: Text2Widget(
+                              text: "No Donations Found",
+                              style: 'body3',
+                            ),
+                          );
+                        } else if (snapshot.data!.docs.isEmpty) {
+                          return const Center(
+                              child: Center(
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Center(
+                                      child: Text2Widget(
+                                          text: "No donations yet",
+                                          style: 'body2'))
+                                ]),
+                          ));
+                        }
+                        return ListView.builder(
+                            itemCount: snapshot.data?.docs.length,
+                            itemBuilder: (context, index) {
+                              Donation donation = Donation.fromJson(
+                                  snapshot.data?.docs[index].data()
+                                      as Map<String, dynamic>);
+                              donation.donationId =
+                                  snapshot.data?.docs[index].id;
+                              print(donation.status);
+                              if (donation.status == "completed") {
+                                return DonationCard(
+                                    donationId: donation.donationId!);
+                              } else {
+                                return Container();
+                              }
+                            });
+                      }),
                 ),
               ),
               Container(
                 color: Colors.white,
-                child: const Center(
-                  child: Text("Complete"),
-                ),
-              ),
-              Container(
-                color: Colors.white,
-                child: const Center(
-                  child: Text("Canceled"),
+                child: Center(
+                  child: StreamBuilder(
+                      stream: donationsStream,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Center(
+                            child: Text("Error encountered! ${snapshot.error}"),
+                          );
+                        } else if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (!snapshot.hasData) {
+                          return const Center(
+                            child: Text2Widget(
+                              text: "No Donations Found",
+                              style: 'body3',
+                            ),
+                          );
+                        } else if (snapshot.data!.docs.isEmpty) {
+                          return const Center(
+                              child: Center(
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Center(
+                                      child: Text2Widget(
+                                          text: "No donations yet",
+                                          style: 'body2'))
+                                ]),
+                          ));
+                        }
+                        return ListView.builder(
+                            itemCount: snapshot.data?.docs.length,
+                            itemBuilder: (context, index) {
+                              Donation donation = Donation.fromJson(
+                                  snapshot.data?.docs[index].data()
+                                      as Map<String, dynamic>);
+                              donation.donationId =
+                                  snapshot.data?.docs[index].id;
+                              print(donation.status);
+                              if (donation.status == "canceled") {
+                                return DonationCard(
+                                    donationId: donation.donationId!);
+                              } else {
+                                return Container();
+                              }
+                            });
+                      }),
                 ),
               ),
             ],
